@@ -1,5 +1,121 @@
 ﻿# AI Daily Digest
 
+## 2026-05-10
+
+### 1. 今日总览
+
+按 Asia/Shanghai 时区检索 2026-05-10 00:00:00 到 23:59:59 的 AI/人工智能相关更新后，没有发现 OpenAI、Anthropic、Google DeepMind、Meta、GitHub Copilot、LangChain/LangGraph 在当天发布新的基础模型、重大 API 版本、框架大版本或高影响论文批次。当天是周日，官方 changelog 与论文发布节奏明显放缓：GitHub Changelog 最新 AI/Copilot 相关条目停留在 5 月 8 日，Anthropic Claude Platform release notes 最新为 5 月 6 日，OpenAI ChatGPT release notes 最新条目为 5 月 7 日，Hugging Face Daily Papers 页面也回落到 5 月 8 日榜单。
+
+当天更有学习价值的信息集中在三类：
+
+- MCP 生产化：有技术博客专门讨论多租户 MCP server 的认证、租户隔离、限流、审计和可观测性，说明 MCP 正从本地工具连接协议进入企业多租户运行时问题域。
+- Gemini / Build with AI 社区实践：GDG 在 5 月 10 日有多场 Gemini、Vertex AI、Gemma、prompt engineering、agentic AI 和 hackathon 活动，偏实践教学而非产品发布。
+- LLM + Knowledge Graph 研究交流：LLM-TEXT2KG 2026 在 5 月 10 日开幕，议题覆盖 LLM 驱动知识图谱构建、RAG、实体/关系抽取、多 agent 信息抽取和文化遗产知识增强。
+
+整体判断：2026-05-10 不是“新模型发布日”，但适合研发团队补齐 agent/MCP 生产化清单，并关注 LLM 与知识图谱、RAG、结构化抽取结合的研究方向。
+
+### 2. 重要事件与发布
+
+#### 官方主线：未发现当天重大模型或平台发布
+
+本次检索覆盖 OpenAI、Anthropic、Google/DeepMind、GitHub Copilot、LangChain/LangGraph、Hugging Face Daily Papers、arXiv 相关关键词与可信技术媒体。可验证的官方页面显示：
+
+- OpenAI ChatGPT release notes 最新可见条目为 2026-05-07 的 Trusted contact，以及 2026-05-05 的 memory sources、GPT-5.5 Instant、ChatGPT for Excel/Google Sheets。
+- Anthropic Claude Platform release notes 最新可见条目为 2026-05-06，重点是 Claude Managed Agents 的 multiagent sessions、Outcomes public beta、vault credential refresh 和 webhooks。
+- GitHub Changelog 在 2026-05-10 没有新增 Copilot/AI changelog；最新 Copilot 相关条目集中在 2026-05-08。
+- Hugging Face Daily Papers 当前入口重定向到 2026-05-08，未见 2026-05-10 的新 daily papers 批次。
+
+对研发团队的意义：周末低发布日不应强行追热点，更适合复盘近几天已经发布的 agent 治理、memory、managed agents、Copilot 指标和 MCP security 方向。
+
+### 3. 技术文档与教程
+
+#### PADISO：多租户 MCP server 的认证、隔离、限流与可观测性
+
+PADISO 在 2026-05-10 发布《Multi-Tenant MCP Servers: Auth, Tenancy, and Rate Limiting Done Right》。文章不是官方 MCP 规范，但工程主题很实用：把 MCP server 放到多租户生产环境后，需要处理 JWT scoped auth、tenant isolation、tool-level scopes、per-tenant rate limits、OpenTelemetry tracing、structured logs、audit logging、horizontal scaling、Redis rate limiter、circuit breaker 和安全审计准备。
+
+值得关注：
+
+- MCP server 不能只按“本地工具适配器”理解；一旦服务多个团队/客户，就会进入 SaaS 后端的经典问题：身份、租户、配额、隔离、审计和故障降级。
+- 权限最好落在 tool scope、tenant context、数据库 RLS 和审计日志多个层面，而不是只靠 prompt 或客户端约定。
+- 对内部 AI 平台，MCP 的监控指标应至少覆盖 tool call latency、error rate、rate-limit hit、token consumption、tenant/request trace correlation。
+
+来源：[PADISO - Multi-Tenant MCP Servers: Auth, Tenancy, and Rate Limiting Done Right](https://www.padiso.co/blog/multi-tenant-mcp-servers-auth-tenancy-rate-limiting/)
+
+#### GDG：Gemini / Vertex AI / Build with AI 实践活动集中在 5 月 10 日
+
+Google Developer Groups 在 2026-05-10 有多场 AI 实践活动，包括 Goa Code Premier League、Build with AI Nepal 2026 Online Series #2、Gemini API Deep Dive Workshop、GDG AI HACK 2026、Build with AI Adana、Agentic AI Hackathon 等。主题覆盖 Gemini、Gemma、Vertex AI、Google Cloud、prompt engineering、vibe coding、agent-based workflows、education AI、vision AI 和 on-device AI。
+
+值得关注：
+
+- “Vibe coding / natural-language-first development”已进入 GDG 的开发者教育内容，说明 AI 编程教学正在从 prompt 技巧转向 agent workflow 与可交付应用。
+- Gemini API 与 Vertex AI 仍是 Google 生态入门路线的核心组合，适合团队新人用 workshop 方式建立端到端体验。
+- Hackathon 主题从“使用 AI API”扩展到教育、视觉、端侧 AI、agentic AI，反映应用层更重视业务场景和原型交付。
+
+来源：[GDG Goa - Goa Code Premier League](https://gdg.community.dev/events/details/google-gdg-goa-presents-goa-code-premier-league/)；[GDG Kathmandu - Build with AI Nepal 2026 Online Series #2](https://gdg.community.dev/events/details/google-gdg-kathmandu-presents-build-with-ai-nepal-2026-online-series-2/)；[GDG AOU Egypt - Gemini API Deep Dive Workshop](https://gdg.community.dev/events/details/google-gdg-on-campus-arab-open-university-el-shorouk-city-egypt-presents-gemini-api-deep-dive-workshop/)；[GDG Polytechnic University of Milan - GDG AI HACK 2026](https://gdg.community.dev/events/details/google-gdg-on-campus-polytechnic-university-of-milan-presents-gdg-ai-hack-2026/)
+
+### 4. LangChain / Agent / LLM 工程相关进展
+
+#### LLM-TEXT2KG 2026：LLM 与知识图谱构建继续融合
+
+LLM-TEXT2KG 2026 于 2026-05-10 在 ESWC 2026 期间开幕。会议主题是 LLM-integrated knowledge graph generation from text，覆盖 NLP、entity linking、relation extraction、knowledge representation、RAG、knowledge sharing between agents、semantic web 与 linked data。5 月 10 日日程中包括 Text2KG 错误模式 keynote、claim extraction、LLM mapping latent narrative content、多 agent closed information extraction、RAG 生成认知概念化知识图谱、文化遗产 linked data 的 multi-agent interpretive KG augmentation 等。
+
+工程启发：
+
+- RAG 不只是“向量检索 + 生成”，LLM 与 KG 的结合可以把抽取、验证、实体对齐、关系建模和可解释检索纳入同一条链路。
+- Multi-agent information extraction 已进入 KG 构建议题，适合关注“抽取 agent、验证 agent、对齐 agent、human review”的分工模式。
+- 对企业知识库，KG 可以补足纯向量检索在结构化约束、关系推理、事实追踪和审计解释上的短板。
+
+来源：[LLM-TEXT2KG 2026](https://aiisc.ai/text2kg2026/)；[ESWC 2026 Posters and Demos](https://2026.eswc-conferences.org/calls/poster-demo/)
+
+#### Awesome Agents 周更：agent 工具生态继续向终端编程、链上激励和 MCP readiness 扩展
+
+Track Awesome Agents 的 2026-05-04 到 2026-05-10 周更中，新增/记录了 Onepilot、AIMorgan、Not Human Search 等项目，分别指向远程终端 coding agents 编排、面向 AI agents 的链上 treasury / x402 / MCP server，以及对 MCP endpoint 与 agentic readiness 的检测评分。
+
+工程启发：
+
+- Coding agent 的交互入口继续向远程终端、移动端 SSH、Codex CLI / Claude Code / OpenClaw / Hermes 编排扩展。
+- MCP readiness 和 endpoint live verification 变成独立工具方向，说明“能暴露 MCP server”不等于“适合 agent 安全调用”。
+- x402、agent registry、agent reward 仍偏早期生态，但值得平台团队观察协议层和结算层是否会影响 agent-to-agent 协作。
+
+来源：[Track Awesome Agents - Weekly updates](https://www.trackawesomelist.com/Scottcjn/awesome-agents/week/)
+
+#### LangGraph：当天无新版本，近期重点仍是 CLI deploy 与长线程状态优化
+
+LangGraph GitHub releases 页面显示，最近相关发布仍是 2026-05-07 的 `langgraph-cli==0.4.25`，包含 `studio deploy` 支持；5 月 5 日附近的 SDK / alpha 更新继续围绕 streaming、thread update、DeltaChannel、checkpoint overhead、long-running threads 等方向。2026-05-10 未检索到新的正式版本。
+
+工程启发：
+
+- LangGraph 的近期演进重点和生产 agent 需求一致：部署、streaming、长线程状态、checkpoint 成本、错误恢复和 graceful shutdown。
+- 如果团队依赖 LangGraph，短期更应关注状态 schema、checkpoint 存储成本、streaming v3、deploy 工具链，而不是等待“新模型能力”解决运行时问题。
+
+来源：[LangGraph GitHub Releases](https://github.com/langchain-ai/langgraph/releases)
+
+### 5. 值得深入阅读的资料
+
+- PADISO 的多租户 MCP server 文章：适合整理内部 MCP server 上线前的安全、租户、限流和观测 checklist。
+- LLM-TEXT2KG 2026 日程：适合 RAG、知识库、搜索、数据治理团队跟踪 LLM+KG 的抽取与评估方法。
+- GDG Build with AI / Gemini workshop 页面：适合用于新人培训或内部 hackathon 的课程结构参考。
+- Anthropic Claude Managed Agents 5 月 6 日 release notes：虽然不是当天更新，但仍是理解生产 agent runtime 的关键资料。
+- GitHub Copilot 5 月 8 日 changelog：适合补齐 coding agent 凭证治理、代码审查指标和模型下线应对策略。
+
+### 6. 来源清单
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 官方发布说明 | ChatGPT - Release Notes | 最新可见条目 2026-05-07；本日无 2026-05-10 新条目 | [https://help.openai.com/en/articles/6825453-chatgpt-release-notes](https://help.openai.com/en/articles/6825453-chatgpt-release-notes) |
+| 官方发布说明 | Claude Platform release notes | 最新可见条目 2026-05-06；本日无 2026-05-10 新条目 | [https://platform.claude.com/docs/en/release-notes/overview](https://platform.claude.com/docs/en/release-notes/overview) |
+| 官方发布说明 | GitHub Changelog | 最新 AI/Copilot 相关条目集中在 2026-05-08；本日无 2026-05-10 Copilot 新条目 | [https://github.blog/changelog/](https://github.blog/changelog/) |
+| 论文聚合 | Hugging Face Daily Papers | 当前入口为 2026-05-08；未见 2026-05-10 新批次 | [https://huggingface.co/papers](https://huggingface.co/papers) |
+| 教程/技术博客 | Multi-Tenant MCP Servers: Auth, Tenancy, and Rate Limiting Done Right | 2026-05-10 | [https://www.padiso.co/blog/multi-tenant-mcp-servers-auth-tenancy-rate-limiting/](https://www.padiso.co/blog/multi-tenant-mcp-servers-auth-tenancy-rate-limiting/) |
+| 官方社区活动 | Goa Code Premier League | 2026-05-10 | [https://gdg.community.dev/events/details/google-gdg-goa-presents-goa-code-premier-league/](https://gdg.community.dev/events/details/google-gdg-goa-presents-goa-code-premier-league/) |
+| 官方社区活动 | Build with AI Nepal 2026 Online Series #2 | 2026-05-10 | [https://gdg.community.dev/events/details/google-gdg-kathmandu-presents-build-with-ai-nepal-2026-online-series-2/](https://gdg.community.dev/events/details/google-gdg-kathmandu-presents-build-with-ai-nepal-2026-online-series-2/) |
+| 官方社区活动 | Gemini API Deep Dive Workshop | 2026-05-10 | [https://gdg.community.dev/events/details/google-gdg-on-campus-arab-open-university-el-shorouk-city-egypt-presents-gemini-api-deep-dive-workshop/](https://gdg.community.dev/events/details/google-gdg-on-campus-arab-open-university-el-shorouk-city-egypt-presents-gemini-api-deep-dive-workshop/) |
+| 官方社区活动 | GDG AI HACK 2026 | 2026-05-09 到 2026-05-10 | [https://gdg.community.dev/events/details/google-gdg-on-campus-polytechnic-university-of-milan-presents-gdg-ai-hack-2026/](https://gdg.community.dev/events/details/google-gdg-on-campus-polytechnic-university-of-milan-presents-gdg-ai-hack-2026/) |
+| 会议/论文研讨会 | LLM-TEXT2KG 2026 | 2026-05-10 到 2026-05-14；5 月 10 日开幕 | [https://aiisc.ai/text2kg2026/](https://aiisc.ai/text2kg2026/) |
+| 会议 | ESWC 2026 Posters and Demos | 2026-05-10 到 2026-05-14 | [https://2026.eswc-conferences.org/calls/poster-demo/](https://2026.eswc-conferences.org/calls/poster-demo/) |
+| 开源/生态周更 | Track Awesome Agents Updates Weekly | 2026-05-04 到 2026-05-10 | [https://www.trackawesomelist.com/Scottcjn/awesome-agents/week/](https://www.trackawesomelist.com/Scottcjn/awesome-agents/week/) |
+| 开源发布 | LangGraph GitHub Releases | 最近相关发布 2026-05-07；本日无 2026-05-10 新正式版本 | [https://github.com/langchain-ai/langgraph/releases](https://github.com/langchain-ai/langgraph/releases) |
+
 ## 2026-05-09
 
 ### 1. 今日总览

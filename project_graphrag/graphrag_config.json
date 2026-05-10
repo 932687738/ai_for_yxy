@@ -1,0 +1,35 @@
+{
+  "storage_root": "C:\\Users\\BG518089\\IdeaProjects\\ai_for_yxy\\project_graphrag",
+  "target_project_path": "C:\\Users\\BG518089\\IdeaProjects\\gwms",
+  "summary_relative": "summary.md",
+  "build_script_relative": "scripts/build_graphrag.py",
+  "enrich_script_relative": "scripts/enrich_from_query.py",
+  "graph_snapshot": {
+    "baseline_generated_at_utc": "2026-05-10T15:12:04.017170+00:00",
+    "baseline_summary_note": "与当前 summary.md 中 Generated At (UTC) 一致；增量/全量构建成功后应改写为最近一次构建时间。",
+    "baseline_local_calendar_date_hint": "2026-05-10"
+  },
+  "incremental_build_policy": {
+    "mechanism": "filesystem",
+    "description": "build_graphrag.py 通过遍历目标项目并使用 source_manifest.json 中的 mtime|size 签名与磁盘对比，识别新增/修改/删除文件并增量解析；不依赖 Git。graph_snapshot.baseline_generated_at_utc 为逻辑快照时间，用于人工对照与编排；下次执行构建时脚本会自动涵盖自上次写入 manifest 以来在磁盘上发生变更的文件。若需『自某一自然日以来』的补充，可先跑一次构建刷新 manifest，或结合 git log --since 与构建前拉取最新代码。",
+    "after_each_successful_build": [
+      "将 summary.md 首行 Generated At (UTC) 同步到本文件的 graph_snapshot.baseline_generated_at_utc",
+      "可选：将 baseline_local_calendar_date_hint 更新为构建日（本地日历日）"
+    ]
+  },
+  "agent_qa_and_writeback": {
+    "retrieve_order": [
+      "1) 读本目录 summary.md、task_status、必要时检索 graph_nodes.jsonl / graph_edges.jsonl / entity_lookup.json 与 impact_*.json",
+      "2) 使用 scripts/query_impact.py（若适用）做影响/实体查询",
+      "3) 仅有当图谱中无答案或结论模糊时，再在 target_project_path 下做代码检索（grep/语义搜索/读源文件）"
+    ],
+    "writeback_after_confirmation": {
+      "require_user_confirmation": true,
+      "description": "将代码侧核实后的结论写回图谱前，须由用户确认（或用户明确指令『无需确认直接写回』时可跳过）。",
+      "audit_log_relative": "agent_confirmed_facts.jsonl",
+      "graph_enrichment_command_hint": "python scripts/enrich_from_query.py --project-root <target_project_path> --graph-root <storage_root> --query <关键词> [--max-matches N]",
+      "append_audit_record": "每确认一条写回，向 agent_confirmed_facts.jsonl 追加一行 JSON：含 confirmed_at_utc、user_question_brief、conclusion、source_files、enrich_queries（传给 enrich_from_query 的关键词列表，可为空）"
+    }
+  },
+  "notes": "本仓库 gwms 知识图谱与索引位于 storage_root；构建与写回不修改 gwms 仓库本身。"
+}

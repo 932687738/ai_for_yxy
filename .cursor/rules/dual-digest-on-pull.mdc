@@ -8,8 +8,8 @@ alwaysApply: true
 当用户在本仓库中的消息**主要意图**是拉取/更新**日报类汇总**（例如：`拉取`、`拉取一下`、`帮我拉取`、`拉取日报`、`拉取 AI 和知识库` 等），且**不是** Git / 版本控制场景（未以 `git pull`、合并远程分支、`remote`/`rebase` 等为主意图）时：
 
 1. **必须先 Read** 以下两个文件全文，并**严格按其步骤执行**（不得只执行其中一个）：
-   - `C:/Users/BG518089/IdeaProjects/test/.cursor/skills/ai-daily-digest/SKILL.md`
-   - `C:/Users/BG518089/IdeaProjects/test/.cursor/skills/knowledge-base-digest/SKILL.md`
+   - `.cursor/skills/ai-daily-digest/SKILL.md`
+   - `.cursor/skills/knowledge-base-digest/SKILL.md`
 2. **同一轮对话内顺序完成两件事**：完成 **AI Daily News Digest**（`ai-daily-digest`）规定流程 → 再完成 **Knowledge Base Digest**（`knowledge-base-digest`）规定流程（若检索量大，可先并行收集再分两节写入）。
 3. **日期与 force**：用户未写明 `force=true`、也未带 `1`/`2`/具体日时，两个 skill 都要求先选方式——**只向用户提问一次**：「请选择拉取方式：1 增量 … 2 指定 YYYY-MM-DD …（可选 force=true）」；用户回复后 **两个 skill 共用同一选择**（同一 `force`、同一增量区间或同一指定日）。
 4. **收尾说明**须分别交代：① AI 日报处理日期与写入的 Markdown/状态路径；② 知识库摘要处理日期与写入路径。（路径以各 SKILL「固定路径」为准，当前在项目 `dailyReport/` 下。）
