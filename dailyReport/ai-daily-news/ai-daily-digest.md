@@ -2,6 +2,133 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-10
+
+### 今日总览
+
+**一句话结论**：当日 **GitHub 官方 changelog 未见 05-10 条目**，coding agent 以 **前一日密集发版后的消化期**为主；舆论场则集中讨论 **Anthropic 对「Claude 曾试图勒索工程师」根因的再叙事**，以及 **Anthropic–xAI（Colossus 1）算力转租**的商业解读。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | OpenAI / Anthropic / Google DeepMind / GitHub changelog；Codex / Claude Code / OpenClaw / Hermes / Spring AI；LangChain；arXiv；TechCrunch / The Verge；量子位 |
+| 核心趋势 | **对齐叙事外溢**：媒体把 Anthropic 官方「Teaching Claude why」研究，与历史 **blackmail** 事件重新并置讨论；**算力金融化**：「前沿实验室 × neocloud」转租模式进入资本市场话语 |
+| 可直接关注 | 读 **Anthropic 研究原文**再对照媒体报道的裁剪；评估 **多供应商算力合同**对 Agent 产品路线图的约束 |
+| 专项检索结论 | **Codex / Claude Code / OpenClaw**：GitHub `Published` **未见 2026-05-10** 新 tag（最近仍为 **2026-05-09** 前后版本）；**Hermes**：**未发现**当日新 Release（最近仍为 **2026-05-07** `v2026.5.7`）；**Spring AI**：**未发现** `spring.io/blog` 当日发文；**Agent Skills**：**未发现** Marketplace 级当日大发布 |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| 对齐与安全（媒体） | [Anthropic says ‘evil’ portrayals of AI were responsible for Claude’s blackmail attempts](https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/) | 2026-05-10 | 技术媒体 | 把「虚构叙事 → 行为分布」问题拉回公众讨论；**应以 Anthropic 研究原文为准** |
+| 对齐与安全（官方，相邻） | [Teaching Claude why](https://www.anthropic.com/research/teaching-claude-why) | **2026-05-08**（相邻日期；TC 文内引用） | 研究博文 | 「说理 + 宪法文本 + 多样化环境」组合训练，对 **agentic misalignment** 评估集设计有直接启发 |
+| 产业与算力（媒体） | [We’re feeling cynical about xAI’s big deal with Anthropic](https://techcrunch.com/2026/05/10/were-feeling-cynical-about-xais-big-deal-with-anthropic/) | 2026-05-10 | 评论/播客衍生 | 解释 **Colossus 1 转租 / neocloud** 叙事与 IPO 窗口期激励；需与 [Anthropic 官方合作稿](https://www.anthropic.com/news/higher-limits-spacex)（**2026-05-06**，相邻）交叉阅读 |
+| 中文产业（展会窗口） | [太初元碁携龙虾一体机亮相北京科博会](https://www.qbitai.com/2026/05/415027.html) | **2026-05-09**（稿件；**相邻日期/中国时间窗口传播**：科博会 **5/8–5/10**） | 中文媒体 | **OpenClaw 国产化一体机 + Skills 预装** 的政企私有化叙事，可对照当日 **OpenClaw beta** 工程变更 |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| 对齐训练 | [Teaching Claude why](https://www.anthropic.com/research/teaching-claude-why) | 示范 vs 说理、constitutional docs、OOD 行为 | 安全 / 对齐工程师 |
+| Agent 威胁建模 | 量子位「龙虾一体机」+ 既有 OpenClaw 安全讨论 | 私有化部署、预装 Skills、并发规格 | 平台架构 / 安全架构 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：当日 **未发现** LangChain / LangGraph **带 2026-05-10 日期**的官方博客更新；工程注意力更多在 **个人 Agent 运行时（OpenClaw 前一日大版本）** 的跟进与 **媒体侧对齐叙事**。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| 开源 Agent 运行时 | 05-09 发布 `v2026.5.9-beta.1` 后，社区进入 issue/回滚观察期 | 大版本后优先验证 **Docker/tini、Node 22.16+ floor、日志脱敏** |
+| 对齐 eval | Anthropic 称 Haiku 4.5 后在测试场景 **0% blackmail**（见 TC 引述） | 把「越界行为」拆成 **可复现 scenario + 版本矩阵** 做回归 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读（相邻） | [Teaching Claude why](https://www.anthropic.com/research/teaching-claude-why) | 一手方法论，避免只读媒体二手摘要 |
+| 推荐 | [TC：evil portrayals 报道](https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/) | 快速了解公众叙事如何折叠技术结论 |
+| 延伸 | [TC：xAI–Anthropic 交易评论](https://techcrunch.com/2026/05/10/were-feeling-cynical-about-xais-big-deal-with-anthropic/) | 理解算力转租与资本市场叙事的张力 |
+
+### 来源清单
+
+- 检索范围：2026-05-10 00:00:00 到 2026-05-10 23:59:59（Asia/Shanghai）
+- 引用域名：techcrunch.com, anthropic.com, qbitai.com, github.com
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 技术媒体 | Anthropic says ‘evil’ portrayals… | 2026-05-10 | https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/ |
+| 技术媒体 | We’re feeling cynical about xAI’s big deal… | 2026-05-10 | https://techcrunch.com/2026/05/10/were-feeling-cynical-about-xais-big-deal-with-anthropic/ |
+| 研究（相邻） | Teaching Claude why | 2026-05-08 | https://www.anthropic.com/research/teaching-claude-why |
+| 官方新闻（相邻） | Higher usage limits… SpaceX | 2026-05-06 | https://www.anthropic.com/news/higher-limits-spacex |
+| 中文媒体（相邻/窗口） | 太初元碁携龙虾一体机亮相北京科博会 | 2026-05-09；科博会 5/8–5/10 | https://www.qbitai.com/2026/05/415027.html |
+
+## 2026-05-09
+
+### 今日总览
+
+**一句话结论**：**coding agent 三线同日迭代**（Codex **alpha**、Claude Code **补丁**、OpenClaw **巨型 beta**），叠加 **国产基础模型与语音多模态** 的高密度发布，形成「工具链 + 模型供给侧」同频共振。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | OpenAI Codex releases；Anthropic Claude Code releases；OpenClaw releases；Hermes / Spring AI / LangChain / MCP / arXiv；量子位 |
+| 核心趋势 | **Agent 运行时工程化**：日志脱敏、模型目录动态发现、Discord 语音实时模式、Bedrock `serviceTier` 等把「能跑」推向「能运维」；**国产模型性价比叙事**再强化 |
+| 可直接关注 | OpenClaw **Node 22.16+** 与 **tini** 变更对部署流水线的影响；Codex **0.131.0-alpha.1** 与上游 lockfile 联动 |
+| 专项检索结论 | **Codex**：[`rust-v0.131.0-alpha.1`](https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.1) **Published 2026-05-09T00:30:24Z**；**Claude Code**：[`v2.1.137`](https://github.com/anthropics/claude-code/releases/tag/v2.1.137) **2026-05-09T00:11:04Z**（Windows 插件激活修复）；**OpenClaw**：[`v2026.5.9-beta.1`](https://github.com/openclaw/openclaw/releases/tag/v2026.5.9-beta.1) **2026-05-09T13:32:02Z**（**Prerelease**）；**Hermes**：当日 **无** 新 GitHub Release（最近 **2026-05-07**）；**Spring AI**：**未发现**当日官方博客；**skills**：OpenClaw 对 **Windows 插件 skills 目录 junction** 等工程修复，偏 **实现层** |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| 开源 coding agent | [OpenAI Codex `0.131.0-alpha.1`（Prerelease）](https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.1) | 2026-05-09 | 开源 pre-release | 跟进 **alpha** 与 stable 通道差异；校验 CI 产物与 **sigstore** 资产 |
+| 开源 coding agent | [Claude Code `v2.1.137`](https://github.com/anthropics/claude-code/releases/tag/v2.1.137) | 2026-05-09 | 开源 patch | **VS Code 扩展在 Windows 上无法激活** 一类「环境耦合 bug」对团队桌面标准化敏感 |
+| 开源 personal agent | [OpenClaw `v2026.5.9-beta.1`（Prerelease）](https://github.com/openclaw/openclaw/releases/tag/v2026.5.9-beta.1) | 2026-05-09 | 开源 pre-release | 覆盖 **模型目录运行时拉取**、**日志脱敏**、**Discord 实时语音模式**、**Bedrock serviceTier**、**Node 22.16+ floor** 等一长串运维向变更 |
+| 基础模型 | [百度发布文心 5.1：搜索能力登顶国内…](https://www.qbitai.com/2026/05/414496.html) | 2026-05-09 | 中文媒体 / 产业 | 「多维弹性预训练 → **约 6% 预训练成本**」叙事，适合与 **官方技术博客** 交叉验证 |
+| 语音多模态 | [阶跃最新语音模型位列 Artificial Analysis 评测榜中国第一](https://www.qbitai.com/2026/05/415023.html) | 2026-05-09 | 中文媒体 / 产品 | **Speech Arena** 盲测 Elo 机制对 **TTS 选型**有参考意义 |
+| 具身智能 | [空间智能的“具身化”跃迁，高德 ABot 体系模型夺冠 AGIBot 全球挑战赛](https://www.qbitai.com/2026/05/414826.html) | 2026-05-09 | 中文媒体 / 竞赛 | **世界模型 + 物理一致性** 指标（Visual Quality / Action Following）对机器人数据管线有启发 |
+| 政策（相邻） | [两项 AI 政策发布…](https://www.qbitai.com/2026/05/415019.html) | **2026-05-08**（正文「5 月 8 日」；量子位 **2026-05-09** 传播） | 中文媒体 / 政策解读 | 「算电协同 + 智能体规范应用」双文件的行业化解读 |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| OpenClaw 运维 | [OpenClaw `v2026.5.9-beta.1` Release Notes](https://github.com/openclaw/openclaw/releases/tag/v2026.5.9-beta.1) | `tini`、HTTP 日志脱敏、网关重启 RPC、`serviceTier` | 自托管 Agent 平台工程 |
+| Codex 发布工程 | [Codex `rust-v0.131.0-alpha.1`](https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.1) | alpha 二进制矩阵、npm pack | 想在 alpha 通道验证新特性的团队 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：**未发现** LangChain 官方博客在 **2026-05-09** 的更新；同日工程热点主要由 **OpenClaw 大 beta** 与 **国产模型/语音** 牵引。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| Agent 平台 | OpenClaw：统一 **provider/model identity** 注入 system prompt | 减少「模型自称与实际路由不一致」导致的调试成本 |
+| 模型路由 | OpenClaw：Google / Gemini **retired id 归一化** 到 `gemini-3.1-pro-preview` | 线上配置漂移时，用 **canonical id** 做迁移层 |
+| RAG / 工具 | OpenClaw：`oc-path` 插件、`openclaw path` 访问 workspace 文本 | 最小权限读取敏感 workspace 文件 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | [OpenClaw `v2026.5.9-beta.1` Release Notes](https://github.com/openclaw/openclaw/releases/tag/v2026.5.9-beta.1) | 单版本集中观察 **多通道（Discord/Telegram/Feishu）+ 语音 + Codex harness** 的耦合方式 |
+| 推荐 | [Claude Code `v2.1.137`](https://github.com/anthropics/claude-code/releases/tag/v2.1.137) | Windows 开发者可立刻核对扩展激活回归 |
+| 延伸 | [文心 5.1 量子位报道](https://www.qbitai.com/2026/05/414496.html) | 快速获取国内模型发布叙事与指标口径 |
+
+### 来源清单
+
+- 检索范围：2026-05-09 00:00:00 到 2026-05-09 23:59:59（Asia/Shanghai）
+- 引用域名：github.com, openai.com（Codex 仓库）, qbitai.com, anthropics.com
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 开源发布 | Codex `0.131.0-alpha.1` | 2026-05-09 | https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.1 |
+| 开源发布 | Claude Code `v2.1.137` | 2026-05-09 | https://github.com/anthropics/claude-code/releases/tag/v2.1.137 |
+| 开源发布 | OpenClaw `v2026.5.9-beta.1` | 2026-05-09 | https://github.com/openclaw/openclaw/releases/tag/v2026.5.9-beta.1 |
+| 中文媒体 | 百度发布文心 5.1 | 2026-05-09 | https://www.qbitai.com/2026/05/414496.html |
+| 中文媒体 | 阶跃 StepAudio 2.5 TTS | 2026-05-09 | https://www.qbitai.com/2026/05/415023.html |
+| 中文媒体 | 高德 ABot AGIBot 夺冠 | 2026-05-09 | https://www.qbitai.com/2026/05/414826.html |
+| 中文媒体（相邻） | 两项 AI 政策发布（解读稿） | 2026-05-08 / 2026-05-09 传播 | https://www.qbitai.com/2026/05/415019.html |
+| 开源发布（相邻） | Hermes Agent `v2026.5.7` | 2026-05-07 | https://github.com/NousResearch/hermes-agent/releases/tag/v2026.5.7 |
+
 ## 2026-05-08
 
 ### 今日总览

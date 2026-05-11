@@ -6,3 +6,7 @@ project_graphrag/graph_nodes.jsonl
 project_graphrag/logs/
 __pycache__/
 *.py[cod]
+
+# nightly dual-digest 调度器产物
+scripts/dual-digest-scheduled/node_modules/
+scripts/dual-digest-scheduled/logs/
