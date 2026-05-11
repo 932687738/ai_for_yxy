@@ -1,6 +1,8 @@
 # GraphRAG 本地影响分析产物（不纳入版本库）
 project_graphrag/impact_stock_keyword.json
 project_graphrag/impact_stockserviceimpl.json
+project_graphrag/graph_edges.jsonl
+project_graphrag/graph_nodes.jsonl
 project_graphrag/logs/
 __pycache__/
 *.py[cod]
