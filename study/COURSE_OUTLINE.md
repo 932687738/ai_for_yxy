@@ -18,6 +18,7 @@
 为避免目录入口歧义，课程学习与回写统一从以下单文件入口开始：
 
 - 主入口：`study/COURSE_OUTLINE.md`
+- **教学进度快照（新对话续课）**：`study/COURSE_PROGRESS.md`
 - 任务与状态：`study/COURSE_TASKS.md`
 - 去重索引：`study/chapters/CROSS_REFERENCE.md`
 - 27-36 回归执行说明：`study/projects/27-36-min-eval-regression.md`
