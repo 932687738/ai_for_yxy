@@ -1,4 +1,4 @@
-# ai_for_yxy
+# ai_for_learning
 
 本项目已新增一组“AI 课程导师”自定义 Agent（基于 Cursor Subagents），用于围绕单一课程大纲文件进行持续教学与项目实战辅导。
 
