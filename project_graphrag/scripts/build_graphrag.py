@@ -813,11 +813,14 @@ class GraphBuilder:
         if not path.exists():
             return out
         with path.open("r", encoding="utf-8") as f:
-            for line in f:
+            for lineno, line in enumerate(f, start=1):
                 line = line.strip()
                 if not line:
                     continue
-                out.append(json.loads(line))
+                try:
+                    out.append(json.loads(line))
+                except json.JSONDecodeError as ex:
+                    self.logger.warn(f"Skipping malformed JSONL row {lineno} in {path.name}: {ex}")
         return out
 
     def build_or_update(self, scanned: List[dict], changes: dict, force_full: bool = False) -> Tuple[List[dict], List[dict], dict]:

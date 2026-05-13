@@ -1441,6 +1441,37 @@ predict 用什么数据？
 
 更完整的术语表见：[glossary.md](</C:/Users/BG518089/IdeaProjects/test/study/glossary.md>)。
 
+### 1.2 术语速答（师生问答回写 · 2026-05-12）
+
+以下与上文速览表对应，便于自学与追问时对照。
+
+- **fit（拟合）**  
+  在训练数据上执行「学习」步骤（如 scikit-learn 的 `fit`）。模型据此更新内部**参数**（由数据学出的权重等），使映射尽可能贴齐训练集里的 `X → y`。预测阶段用 `predict`，不再给 `y`。
+
+- **超参数（hyperparameter）**  
+  在 `fit` **之前**由人设定、不由本次训练从样本里直接学出的配置，例如树模型的最大深度、迭代次数上限、学习率、`train_test_split` 的 `test_size` 等。**调参**多数指调超参数；应用**验证集**来比好坏，避免仅看训练集。
+
+- **early stopping（早停）**  
+  迭代训练时**反复**用**验证集**监控指标；若连续多轮不再提升则**提前结束**训练。目的：减轻**过拟合**、省算力。具体写法随框架而异，本课先记语义与使用场景。
+
+- **MAE（平均绝对误差）**  
+  每个样本上 `|预测值 − 真实值|` 再取平均。量纲与 `y` 相同，直观；对大离群误差的惩罚弱于 MSE。
+
+- **MSE（均方误差）**  
+  误差平方后取平均。**大误差**被放大，常作为回归的优化目标；量纲是目标变量单位的平方。
+
+- **RMSE（均方根误差）**  
+  `MSE` 再开平方。量纲与 `y` 一致，仍体现对大误差的敏感，便于和业务数量级对齐解读。
+
+- **R²（决定系数）**  
+  描述模型相对「只预测均值」等简单基线**多解释了多少目标方差**，一般越接近 **1** 越好（依赖数据分布与问题设定，需结合教材后文场景理解，不可单看一个数下定论）。
+
+- **过拟合（overfitting）**  
+  模型过强或数据/正则不足时，把训练集里的噪声或偶然模式也学进参数：**训练误差很低，泛化差**（验证或测试明显变差）。
+
+- **欠拟合（underfitting）**  
+  模型太简单或特征、数据不足，主要规律没学到：**训练集与测试集表现都不好**。
+
 ## 2. 什么是机器学习
 
 传统编程通常是：
@@ -4447,6 +4478,250 @@ EDA 探索性数据分析
 18. 参数和超参数有什么区别？
 19. 模型保存时为什么要保存预处理流程？
 20. 模型上线后为什么还要监控？
+
+### 20.9.22 【学员补充】超参数详解与调优实践（外部笔记回写 · 2026-05-12）
+
+> 来源：学员在其他渠道整理的学习笔记，已按课程 Markdown 规范整理并入库；与上文 **§17 交叉验证**、**§20.9.13 超参数调优** 互补，细节上若有版本差异以 scikit-learn / Optuna 官方文档为准。
+
+#### 1. 什么是超参数？
+
+超参数是在模型训练**之前**需要预先设置的配置变量，不能单靠训练数据在 `fit` 中自动学出，须由人工指定或通过搜索策略确定。
+
+##### 1.1 与模型参数的区别
+
+| 类型 | 定义 | 来源 | 例子 |
+|------|------|------|------|
+| 模型参数 | 模型从数据中学到的内部量 | 训练过程更新 | 线性回归系数、神经网络权重 |
+| 超参数 | 人为设定的控制量，影响「如何学参数」 | 训练前指定或搜索 | 学习率、树最大深度、KNN 的 K |
+
+##### 1.2 直观比喻：做菜
+
+- **模型参数**：菜谱里学出来的配比（如盐 5 g、糖 10 g）。  
+- **超参数**：灶上的设定（火力、时间、水量），由厨师事先决定。
+
+##### 1.3 常见超参数举例
+
+- **学习率**：每次更新参数步长；过大易震荡或错过较优区，过小则收敛慢。  
+- **K（K 近邻）**：投票时纳入的邻居个数。  
+- **树的深度与棵数**（随机森林、GBDT 等）：控制模型容量与集成规模。  
+- **神经网络**：层数、各层宽度等，决定网络结构。
+
+##### 1.4 为什么重要？
+
+超参数直接影响训练速度与最终效果；系统寻找较优组合的过程即 **超参数调优**，是 ML 工程中的关键步骤。
+
+#### 2. 超参数调优的常用方法
+
+##### 2.1 手动搜索
+
+凭经验或试错调整，观察验证集表现再继续。
+
+- **优点**：灵活、无需额外代码。  
+- **缺点**：效率低、依赖个人经验、难复现。
+
+##### 2.2 网格搜索（Grid Search）
+
+为各超参数指定候选值，**穷举**所有组合，分别训练评估后选最优。
+
+- **优点**：简单、覆盖给定离散网格。  
+- **缺点**：维度灾难——组合数随参数个数与取值数爆炸，算力成本高。
+
+##### 2.3 随机搜索（Random Search）
+
+在各超参数取值范围内**随机采样**若干组组合，而非全部遍历。
+
+- **优点**：同等预算下常能探索更广空间，多数情况比朴素网格更高效。  
+- **缺点**：可能错过最优区，且依赖随机种子与采样次数。
+
+##### 2.4 贝叶斯优化（Bayesian Optimization）
+
+利用历史评估结果建立**概率代理模型**，预测下一组较有潜力的超参数。
+
+- **优点**：评估昂贵（如大型深度学习）时，常以较少试验次数接近较优解。  
+- **缺点**：实现更复杂，常依赖 Optuna、Hyperopt 等库。
+
+##### 2.5 其他进阶方向
+
+- **基于梯度的超参优化**：把超参当作可微量（适用面窄）。  
+- **进化算法**：维护种群，通过交叉、变异迭代（与工业界网格/随机/贝叶斯相比偏小众场景）。
+
+#### 3. 代码示例：随机搜索 vs 贝叶斯优化（Optuna）
+
+以下以 **随机森林分类器** 与 **Iris** 为例，演示 `RandomizedSearchCV` 与 Optuna（思路与 **§20.9.13** 中的 `GridSearchCV` 一致：在训练子集上用交叉验证选参，勿反复榨取最终测试集）。
+
+##### 3.1 RandomizedSearchCV
+
+```python
+from scipy.stats import randint
+
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RandomizedSearchCV, train_test_split
+
+X, y = load_iris(return_X_y=True)
+X_train, X_val, y_train, y_val = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+rf = RandomForestClassifier(random_state=42)
+
+param_dist = {
+    "n_estimators": randint(50, 200),
+    "max_depth": [None] + list(range(5, 21)),
+    "min_samples_split": randint(2, 10),
+    "min_samples_leaf": randint(1, 5),
+}
+
+search = RandomizedSearchCV(
+    rf,
+    param_distributions=param_dist,
+    n_iter=30,
+    cv=5,
+    scoring="accuracy",
+    random_state=42,
+)
+search.fit(X_train, y_train)
+
+print("Best params:", search.best_params_)
+print("Best CV accuracy:", search.best_score_)
+print("Validation accuracy:", search.score(X_val, y_val))
+```
+
+##### 3.2 Optuna（需 `pip install optuna`）
+
+```python
+import optuna
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score, train_test_split
+
+X, y = load_iris(return_X_y=True)
+X_train, X_val, y_train, y_val = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+
+def objective(trial):
+    n_estimators = trial.suggest_int("n_estimators", 50, 200)
+    use_unlimited = trial.suggest_categorical("use_unlimited_depth", [True, False])
+    max_depth = None if use_unlimited else trial.suggest_int("max_depth", 5, 20)
+    min_samples_split = trial.suggest_int("min_samples_split", 2, 10)
+    min_samples_leaf = trial.suggest_int("min_samples_leaf", 1, 5)
+
+    model = RandomForestClassifier(
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+        min_samples_leaf=min_samples_leaf,
+        random_state=42,
+    )
+    return cross_val_score(
+        model, X_train, y_train, cv=5, scoring="accuracy"
+    ).mean()
+
+
+study = optuna.create_study(direction="maximize")
+study.optimize(objective, n_trials=30)
+
+print("Best trial:")
+print("  Value (CV accuracy):", study.best_value)
+print("  Params:", study.best_params)
+
+best = study.best_params.copy()
+use_unlimited = best.pop("use_unlimited_depth", False)
+max_depth = None if use_unlimited else best.pop("max_depth", None)
+best_model = RandomForestClassifier(
+    max_depth=max_depth,
+    random_state=42,
+    **best,
+)
+best_model.fit(X_train, y_train)
+print("Validation accuracy:", best_model.score(X_val, y_val))
+```
+
+> 说明：原始笔记中 `max_depth = trial.suggest_int(...) or None` 无法表达「不限制深度」；上例用 `use_unlimited_depth` 与 `RandomizedSearchCV` 的 `[None] + range(...)` 对齐。
+
+#### 4. 交叉验证（与 §17 对照）
+
+##### 4.1 为什么需要？
+
+单次 train/val 划分可能「运气好或坏」，评估波动大。交叉验证通过**多次划分取平均**，得到更稳定的性能估计。
+
+##### 4.2 K 折过程（概念）
+
+将训练数据随机分成 K 份（常用 5 或 10）；共 K 轮，每轮用 1 份作验证、其余作训练，对 K 个验证分数取平均。
+
+##### 4.3 常见变体
+
+- **分层 K 折**：每折内类别比例与全集相近（分类任务常用）。  
+- **留一法**：K 为样本数，一般仅小数据可承受。  
+- **时间序列**：按时间切分，避免用未来信息训过去（与本课 **§17.3** 相呼应）。
+
+##### 4.4 与超参搜索的结合
+
+`GridSearchCV` / `RandomizedSearchCV` 的 `cv` 即 K 折；在交叉验证意义上选出的超参组合，仍应在**独立测试集**上做一次性、可信的泛化评估（见 **§17.4**）。
+
+#### 5. 超参数优化中的 Pruning（试验剪枝）
+
+注意：这里的 **pruning** 指**搜索过程中**提前终止无望的 trial，不是决策树里防止过拟合的剪枝。
+
+##### 5.1 思想
+
+对某一组候选超参数，训练不必跑满；周期性看中间指标（如验证准确率），若明显劣于已有较好 trial，则**提前结束**该 trial，节省算力。
+
+##### 5.2 Optuna 示意（占位函数需换成真实训练循环）
+
+```python
+def objective(trial):
+    for epoch in range(10):
+        score = train_one_epoch()  # 替换为真实每轮验证指标
+        trial.report(score, step=epoch)
+        if trial.should_prune():
+            raise optuna.TrialPruned()
+    return score
+```
+
+- `trial.report(score, step)` 上报中间结果。  
+- `trial.should_prune()` 由 pruner（如 MedianPruner）根据历史 trial 判断是否早停该次搜索。
+
+##### 5.3 收益
+
+把算力集中到更有希望的候选上；单轮训练很贵时（如深度学习）收益更明显。
+
+#### 6. 贝叶斯优化原理（概念）
+
+##### 6.1 与随机搜索的对比
+
+随机搜索不做结构化的「利用历史」；贝叶斯优化用已观测点更新对目标函数（如验证准确率）的信念，在 **探索** 与 **利用** 之间权衡。
+
+##### 6.2 代理模型与采集函数
+
+- **代理模型（Surrogate）**：近似「超参数 → 目标」的映射；经典如高斯过程（GP），给出预测的均值与不确定性。  
+- **采集函数（Acquisition）**：决定下一个尝试点；**期望改进（EI, Expected Improvement）** 常见。直觉：在当前最佳表现 \(f_{\mathrm{best}}\) 下，若某点可能显著超过 \(f_{\mathrm{best}}\) 或不确定性大（值得探索），则 EI 较高。
+
+##### 6.3 迭代流程
+
+1. 少量随机点评估真实目标。  
+2. 用结果拟合代理模型。  
+3. 最大化采集函数得下一组超参。  
+4. 评估并加入历史。  
+5. 重复 2～4 直至预算用尽。
+
+##### 6.4 常用框架
+
+- **Optuna**：默认一类 TPE（树结构 Parzen 估计），处理条件超参较灵活。  
+- **Hyperopt**：TPE 等。  
+- **Scikit-Optimize**：偏 GP 路线。
+
+#### 7. 小结（与课程对齐）
+
+| 技术 | 解决的问题 | 核心思想 |
+|------|------------|----------|
+| 交叉验证 | 单次划分评估不稳 | 多次划分取平均 |
+| 剪枝（trial 级） | 搜索浪费在差候选上 | 中间指标差则提前终止该 trial |
+| 贝叶斯优化 | 网格/随机在高维或昂贵目标上效率低 | 用概率模型指导下一组采样 |
+
+实践建议（与 **§20.9.13** 一致）：可先从 **随机搜索** 或小型 **网格** 入手；单次训练很贵时再考虑 **Optuna 等贝叶斯方法**，并始终配合 **交叉验证**；深度学习长练时可配合 **report + should_prune**。
 
 ## 21. 本课实践任务
 

@@ -1,0 +1,3 @@
+# 可选：仅在使用 scripts/sync_graphrag_chroma.py 将图谱同步到 ChromaDB 时需要。
+# 建议 >=1.0：Windows 上通常为 cp39-abi3 预编译包，避免 chroma-hnswlib 本地编译（需 MSVC）。
+chromadb>=1.0.0,<2.0.0

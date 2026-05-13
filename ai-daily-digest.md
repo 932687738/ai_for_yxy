@@ -1,5 +1,153 @@
 ﻿# AI Daily Digest
 
+## 2026-05-12
+
+### 1. 今日总览
+
+按 Asia/Shanghai 时区检索 2026-05-12 00:00:00 到 23:59:59 的 AI/人工智能相关更新后，当天没有发现 OpenAI、Anthropic、Google DeepMind、Meta、LangChain/LangGraph 发布新的通用基础模型大版本。当天值得研发团队关注的内容主要集中在五条线：
+
+- OpenAI API 进入旧图像模型迁移窗口：DALL-E 2 与 DALL-E 3 的新图片生成请求计划在 2026-05-12 停止支持，官方建议迁移到 `gpt-image-1`。
+- AI agent 从能力展示进入治理和可观测性阶段：Endor Labs 推出 AURI Agent Governance 与 Package Firewall；Honeycomb 发布 Agent Observability；这些都指向 agent 生产化的权限、依赖、工具行为和调试问题。
+- MCP 与企业自动化结合继续升温：Red Hat Ansible Automation Platform 2.6 相关报道和文档强调 Event-Driven Ansible、Lightspeed 与 MCP server，用自然语言与 Ansible 内容交互成为自动化平台的新入口。
+- AI 安全讨论从模型滥用扩展到漏洞利用和防御流程：Google Cloud 安全侧继续围绕“AI + 0-day 利用”释放信号；Anthropic 安排 Claude Code 与 code security webinar，说明 AI 编程安全正在变成企业培训主题。
+- 论文侧没有出现单一压倒性爆点，但有若干值得跟踪的 LLM 评测、agent 搜索、LLM 编程、语言/语音模型和自主智能体综述方向。
+
+整体判断：2026-05-12 不是“新模型能力跃迁日”，而是“旧接口迁移 + agent 生产治理 + AI 安全工程化”的一天。研发团队更应关注图像 API 兼容性、agent 的依赖和行为边界、MCP/自动化系统的身份权限，以及 AI 编程流程中的安全评审与可观测性。
+
+### 2. 重要事件与发布
+
+#### OpenAI：DALL-E 2 / DALL-E 3 API 生成请求停止支持，迁移到 `gpt-image-1`
+
+OpenAI 的 deprecations 文档列出，DALL-E 2 与 DALL-E 3 的新图片生成请求在 2026-05-12 停止支持，建议迁移到 `gpt-image-1`。文档同时说明，DALL-E 3 的编辑请求继续可用至 2026-11-01，DALL-E 2 的编辑请求继续可用至 2026-05-01；`gpt-image-1` 作为替代模型支持更高质量图像生成、编辑、透明背景、不同尺寸和质量参数等能力。
+
+对研发团队的意义：
+
+- 如果产品仍调用 DALL-E 2/3 做新图生成，需要立即检查失败率、错误处理和模型路由，避免定时任务、内容生产流水线或用户侧图像功能在下线日后静默失败。
+- 迁移不是简单替换 model name：需要核对 `images.generate` / `images.edit` 的参数、尺寸、质量、透明背景、成本和输出格式差异。
+- 对内部 AI 平台而言，图像模型应纳入统一 deprecation 监控和 provider capability matrix，不应只监控文本模型。
+
+来源：[OpenAI Platform - Deprecations](https://platform.openai.com/docs/deprecations)；[OpenAI Platform - Image generation](https://platform.openai.com/docs/guides/image-generation)
+
+#### Endor Labs：推出 AURI Agent Governance 与 Package Firewall，瞄准 agentic coding 的供应链风险
+
+Endor Labs 在 2026-05-12 宣布扩展 AURI，新增 Agent Governance 和 Package Firewall。公告重点是让安全团队能够发现、控制和审计 AI coding agent 的行为，包括 agent 使用了哪些工具、访问了哪些资源、引入了哪些依赖，以及如何在包被安装或提交前阻断恶意/不合规依赖。
+
+对研发团队的意义：
+
+- Agentic coding 的风险不止在模型输出质量，还包括依赖引入、脚本执行、凭据触达、工具调用和自动提交路径。
+- 如果团队允许 coding agent 修改依赖文件、安装包或调用外部工具，需要在 CI、包代理、代码审查和 IDE/agent 运行时都设置边界。
+- “Package Firewall”反映出一个趋势：AI 代码助手会显著放大 typo-squatting、依赖混淆和幻觉包名的风险，单靠人工 review 很难覆盖。
+
+来源：[Endor Labs - Endor Labs Expands AURI with Agent Governance and Package Firewall](https://www.endorlabs.com/press-release/endor-labs-expands-auri-with-agent-governance-and-package-firewall)；[Business Wire - Endor Labs Expands AURI](https://www.businesswire.com/news/home/20260512260776/en/Endor-Labs-Expands-AURI-with-Agent-Governance-and-Package-Firewall)
+
+#### Honeycomb：发布 Agent Observability，面向 AI agent 行为调试和生产监控
+
+Honeycomb 在 2026-05-12 发布 Agent Observability，定位为帮助团队观察 agent 的计划、工具调用、上下文、状态转移、延迟、错误和成本等运行细节。相关报道和官方材料都把重点放在“agent 不是普通服务请求”，需要能跨步骤理解其决策过程、工具链和失败原因。
+
+对研发团队的意义：
+
+- Agent 上线后最难排查的往往不是单个 HTTP 500，而是“为什么选错工具、为什么跳过确认、为什么重复调用、为什么成本暴涨”。
+- 传统 APM 指标仍有用，但需要扩展到 trace 中的 prompt、tool call、retrieval、model response、handoff、human approval 和 policy decision。
+- 研发团队可以提前定义 agent trace schema，避免后续在事故复盘时缺少关键上下文。
+
+来源：[Honeycomb - Agent Observability](https://www.honeycomb.io/agent-observability)；[Business Wire - Honeycomb Announces Agent Observability](https://www.businesswire.com/news/home/20260512865242/en/Honeycomb-Announces-Agent-Observability)
+
+#### Red Hat：Ansible Automation Platform 2.6 强化 AI 辅助自动化与 MCP 交互
+
+Red Hat Ansible Automation Platform 2.6 在 2026-05-12 前后通过技术媒体和官方文档释放重点：平台强化 Event-Driven Ansible、containerized Ansible Automation Platform、Lightspeed 以及 MCP server。Network World 报道特别提到，Ansible MCP server 让用户可以通过自然语言请求与 Ansible 内容交互；Red Hat 文档则把 MCP server 作为可连接 Ansible Automation Platform 与 AI assistant / MCP client 的服务端能力。
+
+对研发团队的意义：
+
+- MCP 正从开发者本地工具连接协议，进入 IT 自动化、运维平台和企业控制面。
+- “自然语言触发自动化”必须配套 RBAC、审批、dry-run、审计、幂等性、变更窗口和失败回滚，否则 agent 误操作的影响会直接进入基础设施层。
+- 对正在做内部运维 agent 的团队，Ansible MCP 的方向值得参考，但更应先梳理工具权限、操作分级和人审策略。
+
+来源：[Network World - Red Hat boosts Ansible automation with AI features](https://www.networkworld.com/article/4170236/red-hat-boosts-ansible-automation-with-ai-features.html)；[Red Hat Docs - Model Context Protocol server](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/latest/html/using_automation_execution/using-mcp-server)
+
+### 3. 技术文档与教程
+
+#### OpenAI：图像生成迁移文档值得补齐为内部兼容性清单
+
+OpenAI Image generation guide 说明 `gpt-image-1` 支持文本到图像、图像编辑、透明背景、不同尺寸、质量、输出格式和多图输入等能力。结合 DALL-E 2/3 的 deprecation 节点，研发团队可以把该文档转成迁移 checklist：
+
+- 找出所有 DALL-E 2 / DALL-E 3 调用点，包括脚本、后端任务、低代码平台、prompt 模板和第三方封装。
+- 对照 `gpt-image-1` 的尺寸、质量、背景、输入图限制、返回格式和价格策略做兼容测试。
+- 为图片生成建立最小回归集：同一 prompt 的视觉一致性、风格、文字渲染、透明背景、编辑区域、失败重试和内容安全反馈。
+
+来源：[OpenAI Platform - Image generation guide](https://platform.openai.com/docs/guides/image-generation)
+
+#### Anthropic：Claude Code + code security webinar 反映 AI 编程安全培训进入常态化
+
+Anthropic 的 webinar 页面显示，2026-05-12 安排了与 Claude Code 和代码安全相关的线上活动，主题聚焦如何在代码工作流中使用 Claude Code 改善安全实践。虽然这不是新的 Claude 模型发布，但它反映出 AI 编程工具的使用场景已经从“生成代码”扩展到“代码审查、漏洞发现、安全修复和团队培训”。
+
+对研发团队的意义：
+
+- AI coding 工具引入安全场景时，应明确其角色：辅助发现、解释和修复，而不是绕过安全评审门禁。
+- 需要把 AI 生成修复纳入同样的测试、SAST/DAST、依赖扫描和人工复核流程。
+- 对平台团队而言，安全提示词、仓库上下文、secret redaction、审计日志和权限分级比单纯模型选择更关键。
+
+来源：[Anthropic - Webinars](https://www.anthropic.com/webinars)
+
+#### Google Cloud Security：AI 辅助攻击报道继续强化“模型 + 漏洞利用”风险教育
+
+Google Cloud 安全博客在 2026-05-12 附近继续强调 Google Threat Intelligence Group 对 AI 辅助攻击的观察，外部技术媒体也持续报道 Google 阻断疑似 AI 辅助开发的 0-day 利用尝试。该事件的细节已在 2026-05-11 汇总中覆盖；5 月 12 日的价值在于它成为安全团队讨论 AI 辅助漏洞发现、业务逻辑缺陷和 2FA 绕过的教育样本。
+
+对研发团队的意义：
+
+- 安全评审需要覆盖“模型帮助攻击者理解系统语义”的场景，不能只检查传统输入点。
+- Agent/MCP 工具尤其要防止把高权限操作暴露给可被诱导的自然语言接口。
+- 代码 agent 的输出应默认走安全工具链和人工确认，不能因为来源是“内部 agent”就降低审查强度。
+
+来源：[Google Cloud Blog - Threat Intelligence](https://cloud.google.com/blog/topics/threat-intelligence/)；[The Verge - Google stopped a zero-day hack that it says was developed with AI](https://www.theverge.com/tech/928007/google-ai-zero-day-exploit-stopped)
+
+### 4. LangChain / Agent / LLM 工程相关进展
+
+#### LangChain / LangGraph：当天未发现新的正式版本发布
+
+检索 LangChain 与 LangGraph GitHub releases、GitHub Changelog 及相关 changelog 页面后，未发现 2026-05-12 当天新的 LangChain、LangGraph 或 GitHub Copilot 正式发布。近期仍应关注 5 月上旬的 LangChain 反序列化/manifest hardening、LangGraph deploy/streaming 变化，以及 GitHub Copilot agent 凭证治理和指标更新。
+
+对研发团队的意义：今天不需要围绕 LangChain/LangGraph 做紧急升级；但 agent 工程的外部信号已经从框架功能转向运行时治理、依赖控制、trace 和安全边界。
+
+来源：[LangChain GitHub Releases](https://github.com/langchain-ai/langchain/releases)；[LangGraph GitHub Releases](https://github.com/langchain-ai/langgraph/releases)；[GitHub Changelog - Copilot label](https://github.blog/changelog/label/copilot/)
+
+#### Agent 生产化信号：治理、可观测性、自动化工具边界成为共同主题
+
+把 Endor Labs、Honeycomb、Red Hat Ansible MCP 和 Anthropic 安全培训放在一起看，2026-05-12 的共同信号很清晰：agent 工程的关键问题正在从“如何让 agent 做事”转向“如何让 agent 在可审计、可回滚、可解释、可限制的边界内做事”。
+
+可落地的工程检查项：
+
+- 为 agent tool call 建立统一审计：输入、输出、权限主体、目标资源、审批状态、失败原因和重试次数。
+- 对 package install、shell command、repo write、cloud operation、ticket update 等高风险工具设置显式 policy。
+- 为 agent trace 保留语义上下文：任务目标、计划、检索证据、模型选择、工具选择理由和人工接管点。
+- 把 MCP server 当作生产 API 管理：鉴权、租户隔离、scope、限流、日志、schema version 和变更审计。
+
+### 5. 值得深入阅读的资料
+
+- OpenAI deprecations 与 image generation guide：适合排查 DALL-E 2/3 调用并制定 `gpt-image-1` 迁移测试。
+- Endor Labs AURI Agent Governance / Package Firewall：适合理解 AI coding agent 在依赖、安全策略和供应链层面的新控制点。
+- Honeycomb Agent Observability：适合设计 agent trace、tool call observability 和生产事故排查字段。
+- Red Hat Ansible MCP server 文档：适合关注 MCP 如何进入企业自动化平台，以及自然语言运维操作应如何加权限边界。
+- Anthropic code security webinar：适合安全团队和研发效能团队补充 AI 编程安全培训材料。
+
+### 6. 来源清单
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 官方文档/弃用说明 | OpenAI Platform Deprecations | 2026-05-12 下线节点 | [https://platform.openai.com/docs/deprecations](https://platform.openai.com/docs/deprecations) |
+| 官方文档 | OpenAI Image generation guide | 检索于 2026-05-12 | [https://platform.openai.com/docs/guides/image-generation](https://platform.openai.com/docs/guides/image-generation) |
+| 官方发布 | Endor Labs Expands AURI with Agent Governance and Package Firewall | 2026-05-12 | [https://www.endorlabs.com/press-release/endor-labs-expands-auri-with-agent-governance-and-package-firewall](https://www.endorlabs.com/press-release/endor-labs-expands-auri-with-agent-governance-and-package-firewall) |
+| 新闻/发布转载 | Endor Labs Expands AURI with Agent Governance and Package Firewall | 2026-05-12 | [https://www.businesswire.com/news/home/20260512260776/en/Endor-Labs-Expands-AURI-with-Agent-Governance-and-Package-Firewall](https://www.businesswire.com/news/home/20260512260776/en/Endor-Labs-Expands-AURI-with-Agent-Governance-and-Package-Firewall) |
+| 官方产品页 | Honeycomb Agent Observability | 2026-05-12 发布相关 | [https://www.honeycomb.io/agent-observability](https://www.honeycomb.io/agent-observability) |
+| 新闻/发布转载 | Honeycomb Announces Agent Observability | 2026-05-12 | [https://www.businesswire.com/news/home/20260512865242/en/Honeycomb-Announces-Agent-Observability](https://www.businesswire.com/news/home/20260512865242/en/Honeycomb-Announces-Agent-Observability) |
+| 技术媒体 | Red Hat boosts Ansible automation with AI features | 2026-05-12 | [https://www.networkworld.com/article/4170236/red-hat-boosts-ansible-automation-with-ai-features.html](https://www.networkworld.com/article/4170236/red-hat-boosts-ansible-automation-with-ai-features.html) |
+| 官方文档 | Red Hat Ansible Automation Platform - Model Context Protocol server | 检索于 2026-05-12 | [https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/latest/html/using_automation_execution/using-mcp-server](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/latest/html/using_automation_execution/using-mcp-server) |
+| 官方活动/教程 | Anthropic Webinars | 2026-05-12 有 Claude Code 安全相关活动 | [https://www.anthropic.com/webinars](https://www.anthropic.com/webinars) |
+| 官方安全博客 | Google Cloud Blog - Threat Intelligence | 2026-05-12 附近持续更新 | [https://cloud.google.com/blog/topics/threat-intelligence/](https://cloud.google.com/blog/topics/threat-intelligence/) |
+| 新闻/安全 | Google stopped a zero-day hack that it says was developed with AI | 2026-05-11，5 月 12 日继续传播讨论 | [https://www.theverge.com/tech/928007/google-ai-zero-day-exploit-stopped](https://www.theverge.com/tech/928007/google-ai-zero-day-exploit-stopped) |
+| 开源发布 | LangChain GitHub Releases | 检索至 2026-05-12；当天无新正式发布 | [https://github.com/langchain-ai/langchain/releases](https://github.com/langchain-ai/langchain/releases) |
+| 开源发布 | LangGraph GitHub Releases | 检索至 2026-05-12；当天无新正式发布 | [https://github.com/langchain-ai/langgraph/releases](https://github.com/langchain-ai/langgraph/releases) |
+| 官方发布说明 | GitHub Changelog - Copilot label | 检索至 2026-05-12；当天无新 Copilot 条目 | [https://github.blog/changelog/label/copilot/](https://github.blog/changelog/label/copilot/) |
+
 ## 2026-05-11
 
 ### 1. 今日总览

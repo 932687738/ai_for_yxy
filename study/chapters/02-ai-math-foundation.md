@@ -2014,23 +2014,24 @@ python ai-learning/02-ai-math-foundation/scripts/linear_regression_from_scratch.
 
 ### 问答记录
 
+- **结业（2026-05-12）**：学员正式声明「**第 2 课已经学会**」。状态机：**已掌握**。下一课入口：`study/chapters/03-machine-learning-workflow.md`（见 `study/COURSE_PROGRESS.md`）。
 - 学员要求：继续第 2 课；后续 Python 文件统一 `.py`。已按约定创建第 2 课脚本与示例数据。
 - 学员反馈：不应在未讲解的情况下先提问；已调整教学顺序为 **先讲（shape / 余弦 / 学习率）→ 再脚本 → 再自查**。
 - **续学（2026-05-12）**：学员口令「继续学习」。锚点仍为 **§18 本课实践**；推进顺序为：任务 1 `vector_matrix_practice.py`（核对 `dot`、范数、`@` 与 `shape`）→ 任务 2 `cosine_search_practice.py`（检索排序直觉）→ 任务 3 `stats_houses.py`（统计 + 可选直方图；无 `matplotlib` 时仍打印均值/方差/极值）→ 任务 4 `linear_regression_from_scratch.py`（MSE + 梯度下降收口）；可选 `broadcast_demo.py` 对照 **§24** 里广播与 `shape`。修复：`stats_houses.py` 改为 **try/except** 导入 `matplotlib`，与 §22「本地练习文件」说明一致。
 
 ### 学习状态
 
-- 状态：进行中
+- 状态：**已掌握**（学员于 2026-05-12 确认「第 2 课已经学会」）
 - 最近更新：2026-05-12
 
 ### 暂停/续学锚点
 
-下次从此处继续：**若尚未读完下节「第 2 课全文串讲」**，则先读完串讲再做练习；若串讲已通读，则进入 **第 18 节实践任务**（四个 `.py`）。
+本课在课程模式中已结业。新对话请读 `study/COURSE_PROGRESS.md`，从 **第 3 课** 续学。
 
 ```text
-继续第2课：已读完「第 2 课全文串讲」则开始第 18 节练习；否则从串讲续读。
-课程入口：./study/COURSE_OUTLINE.md
-当前课：./study/chapters/02-ai-math-foundation.md
+第 2 课：已掌握。课程入口：./study/COURSE_OUTLINE.md
+第 3 课：./study/chapters/03-machine-learning-workflow.md
+进度快照：./study/COURSE_PROGRESS.md
 ```
 
 ## 23. 教学安排：正文讲完再做练习（学员约定）
@@ -2152,20 +2153,19 @@ python ai-learning/02-ai-math-foundation/scripts/linear_regression_from_scratch.
 
 ### 学习状态（约定后）
 
-- 状态：进行中（**正文+串讲优先，练习置后**）
-- 最近更新：2026-05-12（**§25 口播**：回合 1～6 已齐；**待做**：正文 **§0～§17** 查漏补缺 → **§18** `.py` → 可选 **§19** 自测）
+- 状态：**已掌握**（学员于 2026-05-12 确认「第 2 课已经学会」）
+- 最近更新：2026-05-12（§18 实践与 §19 自测随结业一并视作完成）
 
 ---
 
 ## 25. 课程模式：第 2 课教学回合（口播讲义 · 持续追加）
 
-> 约定：**先讲完教材 §0～§17（可与本节对照），暂不做 §18 练习。** 下方按「回合」追加；**最新进度快照**见 `study/COURSE_PROGRESS.md`（新对话续课优先读该文件，避免拉满聊天上下文）。
+> **（口播阶段约定，教材备查）** 先讲完教材 §0～§17（可与本节对照），再统一做 §18 练习。下方按「回合」追加；**结业与当前课**见 `study/COURSE_PROGRESS.md`（新对话续课优先读该文件，避免拉满聊天上下文）。
 
 **学员进度锚点（以教材正文节号为准）**
 
-- **当前**：**§25 口播回合 1～6** 已齐（含 **§16～§17** 收束）；正文请自行确保 **§0～§17** 已读或与 **§24 全文串讲** 对照补足。  
-- **下一动**：**§18 本课实践**（`ai-learning/02-ai-math-foundation/scripts/` 下各 `.py`，及教材 §18 任务说明）。  
-- **第 3 课**：`study/chapters/03-machine-learning-workflow.md` 待机；须你在 **大纲** 中确认「**第 2 课已掌握**」后再进入。
+- **本课状态**：**已掌握**（2026-05-12 学员确认）。备查：§24 串讲、§25 口播、§18 脚本目录 `ai-learning/02-ai-math-foundation/scripts/`。  
+- **下一课**：**第 3 课** `study/chapters/03-machine-learning-workflow.md`；入口与快照见 `study/COURSE_PROGRESS.md`。
 
 ### 回合 1（2026-05-12）：§0～§4 —— 这课学什么、数字怎么摆
 

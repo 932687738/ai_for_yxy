@@ -3011,11 +3011,11 @@
       "summary": "Scanned source files: 8872 | added=8872, modified=0, deleted=0"
     },
     "PARSE_CLASSES": {
-      "task_id": "parse-classes-1778590366",
+      "task_id": "parse-classes-1778632153",
       "task_type": "PARSE_CLASSES",
       "status": "completed",
-      "start_time": "2026-05-12T12:52:46.451416+00:00",
-      "end_time": "2026-05-12T12:52:46.460400+00:00",
+      "start_time": "2026-05-13T00:29:13.337561+00:00",
+      "end_time": "2026-05-13T00:29:13.346536+00:00",
       "processed_targets": [
         "CfConditionExamplesSafe.java",
         "CfConstant.java",
@@ -3745,28 +3745,28 @@
       "summary": "Prepared parse workload: 9305 files, changed_set=724"
     },
     "PARSE_METHODS": {
-      "task_id": "parse-methods-1778590366",
+      "task_id": "parse-methods-1778632153",
       "task_type": "PARSE_METHODS",
       "status": "completed",
-      "start_time": "2026-05-12T12:52:46.465379+00:00",
-      "end_time": "2026-05-12T12:52:46.469368+00:00",
+      "start_time": "2026-05-13T00:29:13.351523+00:00",
+      "end_time": "2026-05-13T00:29:13.357508+00:00",
       "processed_targets": [],
       "summary": "Method parsing delegated to graph build pipeline."
     },
     "PARSE_DB_TABLES": {
-      "task_id": "parse-db-1778590366",
+      "task_id": "parse-db-1778632153",
       "task_type": "PARSE_DB_TABLES",
       "status": "completed",
-      "start_time": "2026-05-12T12:52:46.475354+00:00",
-      "end_time": "2026-05-12T12:52:46.481336+00:00",
+      "start_time": "2026-05-13T00:29:13.363491+00:00",
+      "end_time": "2026-05-13T00:29:13.369476+00:00",
       "processed_targets": [],
       "summary": "DB table identification delegated to graph build pipeline."
     },
     "BUILD_GRAPH_NODES": {
-      "task_id": "build-nodes-1778590366",
+      "task_id": "build-nodes-1778632153",
       "task_type": "BUILD_GRAPH_NODES",
       "status": "running",
-      "start_time": "2026-05-12T12:52:46.495883+00:00",
+      "start_time": "2026-05-13T00:29:13.386430+00:00",
       "end_time": null,
       "processed_targets": [],
       "summary": ""
@@ -3808,11 +3808,11 @@
       "summary": "Unhandled failure: Unterminated string starting at: line 1 column 79 (char 78)"
     },
     "PARSE_BUSINESS_RULES": {
-      "task_id": "parse-rules-1778590366",
+      "task_id": "parse-rules-1778632153",
       "task_type": "PARSE_BUSINESS_RULES",
       "status": "completed",
-      "start_time": "2026-05-12T12:52:46.485326+00:00",
-      "end_time": "2026-05-12T12:52:46.490896+00:00",
+      "start_time": "2026-05-13T00:29:13.375459+00:00",
+      "end_time": "2026-05-13T00:29:13.381443+00:00",
       "processed_targets": [],
       "summary": "Business rule parsing scheduled in graph build pipeline."
     }
@@ -4195,7 +4195,52 @@
       "end_time": null,
       "processed_targets": [],
       "summary": ""
+    },
+    {
+      "task_id": "parse-classes-1778632153",
+      "task_type": "PARSE_CLASSES",
+      "status": "running",
+      "start_time": "2026-05-13T00:29:13.337561+00:00",
+      "end_time": null,
+      "processed_targets": [],
+      "summary": ""
+    },
+    {
+      "task_id": "parse-methods-1778632153",
+      "task_type": "PARSE_METHODS",
+      "status": "running",
+      "start_time": "2026-05-13T00:29:13.351523+00:00",
+      "end_time": null,
+      "processed_targets": [],
+      "summary": ""
+    },
+    {
+      "task_id": "parse-db-1778632153",
+      "task_type": "PARSE_DB_TABLES",
+      "status": "running",
+      "start_time": "2026-05-13T00:29:13.363491+00:00",
+      "end_time": null,
+      "processed_targets": [],
+      "summary": ""
+    },
+    {
+      "task_id": "parse-rules-1778632153",
+      "task_type": "PARSE_BUSINESS_RULES",
+      "status": "running",
+      "start_time": "2026-05-13T00:29:13.375459+00:00",
+      "end_time": null,
+      "processed_targets": [],
+      "summary": ""
+    },
+    {
+      "task_id": "build-nodes-1778632153",
+      "task_type": "BUILD_GRAPH_NODES",
+      "status": "running",
+      "start_time": "2026-05-13T00:29:13.386430+00:00",
+      "end_time": null,
+      "processed_targets": [],
+      "summary": ""
     }
   ],
-  "last_updated": "2026-05-12T12:52:46.490896+00:00"
+  "last_updated": "2026-05-13T00:29:13.381443+00:00"
 }

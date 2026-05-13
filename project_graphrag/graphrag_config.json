@@ -17,6 +17,13 @@
       "可选：将 baseline_local_calendar_date_hint 更新为构建日（本地日历日）"
     ]
   },
+  "chroma": {
+    "persist_directory_relative": "chroma_data",
+    "nodes_collection": "graphrag_nodes",
+    "edges_collection": "graphrag_edges",
+    "sync_script_relative": "scripts/sync_graphrag_chroma.py",
+    "usage_hint": "构建图谱后: pip install -r project_graphrag/requirements-chroma.txt（建议 Python 3.11+，chromadb>=1.0 在 Windows 上多为预编译包）。同步: python project_graphrag/scripts/sync_graphrag_chroma.py --graph-root <storage_root> [--reset]；公网拉嵌入失败可加 --deterministic-embeddings（离线哈希向量，语义较弱）。试查可加 --query \"...\""
+  },
   "agent_qa_and_writeback": {
     "retrieve_order": [
       "1) 读本目录 summary.md、task_status、必要时检索 graph_nodes.jsonl / graph_edges.jsonl / entity_lookup.json 与 impact_*.json",

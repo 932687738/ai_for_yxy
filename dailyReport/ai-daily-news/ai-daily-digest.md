@@ -2,6 +2,82 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-12
+
+### 今日总览
+
+**一句话结论**：本日同时出现 **交互层（指针/系统 UI）**、**平台商业化（Copilot 用量与套餐）** 与 **工程底座（Codex alpha、MCP 参考实现、开源 Agent 运行时）** 三条线叠加——更像“产品入口改造 + 企业付费模型落地 + Agent 工具链持续打补丁”的组合拳，而不是单一模型发布日。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | OpenAI / Google DeepMind / GitHub 官方与 changelog；Codex / OpenClaw；MCP servers；The Verge（政策与产业）；LangChain / Spring AI / Hermes / Claude Code / Cursor Skills 专项检索；中文补充（掘金） |
+| 核心趋势 | **UI 入口前移**：DeepMind 公布 AI 指针原则并推进 Gemini in Chrome / Googlebook「Magic Pointer」；**Copilot 用量经济实锤**：个人套餐引入 flex、发布 Max，并开放 4 月用量报告；**开源工程继续增量**：Codex `0.131.0-alpha.7`、OpenClaw `beta.5`（上海时区落入当日窗口）、MCP everything-server 合并 Zod v4 升级 PR |
+| 可直接关注 | 指针交互对「少写 prompt、 pixels → 实体」的产品隐喻；企业侧 Copilot **base + flex** 的预算模型；MCP 参考服务器与 SDK 版本联动的 schema 栈升级 |
+| 专项检索结论 | **Codex**：`rust-v0.131.0-alpha.7`，GitHub `Published` `2026-05-12T01:58:34Z`（Asia/Shanghai 当日）；**Claude Code**：**未发现** GitHub Release 页面明确落在 `2026-05-12` 的新 tag（最近相邻为 `v2.1.139` **2026-05-11**）；**OpenClaw**：`v2026.5.10-beta.5`，`Published` `2026-05-11T16:38:39Z` → **落入 `2026-05-12 00:38` Asia/Shanghai**；**Hermes**：**未发现**当日新 release（最近仍为 `v2026.5.7` **2026-05-07**）；**Spring AI**：**未发现**当日 release（最近相邻仍为 **2026-05-08** milestone/patch）；**skills / Agent Skills**：**未发现**可核验的规范级当日大发布（以文档与社区迁移内容为主） |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| 研究与竞赛 | [What Parameter Golf taught us](https://openai.com/index/what-parameter-golf-taught-us/) | 2026-05-12 | 官方研究 | OpenAI 复盘 Parameter Golf：海量提交、**编码 agent 广泛参与**带来实验加速，也带来审核/归因/抄榜噪声；并提到 **Codex triage bot** 在大流量下的用法，对“人机混合评审流水线”有直接启发 |
+| 交互与多模态产品 | [Shaping the future of AI interaction by reimagining the mouse pointer](https://deepmind.google/blog/ai-pointer/) | 2026-05-12 | 官方研究 / 产品路线 | 提出指针交互四原则，并把实验 demo 放进 AI Studio；同步宣布在 **Chrome** 与 **Googlebook** 上推进更“无打断”的 pointing+语音交互，适合做端侧/桌面 Agent 产品的人机界面参考 |
+| 开发者平台 / AI 编程商业化 | [GitHub Copilot individual plans: flex allotments, new Max plan](https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/) | 2026-05-12 | 官方公告 | **Pro / Pro+ / Max** 的 **base credits + flex allotment** 结构，配合 **6 月 1 日**用量计费切换；付费计划下 **completions / next edit suggestions 仍不限** |
+| 开发者工具链 | [Codex `0.131.0-alpha.7`](https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.7) | 2026-05-12（`Published` UTC 对应上海当日） | 开源 prerelease | 延续多平台资产与分发矩阵；与同日 Parameter Golf 文章形成“产品体验 ↔ 开源 CLI”对照阅读 |
+| 开源 Agent 运行时 | [OpenClaw `v2026.5.10-beta.5`](https://github.com/openclaw/openclaw/releases/tag/v2026.5.10-beta.5) | 2026-05-12（Asia/Shanghai；`Published` `2026-05-11T16:38:39Z`） | 开源 prerelease | Fly Machines 环境识别、Fal 图片编辑路由、**`session.agentToAgent.maxPingPongTurns` 上限提升到 20**、Slack unfurl、**`/context map`**、Codex app-server 超时客户端回收、pnpm 11 等——偏“平台化运营+可靠性补丁” |
+| MCP 工程 | [servers#4136：upgrade everything-server to zod v4, latest MCP sdk](https://github.com/modelcontextprotocol/servers/pull/4136) | 2026-05-12（Merged `2026-05-12T14:15:10Z`） | 开源合并 | 参考实现升级 **Zod v4** 与 **`@modelcontextprotocol/sdk` `1.29.0`**，展示 **v3→v4** API 迁移样例；自述 **不改变 MCP tool schema 行为** |
+| AI 政策与授权 | [Human Consent Standard for AI licensing（RSL Media）](https://www.theverge.com/ai-artificial-intelligence/928534/rsl-media-human-consent-standard) | 2026-05-12 | 技术媒体 / 产业标准 | 把“机器人协议信号”扩展到 **肖像/角色/作品本体**；六月 registry 预期上线——对训练数据合规、爬虫策略与安全红线有前置影响 |
+| Copilot 产品体验 | [Copilot code review: comment experience improvements](https://github.blog/changelog/2026-05-12-copilot-code-review-comment-experience-improvements/) | 2026-05-12 | 官方 changelog | PR 场景：**severity** + **分组 comment**，降低大 PR 噪声；依赖新 PR 体验开关 |
+| Copilot 迁移配套 | [April reports for usage-based billing](https://github.blog/changelog/2026-05-12-april-reports-are-now-available-to-prepare-for-usage-based-billing/) | 2026-05-12 | 官方 changelog | 4 月用量→credits 的“预演报表”，帮助个人与企业在 **6/1** 前估预算（文档提示有统计口径边界） |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| 竞赛运营与 agent | [Parameter Golf 复盘](https://openai.com/index/what-parameter-golf-taught-us/) | 低比特训练、量化、评测策略边界、agent 辅助提交流程 | ML 平台 / DevRel / 研究团队 |
+| MCP schema 栈 | [PR #4136 描述与 diff 导向阅读](https://github.com/modelcontextprotocol/servers/pull/4136) | Zod v4：`z.url()`、`z.looseObject()`、SDK 版本对齐 | MCP server 维护者 |
+| Copilot 计费 | [Usage-based billing 文档入口（GitHub Docs）](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) | base/flex、仪表盘读数 | 需要给研发部做预算模型的人 |
+| 指针交互原型 | [AI Pointer demos（AI Studio）](https://aistudio.google.com/)（文内链接） | pointing+语音、上下文绑定 | 端侧产品 / 交互设计 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：**未发现** LangChain 官方博客在 `2026-05-12` 的新发长文；同日工程注意力更多在 **IDE/浏览器入口**、**GitHub Copilot 计费与 code review 交互**、以及 **MCP 参考实现依赖升级** 上。LangChain 侧的 **Interrupt 会议**处于 **2026-05-13`–`05-14**（**相邻日期**）窗口，可作为 community 热度背景。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| MCP 实现面 | everything-server 合并 Zod v4 升级 | 给“协议不变、实现库升级”的场景一套可抄的迁移路径；注意 **SDK 小版本**与 schema 库联动 |
+| Agent 运行态 | OpenClaw 继续堆多通道与沙箱策略细粒度开关 | 多 Agent ping‑pong、消息跨上下文权限，本质是 ** blast radius 控制**，企业自建 agent 也要 Product+Security 同桌设参 |
+| 交互层 | DeepMind AI Pointer | 把“选区即 prompt”推到 UI 预设里，减少长提示与粘贴摩擦 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | [Parameter Golf 复盘](https://openai.com/index/what-parameter-golf-taught-us/) | 一手总结 agent 时代开放式技术竞技的治理难题 |
+| 必读 | [DeepMind：AI pointer](https://deepmind.google/blog/ai-pointer/) | 看懂 Google 如何把多模态理解嵌进最基础的指针交互 |
+| 推荐 | [Copilot 个人套餐与 flex](https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/) | 直接决定团队 IDE agent 用量规划 |
+| 推荐 | [The Verge：Human Consent Standard](https://www.theverge.com/ai-artificial-intelligence/928534/rsl-media-human-consent-standard) | 训练/爬虫/真人素材授权的新信号，需和法务一起读 |
+| 延伸（相邻） | [Introducing Interrupt（LangChain 会议预热）](https://blog.langchain.com/introducing-interrupt-langchain-conference) | Agent 社区议程风向标（会议日：2026-05-13 起） |
+
+### 来源清单
+
+- 检索范围：2026-05-12 00:00:00 到 2026-05-12 23:59:59（Asia/Shanghai）
+- 引用域名：openai.com, deepmind.google, aistudio.google.com, github.com, github.blog, theverge.com, rslmedia.org, juejin.cn, blog.langchain.com
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 官方发布 | What Parameter Golf taught us | 2026-05-12 | https://openai.com/index/what-parameter-golf-taught-us/ |
+| 官方发布 | Reimagining the mouse pointer（AI pointer） | 2026-05-12 | https://deepmind.google/blog/ai-pointer/ |
+| 官方发布 | GitHub Copilot individual plans（flex / Max） | 2026-05-12 | https://github.blog/news-insights/company-news/github-copilot-individual-plans-introducing-flex-allotments-in-pro-and-pro-and-a-new-max-plan/ |
+| 官方 changelog | April reports for usage-based billing | 2026-05-12 | https://github.blog/changelog/2026-05-12-april-reports-are-now-available-to-prepare-for-usage-based-billing/ |
+| 官方 changelog | Copilot code review comment experience improvements | 2026-05-12 | https://github.blog/changelog/2026-05-12-copilot-code-review-comment-experience-improvements/ |
+| 开源发布 | OpenAI Codex `0.131.0-alpha.7` | 2026-05-12（Asia/Shanghai） | https://github.com/openai/codex/releases/tag/rust-v0.131.0-alpha.7 |
+| 开源发布 | OpenClaw `v2026.5.10-beta.5` | 2026-05-12（Asia/Shanghai；UTC 相邻） | https://github.com/openclaw/openclaw/releases/tag/v2026.5.10-beta.5 |
+| 开源合并 | MCP servers PR #4136（Zod v4） | 2026-05-12 | https://github.com/modelcontextprotocol/servers/pull/4136 |
+| 技术媒体 | Human Consent Standard（RSL Media） | 2026-05-12 | https://www.theverge.com/ai-artificial-intelligence/928534/rsl-media-human-consent-standard |
+| 中文补充 | 掘金：ChatGPT 更新节奏与趋势（社区稿） | 2026-05-12 | https://juejin.cn/post/7638839672550785062 |
+| 社区预热（相邻日期） | Introducing Interrupt（LangChain conference） | 发布日未在抓取正文顶部展示；会议为 2026-05-13`–`05-14（相邻日期） | https://blog.langchain.com/introducing-interrupt-langchain-conference |
+
 ## 2026-05-11
 
 ### 今日总览
