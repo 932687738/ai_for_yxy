@@ -11,3 +11,4 @@ __pycache__/
 # nightly dual-digest 调度器产物
 scripts/dual-digest-scheduled/node_modules/
 scripts/dual-digest-scheduled/logs/
+/.idea/

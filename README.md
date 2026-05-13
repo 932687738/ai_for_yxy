@@ -19,6 +19,32 @@
 
 若未提供 `{COURSE_PATH}`，Agent 会先询问后再开始教学。
 
+## 使用 Python（PyCharm 解释器）
+
+在本仓库中若要运行或编辑 Python 相关代码，请在 **PyCharm** 中为当前工程配置解释器：
+
+1. 打开 **Settings / Preferences**（Windows/Linux：`File` → `Settings`；macOS：`PyCharm` → `Preferences`）。
+2. 进入 **Project → Python Interpreter**（左侧项目区域下）。
+3. 在 **Python Interpreter** 下拉框中选择本机已有的解释器；若尚无合适环境，可通过 **Add Interpreter** 新建虚拟环境（venv）或指定 Conda/Python 路径。
+
+配置完成后，PyCharm 的代码补全、运行/调试与会话所使用的 Python 才与项目目录一致。
+
+### `ai-learning` 脚本依赖安装
+
+仓库内 `ai-learning/**/scripts/*.py` 累计使用到的第三方包如下，运行前请先安装：
+
+| 包名 | 说明 |
+| --- | --- |
+| `numpy` | 数值与张量练习（向量/矩阵、广播、线性回归、余弦相似度等） |
+| `pandas` | CSV 读写与统计（学生成绩、房价等示例） |
+| `matplotlib` | 图表展示；`stats_houses.py` 在未安装时会跳过绘图，其余依赖绘图的脚本需安装 |
+
+在项目已激活的虚拟环境中执行（推荐先 `cd` 到仓库根目录再执行）：
+
+```bash
+python -m pip install numpy pandas matplotlib
+```
+
 **续课（控制上下文长度）**：进度已落在 `study/COURSE_PROGRESS.md`，新开对话时让助手**先读该文件**再讲，无需复述整段聊天历史。
 
 ## 触发示例
