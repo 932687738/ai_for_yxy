@@ -2,6 +2,76 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-13
+
+### 今日总览
+
+**一句话结论**：`2026-05-13`（Asia/Shanghai 全日窗口）更像「**企业/小商户把 Agent 接进业务系统** + **平台方把云 Agent 编排 API 化** + **IDE 侧把多仓云环境做成可治理资产**」，同日还有 **Interrupt 会前日（工作坊）** 与 **英国 AISI 网络安全评测进展** 这类“治理与红队叙事”抬升风险讨论水位。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | Anthropic / GitHub 官方；Cursor changelog；LangChain Interrupt（会议窗口）；The Verge / AISI / Microsoft 安全博客摘要核验；Copilot Agent Tasks API；Claude Code / Codex / OpenClaw / Hermes / Spring AI / MCP 专项检索；中文补充（量子位 Create2026 速览、掘金 AI 速递） |
+| 核心趋势 | **SMB 连接器套餐**：Anthropic 推出 Claude for Small Business（连接器 + 工作流 +技能）；**Codex/云 Agent 自动化入口**：GitHub 公布 Copilot cloud agent 的 Agent tasks REST API（public preview）；**Cursor**：云 Agent **多仓环境 + Dockerfile 机密 + 分层缓存 + 环境治理**；**安全评测舆论场**：AISI / MDASH / Mythos & GPT-5.5 叙事同日升温 |
+| 可直接关注 | 把小企业“台账/发票/合同/营销”这类高风险动作做成 **人机同权的审批流**（官方强调人在回路）；把 **云 Agent** 接进 **内部开发者门户/批量化迁移流水线** 需要 API 与凭证治理；把 **环境定义（Dockerfile）** 当供应链面管（机密、缓存、回滚） |
+| 专项检索结论 | **Codex**：**未发现** GitHub Release 页明确落在 **`2026-05-13`（Asia/Shanghai）** 的新 tag（相邻仍可见 `rust-v0.131.0-alpha.8` 等更接近 `2026-05-12` 的节奏）；**Claude Code**：**未发现**当日新 GitHub Release tag；**OpenClaw**：检索到 **`v2026.5.12-beta.5`** 的 GitHub `Published` 时间为 **`2026-05-13T18:06:44Z`**，换算 Asia/Shanghai 为 **`2026-05-14 02:06:44`**，**不属于**本日 `00:00–23:59（上海）` 窗口，**建议并入 `2026-05-14` 批次**再写入“发布类”结论；**Hermes**：**未发现**当日新 release；**Spring AI**：**未发现**当日官方博客/Release 线显著落点；**MCP**：**未发现**可核验的“规范级/主线仓库”在当日的单一高置信重大发布（以社区议题与相邻合并为主）；**skills / Agent Skills**：当日更偏 **产品工程化**（Cursor 环境治理与多仓）与小企业 **预置技能包**，而非标准文本突变 |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| 产品 / 中小企业落地 | [Introducing Claude for Small Business](https://www.anthropic.com/news/claude-for-small-business) | 2026-05-13 | 官方公告 | 把连接器与“可运行工作流/技能”打包进 Claude Cowork，强调权限继承与人在回路；对做 **B2B 集成** 的团队是“连接器 + 审批 + 审计”样板 |
+| 开发者平台 / 云 Agent | [Start Copilot cloud agent tasks via the REST API](https://github.blog/changelog/2026-05-13-start-copilot-cloud-agent-tasks-via-the-rest-api/) | 2026-05-13 | 官方 changelog | Business/Enterprise 可用 REST **启动 cloud agent 任务**并跟踪进度；适合做跨仓批量改造、门户一键建库、周期发布自动化（前提是治理好 token/密钥与代码变更授权） |
+| IDE / 云 Agent 基础设施 | [Cursor Changelog（May 13, 2026）](https://cursor.com/changelog/05-13-26) | 2026-05-13 | 产品更新 | **多仓环境**、Dockerfile **build secrets**、分层缓存（命中缓存构建更快）、环境版本回滚/审计/出站与密钥隔离；把“像笔记本一样的 Agent 运行环境”工程化 |
+| Agent 社区 | [Introducing Interrupt: The AI Agent Conference by LangChain](https://blog.langchain.com/introducing-interrupt-langchain-conference)（会议窗口落入当日：5/13 工作坊日） | 2026-05-13（会议日程） | 社区活动 | 以 Interrupt（`2026-05-13`–`2026-05-14`，旧金山）观察 **Agent 产品/治理** 议程风向；当日为会前工作坊与社交环节（以官网/博文披露的日程为准） |
+| 安全评测 / 监管叙事 | [AI cybersecurity updates for MDASH, Mythos, and GPT-5.5](https://www.theverge.com/ai-artificial-intelligence/930236/ai-cybersecurity-updates-for-mdash-mythos-and-gpt-5-5) | 2026-05-13 | 技术媒体 | 汇总 AISI 对 **Claude Mythos Preview** 与 **GPT-5.5** 的网络安全测试进展，并关联 Microsoft **MDASH** 与 Patch Tuesday 发现；适合做威胁建模与安全基准的对照阅读 |
+| 产业 / 国内活动 | [Create2026 百度 AI 开发者大会速览（量子位）](https://www.qbitai.com/2026/05/416762.html) | 2026-05-13 | 中文媒体 | 便于快速抓取国内同日活动叙事（**DAA**、DuMate、秒哒、智能云基础设施等）；关键数字与能力边界建议再查官方材料 |
+| 隐私 / 产品 | [Mark Zuckerberg announces ‘completely private’ encrypted Meta AI chat](https://www.theverge.com/tech/929791/meta-ai-incognito-chats) | 2026-05-13 | 技术媒体 | “会话结束即消失、服务器不可读”的隐私叙事会与 **企业日志/合规** 需求冲突；做端云架构时要分清营销承诺与可验证威胁模型 |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| Copilot 自动化集成 | [Agent tasks REST API 文档](https://docs.github.com/rest/agent-tasks/agent-tasks?apiVersion=2026-03-10#start-a-task) | 任务启停、鉴权（PAT/OAuth）、进度查询 | 平台工程 / DevEx |
+| 云 Agent 环境 | [Cloud agent development environments（Cursor Docs）](https://cursor.com/docs/cloud-agent/setup) | Dockerfile、机密、缓存、审计 | 需要给团队开“可控沙箱”的研发负责人 |
+| Claude SMB 集成 | [Claude for Small Business 解决方案页](https://claude.com/solutions/small-business) | 连接器、工作流目录、信任与安全说明 | 做 SaaS 集成与权限模型的 PM/架构师 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：工程侧的“硬更新”集中在 **托管云 Agent 的任务 API**（GitHub）与 **IDE 云环境治理**（Cursor）；**LangGraph/LangChain 本体**未检索到与 `2026-05-13` 强绑定的单一旗舰发布，更多热度来自 **Interrupt** 线下议程。另：OpenClaw 的相邻 release 时间戳落在 **上海日历日的次日**，见上表“跨日时区边界”。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| 编排自动化 | Copilot cloud agent REST 任务 API | 用 **API + PR** 闭合“需求→环境→变更”的链路；要把 **凭证、仓库范围、评审门槛** 设计成平台能力，而不是脚本私货 |
+| 环境与供应链 | Cursor：build secrets / 分层缓存 / 环境级 egress | 多仓 Agent 会把“镜像构建依赖”放大成供应链面；**机密只进 build、不进运行态**是可复制模式 |
+| 跨日时区边界 | OpenClaw：Release 时间戳 vs 业务日切 | 全球化项目要以 **业务时区（本 Skill：Asia/Shanghai）** 定义“某天发过什么”，避免把 UTC 午夜附近的发布写错日 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | [Claude for Small Business（Anthropic）](https://www.anthropic.com/news/claude-for-small-business) | 一手定义连接方式、工作流边界与信任叙述 |
+| 必读 | [Copilot Agent tasks API（GitHub Blog）](https://github.blog/changelog/2026-05-13-start-copilot-cloud-agent-tasks-via-the-rest-api/) | 云 Agent “可编程入口”会直接改变内部自动化拓扑 |
+| 推荐 | [AISI：How fast is autonomous AI cyber capability advancing?](https://www.aisi.gov.uk/blog/how-fast-is-autonomous-ai-cyber-capability-advancing) | 把模型评测与国家安全叙事的“速度感”对齐到可引用来源 |
+| 延伸 | [量子位：Create2026 速览](https://www.qbitai.com/2026/05/416762.html) | 国内产业语料与时间线抓型；关键结论需二次核验 |
+
+### 来源清单
+
+- 检索范围：2026-05-13 00:00:00 到 2026-05-13 23:59:59（Asia/Shanghai）
+- 引用域名：anthropic.com, claude.com, github.blog, docs.github.com, github.com, cursor.com, blog.langchain.com, theverge.com, aisi.gov.uk, microsoft.com, qbitai.com, deepmind.google, juejin.cn, techcrunch.com
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 官方发布 | Introducing Claude for Small Business | 2026-05-13 | https://www.anthropic.com/news/claude-for-small-business |
+| 官方 changelog | Start Copilot cloud agent tasks via the REST API | 2026-05-13 | https://github.blog/changelog/2026-05-13-start-copilot-cloud-agent-tasks-via-the-rest-api/ |
+| 产品更新 | Cursor（May 13, 2026 changelog） | 2026-05-13 | https://cursor.com/changelog/05-13-26 |
+| 社区活动 | Introducing Interrupt（会议介绍；日程含 2026-05-13） | 相邻信息：会议窗口 | https://blog.langchain.com/introducing-interrupt-langchain-conference |
+| 技术媒体 | AI cybersecurity updates（The Verge） | 2026-05-13 | https://www.theverge.com/ai-artificial-intelligence/930236/ai-cybersecurity-updates-for-mdash-mythos-and-gpt-5-5 |
+| 技术媒体 | Meta AI incognito chats（The Verge） | 2026-05-13 | https://www.theverge.com/tech/929791/meta-ai-incognito-chats |
+| 技术媒体 | Anthropic is launching Claude for Small Business（The Verge） | 2026-05-13 | https://www.theverge.com/ai-artificial-intelligence/929727/anthropic-is-launching-claude-for-small-business |
+| 中文补充 | Create2026 百度 AI 开发者大会速览（量子位） | 2026-05-13 | https://www.qbitai.com/2026/05/416762.html |
+| 中文补充 | 衍辉 AI 速递 5.13（掘金；条目多为转载核验线索） | 2026-05-13 | https://juejin.cn/post/7639128832419250217 |
+
 ## 2026-05-12
 
 ### 今日总览

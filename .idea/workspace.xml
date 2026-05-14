@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/COURSE_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_TASKS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/chapters/03-machine-learning-workflow.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/chapters/03-machine-learning-workflow.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +23,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Python.house_price_cross_val">
+  <component name="RunManager" selected="Python.01-python-basics">
     <configuration name="01-python-basics" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -135,14 +129,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.house_price_cross_val" />
-        <item itemvalue="Python.house_price_pipeline" />
-        <item itemvalue="Python.house_price_linear_regression" />
-        <item itemvalue="Python.broadcast_demo" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -160,10 +146,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1778634548353</updated>
+      <workItem from="1778637168484" duration="4874000" />
     </task>
+    <task id="LOCAL-00001" summary="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径">
+      <option name="closed" value="true" />
+      <created>1778637191383</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1778637191383</updated>
+    </task>
+    <task id="LOCAL-00002" summary="docs(learning): 更新课程内容与脚本注释规范&#10;&#10;- 为 ai-course-mentor-course-mode 和 ai-course-mentor-project-mode&#10;  添加联想扩展、答疑回写和脚本注释规范&#10;- 在第3章机器学习工作流中增加核心讲解、拓展阅读、联想扩展&#10;  与问答记录等章节补充&#10;- 为01-python-basics.py和broadcast_demo.py添加中文注释和&#10;  代码结构说明&#10;- 在cosine_search_practice.py中完善docstring格式&#10;- 更新第2课广播示例脚本的注释和代码可读性">
+      <option name="closed" value="true" />
+      <created>1778642444304</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1778642444304</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat(study): 更新第3课和第7课教学内容并添加示例脚本&#10;&#10;- 在第3课中添加交叉验证、模型保存和Java系统集成的核心讲解与问答&#10;- 增加常见错误与排错章节的详细说明和外部补充&#10;- 新增house_price_cross_val.py和house_price_save_load.py示例脚本&#10;- 在.gitignore中添加模型文件夹忽略规则&#10;- 更新COURSE_PROGRESS.md反映第7课学习进度和跳课说明&#10;- 修改README.md更新pandas依赖说明&#10;- 更新IDEA运行配置添加新的Python脚本配置">
+      <option name="closed" value="true" />
+      <created>1778643849270</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1778643849270</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径" />
+    <MESSAGE value="docs(learning): 更新课程内容与脚本注释规范&#10;&#10;- 为 ai-course-mentor-course-mode 和 ai-course-mentor-project-mode&#10;  添加联想扩展、答疑回写和脚本注释规范&#10;- 在第3章机器学习工作流中增加核心讲解、拓展阅读、联想扩展&#10;  与问答记录等章节补充&#10;- 为01-python-basics.py和broadcast_demo.py添加中文注释和&#10;  代码结构说明&#10;- 在cosine_search_practice.py中完善docstring格式&#10;- 更新第2课广播示例脚本的注释和代码可读性" />
+    <MESSAGE value="feat(study): 更新第3课和第7课教学内容并添加示例脚本&#10;&#10;- 在第3课中添加交叉验证、模型保存和Java系统集成的核心讲解与问答&#10;- 增加常见错误与排错章节的详细说明和外部补充&#10;- 新增house_price_cross_val.py和house_price_save_load.py示例脚本&#10;- 在.gitignore中添加模型文件夹忽略规则&#10;- 更新COURSE_PROGRESS.md反映第7课学习进度和跳课说明&#10;- 修改README.md更新pandas依赖说明&#10;- 更新IDEA运行配置添加新的Python脚本配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(study): 更新第3课和第7课教学内容并添加示例脚本&#10;&#10;- 在第3课中添加交叉验证、模型保存和Java系统集成的核心讲解与问答&#10;- 增加常见错误与排错章节的详细说明和外部补充&#10;- 新增house_price_cross_val.py和house_price_save_load.py示例脚本&#10;- 在.gitignore中添加模型文件夹忽略规则&#10;- 更新COURSE_PROGRESS.md反映第7课学习进度和跳课说明&#10;- 修改README.md更新pandas依赖说明&#10;- 更新IDEA运行配置添加新的Python脚本配置" />
   </component>
 </project>
