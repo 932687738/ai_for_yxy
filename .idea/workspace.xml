@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="">
+    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/COURSE_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_TASKS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,28 +27,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Python.01-python-basics">
-    <configuration name="01-python-basics" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ai_for_learing" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ai-learning/01-python-ai-environment/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/01-python-ai-environment/scripts/01-python-basics.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.cnn_valid_conv_numpy_demo">
     <configuration name="broadcast_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -58,6 +41,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/02-ai-math-foundation/scripts/broadcast_demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cnn_valid_conv_numpy_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ai_for_learing" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts/cnn_valid_conv_numpy_demo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -129,6 +133,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.cnn_valid_conv_numpy_demo" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -147,6 +156,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778634548353</updated>
       <workItem from="1778637168484" duration="4874000" />
+      <workItem from="1778721891218" duration="45000" />
     </task>
     <task id="LOCAL-00001" summary="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径">
       <option name="closed" value="true" />
@@ -172,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778643849270</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据">
+      <option name="closed" value="true" />
+      <created>1778721902440</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1778721902440</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +200,7 @@
     <MESSAGE value="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径" />
     <MESSAGE value="docs(learning): 更新课程内容与脚本注释规范&#10;&#10;- 为 ai-course-mentor-course-mode 和 ai-course-mentor-project-mode&#10;  添加联想扩展、答疑回写和脚本注释规范&#10;- 在第3章机器学习工作流中增加核心讲解、拓展阅读、联想扩展&#10;  与问答记录等章节补充&#10;- 为01-python-basics.py和broadcast_demo.py添加中文注释和&#10;  代码结构说明&#10;- 在cosine_search_practice.py中完善docstring格式&#10;- 更新第2课广播示例脚本的注释和代码可读性" />
     <MESSAGE value="feat(study): 更新第3课和第7课教学内容并添加示例脚本&#10;&#10;- 在第3课中添加交叉验证、模型保存和Java系统集成的核心讲解与问答&#10;- 增加常见错误与排错章节的详细说明和外部补充&#10;- 新增house_price_cross_val.py和house_price_save_load.py示例脚本&#10;- 在.gitignore中添加模型文件夹忽略规则&#10;- 更新COURSE_PROGRESS.md反映第7课学习进度和跳课说明&#10;- 修改README.md更新pandas依赖说明&#10;- 更新IDEA运行配置添加新的Python脚本配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(study): 更新第3课和第7课教学内容并添加示例脚本&#10;&#10;- 在第3课中添加交叉验证、模型保存和Java系统集成的核心讲解与问答&#10;- 增加常见错误与排错章节的详细说明和外部补充&#10;- 新增house_price_cross_val.py和house_price_save_load.py示例脚本&#10;- 在.gitignore中添加模型文件夹忽略规则&#10;- 更新COURSE_PROGRESS.md反映第7课学习进度和跳课说明&#10;- 修改README.md更新pandas依赖说明&#10;- 更新IDEA运行配置添加新的Python脚本配置" />
+    <MESSAGE value="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据" />
   </component>
 </project>

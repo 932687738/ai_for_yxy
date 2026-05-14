@@ -35,6 +35,7 @@
 
 - `**/scripts/**/*.py`（如第 1～2 课）
 - **`03-machine-learning-workflow/src/**/*.py`**（第 3 课教材第九节起的配套脚本，见 `study/chapters/03-machine-learning-workflow.md`）
+- **`07-cnn-rnn-transformer-intro/scripts/**/*.py`**（第 7 课小节 0.1.2 起：`cnn_valid_conv_numpy_demo.py`、`cnn_output_spatial_formula_demo.py`、`pooling_2x2_stride2_numpy_demo.py` 等）
 
 用到的第三方包汇总如下（按需安装）：
 

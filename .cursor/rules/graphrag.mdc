@@ -1,6 +1,6 @@
 ---
 description: 项目知识图谱构建与维护智能体。通过 @graphrag 或 project_graphrag 相关文件触发，支持基础索引构建、AI 语义增强、增量更新、影响分析与确认后写回。
-globs: project_graphrag/**,.cursor/rules/graphrag.mdc
+globs: project_graphrag/**,tools/chroma_crud.py,.cursor/rules/graphrag.mdc
 alwaysApply: false
 ---
 
@@ -27,6 +27,13 @@ alwaysApply: false
 3. 用户本轮明确给出的源码目录。
 
 若是**问答任务**且仍无法确定目标项目，可基于已有图谱回答并说明限制。若是**构建/写回任务**且仍无法确定目标项目，必须失败并写入日志，不得静默扫描本工作区替代目标项目。
+
+### 1.1 ChromaDB / 向量操作统一入口
+
+- **后续所有面向 Chroma 向量库的交互操作**（连接本地持久化目录或 HTTP Server、集合创建/删除/元信息、文档增删改查、按文本或向量 `query`、`peek`/`count`、列出集合等）**统一使用仓库根目录** `tools/chroma_crud.py`，通过子命令完成；不要为零散任务再写独立的 `import chromadb` 脚本。若确需新能力，应**扩展** `tools/chroma_crud.py` 或复用其模式，而不是另起炉灶。
+- **持久化路径**：与 `graphrag_config.json` 中 `chroma.persist_directory_relative` 一致，通常解析为 `<storage_root>/<persist_directory_relative>`（与 `project_graphrag/scripts/sync_graphrag_chroma.py` 的 `--persist-dir` 指向同一目录）。HTTP 模式时使用 `--http HOST PORT`（可选 `--ssl`）。
+- **依赖**：`pip install -r project_graphrag/requirements-chroma.txt`。
+- **唯一例外（批量同步管线）**：将 `graph_nodes.jsonl` / `graph_edges.jsonl` **整库同步**到 Chroma 时，仍使用既有专用脚本 `project_graphrag/scripts/sync_graphrag_chroma.py`；同步完成后的**验证、排错、手工补数、临时检索、按集合清空**等仍应优先用 `tools/chroma_crud.py`。
 
 ## 2. 基础索引构建
 
