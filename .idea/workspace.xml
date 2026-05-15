@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据">
+    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间">
+      <change beforePath="$PROJECT_DIR$/.idea/ai_for_learing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai_for_learing.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/COURSE_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_TASKS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,38 +19,49 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;932687738&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/932687738/ai_for_learing.git&quot;,
+    &quot;accountId&quot;: &quot;bfd8cec1-f587-4317-8f13-c69f1a6e56b6&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="3DeFIBVCXDrn1GH0RQcQJebrRRE" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager" selected="Python.01-python-basics">
-    <configuration name="01-python-basics" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ai_for_learing" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ai-learning/01-python-ai-environment/scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/01-python-ai-environment/scripts/01-python-basics.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.vanilla_rnn_numpy_demo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
     <configuration name="cnn_valid_conv_numpy_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -57,6 +72,9 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts/cnn_valid_conv_numpy_demo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -68,6 +86,7 @@
     </configuration>
     <configuration name="house_price_cross_val" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -78,6 +97,9 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/03-machine-learning-workflow/src/house_price_cross_val.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -89,6 +111,7 @@
     </configuration>
     <configuration name="house_price_linear_regression" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -99,6 +122,9 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/03-machine-learning-workflow/src/house_price_linear_regression.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -110,6 +136,7 @@
     </configuration>
     <configuration name="house_price_pipeline" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -120,6 +147,9 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/03-machine-learning-workflow/src/house_price_pipeline.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -129,11 +159,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.01-python-basics" />
-      </list>
-    </recent_temporary>
+    <configuration name="vanilla_rnn_numpy_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ai_for_learing" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.14 (ai_study)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts/vanilla_rnn_numpy_demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -154,7 +205,6 @@
       <workItem from="1778637168484" duration="4874000" />
       <workItem from="1778721891218" duration="45000" />
       <workItem from="1778758222598" duration="3416000" />
-      <workItem from="1778805293900" duration="7294000" />
     </task>
     <task id="LOCAL-00001" summary="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径">
       <option name="closed" value="true" />
@@ -204,39 +254,7 @@
       <option name="project" value="LOCAL" />
       <updated>1778760704479</updated>
     </task>
-    <task id="LOCAL-00007" summary="feat(graphrag): 初始化 GraphRAG 确认事实数据和实体查找功能&#10;&#10;- 添加 agent_confirmed_facts.jsonl 文件存储确认的业务逻辑事实&#10;- 添加 entity_lookup.json 文件用于实体名称到节点ID的映射查找&#10;- 更新 ai-daily-state.json 同步状态至 2026-05-14&#10;- 在 ai-daily-digest.md 中新增 2026-05-14 AI 资讯摘要内容&#10;- 集成 outbound order、wave operations、receipt、stock 和 logistics tracking 等业务模块的事实数据">
-      <option name="closed" value="true" />
-      <created>1778806045781</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1778806045781</updated>
-    </task>
-    <task id="LOCAL-00008" summary="feat(tools): 添加仓库简介翻译功能并优化 GitHub 排行榜展示&#10;&#10;- 在 GitHub 排行榜表格中新增「仓库简介（中文）」列&#10;- 实现 GitHub API 获取仓库描述信息功能&#10;- 集成 MyMemory 翻译接口将英文描述转为中文&#10;- 添加常见仓库的手动维护中文简介映射&#10;- 支持检测并保留现有中文简介避免覆盖&#10;- 更新正则表达式以兼容新表格格式解析&#10;- 添加缺失描述信息的补充请求机制&#10;- 优化表格渲染逻辑支持四列显示格式">
-      <option name="closed" value="true" />
-      <created>1778808444305</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1778808444305</updated>
-    </task>
-    <task id="LOCAL-00009" summary="feat(tools): 新增 GitHub trending 数据抓取功能&#10;&#10;- 添加了 tools/github_topz 目录及初始化文件&#10;- 实现了 display_zh.py 中的中文描述处理和翻译功能&#10;- 创建了 stars_merge.py 用于 GitHub 全局 Star 数据合并&#10;- 开发了 trending_fetch.py 用于抓取和解析 GitHub trending 页面&#10;- 更新 dailyReport/github-topz.md 以支持双重数据源展示&#10;- 集成中文简介显示和 HTML 解析功能">
-      <option name="closed" value="true" />
-      <created>1778809952360</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1778809952360</updated>
-    </task>
-    <task id="LOCAL-00010" summary="docs(readme): 更新 README.md 添加仓库结构和功能模块说明&#10;&#10;- 补充仓库目录结构映射表，包含 study/、ai-learning/、dailyReport/ 等主要目录说明&#10;- 添加 Agents、Rules、Skills 三大功能模块的详细介绍和配置文件说明&#10;- 增加脚本与工具模块的使用说明，包括 github_topz 和 chroma_crud.py 等工具&#10;- 完善 Cursor 相关配置文件说明，包含 .cursor/ 目录下的各类配置和规则文件&#10;- 优化原有 AI 课程导师功能描述，增加本地仓库路径提醒&#10;- 添加表格格式的文件路径与功能对应关系，提高文档可读性">
-      <option name="closed" value="true" />
-      <created>1778810111214</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1778810111214</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,10 +267,6 @@
     <MESSAGE value="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据" />
     <MESSAGE value="feat(study): 完善CNN课程内容并新增向量数据库管理工具&#10;&#10;- 补充CNN核心概念讲解包括卷积运算、核权重、特征图和池化详解&#10;- 新增三个NumPy演示脚本用于可视化卷积和池化过程&#10;- 添加课程进度跟踪和外部依赖说明&#10;- 开发ChromaDB命令行工具支持CRUD操作和多种连接模式&#10;- 更新项目规则文档集成向量数据库操作入口" />
     <MESSAGE value="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间" />
-    <MESSAGE value="feat(graphrag): 初始化 GraphRAG 确认事实数据和实体查找功能&#10;&#10;- 添加 agent_confirmed_facts.jsonl 文件存储确认的业务逻辑事实&#10;- 添加 entity_lookup.json 文件用于实体名称到节点ID的映射查找&#10;- 更新 ai-daily-state.json 同步状态至 2026-05-14&#10;- 在 ai-daily-digest.md 中新增 2026-05-14 AI 资讯摘要内容&#10;- 集成 outbound order、wave operations、receipt、stock 和 logistics tracking 等业务模块的事实数据" />
-    <MESSAGE value="feat(tools): 添加仓库简介翻译功能并优化 GitHub 排行榜展示&#10;&#10;- 在 GitHub 排行榜表格中新增「仓库简介（中文）」列&#10;- 实现 GitHub API 获取仓库描述信息功能&#10;- 集成 MyMemory 翻译接口将英文描述转为中文&#10;- 添加常见仓库的手动维护中文简介映射&#10;- 支持检测并保留现有中文简介避免覆盖&#10;- 更新正则表达式以兼容新表格格式解析&#10;- 添加缺失描述信息的补充请求机制&#10;- 优化表格渲染逻辑支持四列显示格式" />
-    <MESSAGE value="feat(tools): 新增 GitHub trending 数据抓取功能&#10;&#10;- 添加了 tools/github_topz 目录及初始化文件&#10;- 实现了 display_zh.py 中的中文描述处理和翻译功能&#10;- 创建了 stars_merge.py 用于 GitHub 全局 Star 数据合并&#10;- 开发了 trending_fetch.py 用于抓取和解析 GitHub trending 页面&#10;- 更新 dailyReport/github-topz.md 以支持双重数据源展示&#10;- 集成中文简介显示和 HTML 解析功能" />
-    <MESSAGE value="docs(readme): 更新 README.md 添加仓库结构和功能模块说明&#10;&#10;- 补充仓库目录结构映射表，包含 study/、ai-learning/、dailyReport/ 等主要目录说明&#10;- 添加 Agents、Rules、Skills 三大功能模块的详细介绍和配置文件说明&#10;- 增加脚本与工具模块的使用说明，包括 github_topz 和 chroma_crud.py 等工具&#10;- 完善 Cursor 相关配置文件说明，包含 .cursor/ 目录下的各类配置和规则文件&#10;- 优化原有 AI 课程导师功能描述，增加本地仓库路径提醒&#10;- 添加表格格式的文件路径与功能对应关系，提高文档可读性" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(readme): 更新 README.md 添加仓库结构和功能模块说明&#10;&#10;- 补充仓库目录结构映射表，包含 study/、ai-learning/、dailyReport/ 等主要目录说明&#10;- 添加 Agents、Rules、Skills 三大功能模块的详细介绍和配置文件说明&#10;- 增加脚本与工具模块的使用说明，包括 github_topz 和 chroma_crud.py 等工具&#10;- 完善 Cursor 相关配置文件说明，包含 .cursor/ 目录下的各类配置和规则文件&#10;- 优化原有 AI 课程导师功能描述，增加本地仓库路径提醒&#10;- 添加表格格式的文件路径与功能对应关系，提高文档可读性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间" />
   </component>
 </project>
