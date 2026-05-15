@@ -1,0 +1,203 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>太阳系观察器</title>
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <aside class="controls" id="controls" aria-label="流星控制选项">
+    <h1>流星设置</h1>
+    <div class="control">
+      <label for="timeSpeedControl">
+        时间速度
+        <output id="timeSpeedValue" for="timeSpeedControl">1.0x</output>
+      </label>
+      <input id="timeSpeedControl" type="range" min="0.1" max="8" step="0.1" value="1">
+      <div class="control-row">
+        <button class="control-button" id="pauseControl" type="button">暂停</button>
+        <button class="control-button" id="resetTimeControl" type="button">重置时间</button>
+      </div>
+    </div>
+    <div class="control">
+      <label for="scaleModeControl">比例模式</label>
+      <select class="control-select" id="scaleModeControl">
+        <option value="visual" selected>视觉模式</option>
+        <option value="relative">相对真实模式</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="targetSelect">搜索/定位</label>
+      <select class="control-select" id="targetSelect">
+        <option value="">选择天体</option>
+        <option value="太阳">太阳</option>
+        <option value="水星">水星</option>
+        <option value="金星">金星</option>
+        <option value="地球">地球</option>
+        <option value="月亮">月亮</option>
+        <option value="火星">火星</option>
+        <option value="木星">木星</option>
+        <option value="土星">土星</option>
+        <option value="天王星">天王星</option>
+        <option value="海王星">海王星</option>
+        <option value="哈雷彗星">哈雷彗星</option>
+      </select>
+      <div class="control-row">
+        <button class="control-button" id="locateControl" type="button">定位</button>
+        <button class="control-button" id="focusControl" type="button">聚焦</button>
+      </div>
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="measureControl">
+        <input id="measureControl" type="checkbox">
+        测距工具
+      </label>
+      <button class="control-button" id="clearMeasureControl" type="button">清除测距</button>
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="showTrailsControl">
+        <input id="showTrailsControl" type="checkbox" checked>
+        轨迹残影
+      </label>
+      <label class="toggle-option" for="showOrbitsControl">
+        <input id="showOrbitsControl" type="checkbox" checked>
+        轨道线
+      </label>
+      <label class="toggle-option" for="showLabelsControl">
+        <input id="showLabelsControl" type="checkbox" checked>
+        天体名称
+      </label>
+      <label class="toggle-option" for="showAsteroidsControl">
+        <input id="showAsteroidsControl" type="checkbox" checked>
+        小行星带
+      </label>
+      <label class="toggle-option" for="showCometsControl">
+        <input id="showCometsControl" type="checkbox" checked>
+        周期彗星
+      </label>
+      <label class="toggle-option" for="showMeteorsControl">
+        <input id="showMeteorsControl" type="checkbox" checked>
+        点击流星
+      </label>
+      <label class="toggle-option" for="showStarsControl">
+        <input id="showStarsControl" type="checkbox" checked>
+        星空背景
+      </label>
+    </div>
+    <div class="control">
+      <label for="sizeControl">
+        大小
+        <output id="sizeValue" for="sizeControl">1.6x</output>
+      </label>
+      <input id="sizeControl" type="range" min="0.6" max="3.2" step="0.1" value="1.6">
+    </div>
+    <div class="control">
+      <label for="speedControl">
+        速度
+        <output id="speedValue" for="speedControl">0.6x</output>
+      </label>
+      <input id="speedControl" type="range" min="0.25" max="1.8" step="0.05" value="0.6">
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="magnifierControl">
+        <input id="magnifierControl" type="checkbox">
+        局部放大
+      </label>
+    </div>
+    <div class="control">
+      <label for="magnifierZoomControl">
+        放大倍数
+        <output id="magnifierZoomValue" for="magnifierZoomControl">2.2x</output>
+      </label>
+      <input id="magnifierZoomControl" type="range" min="1.2" max="5" step="0.1" value="2.2">
+    </div>
+    <div class="control">
+      <label for="magnifierRadiusControl">
+        镜头大小
+        <output id="magnifierRadiusValue" for="magnifierRadiusControl">90px</output>
+      </label>
+      <input id="magnifierRadiusControl" type="range" min="54" max="160" step="2" value="90">
+    </div>
+    <div class="control">
+      <label for="tailShapePicker">
+        拖尾形状
+        <output id="tailShapeValue" for="tailShapePicker">5种</output>
+      </label>
+      <details class="shape-picker" id="tailShapePicker">
+        <summary id="tailShapeSummary">随机全部拖尾</summary>
+        <div class="shape-menu">
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="trail" checked>
+            经典拖尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="comet" checked>
+            粗亮彗尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="double" checked>
+            双尾流光
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="flare" checked>
+            爆闪短尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="blade" checked>
+            光刃切线
+          </label>
+        </div>
+      </details>
+    </div>
+    <div class="control">
+      <label for="bodyShapePicker">
+        本体形状
+        <output id="bodyShapeValue" for="bodyShapePicker">5种</output>
+      </label>
+      <details class="shape-picker" id="bodyShapePicker">
+        <summary id="bodyShapeSummary">随机全部本体</summary>
+        <div class="shape-menu">
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="oval" checked>
+            椭圆光核
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="comet" checked>
+            彗星光团
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="double" checked>
+            双光点
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="star" checked>
+            星芒核心
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="blade" checked>
+            菱形光刃
+          </label>
+        </div>
+      </details>
+    </div>
+  </aside>
+  <section class="info-panel" id="infoPanel" hidden aria-live="polite">
+    <div class="info-header">
+      <h2 class="info-title" id="infoTitle">天体信息</h2>
+      <button class="info-close" id="infoClose" type="button" aria-label="关闭信息">×</button>
+    </div>
+    <dl class="info-grid" id="infoGrid"></dl>
+    <div class="info-actions">
+      <button class="control-button" id="infoFocusControl" type="button">聚焦</button>
+      <button class="control-button" id="infoMeasureControl" type="button">加入测距</button>
+    </div>
+  </section>
+  <div class="measure-banner" id="measureBanner" hidden>测距工具已开启：依次点击两个天体</div>
+  <div class="hint">动态太阳系背景中，点击任意位置生成随机流星</div>
+
+  <script src="./src/main.js" defer></script>
+</body>
+</html>
+
