@@ -114,6 +114,47 @@
       cursor: pointer;
     }
 
+    select,
+    button {
+      font: inherit;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .control-button,
+    .control-select {
+      min-height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+    }
+
+    .control-button {
+      cursor: pointer;
+    }
+
+    .control-button:hover,
+    .control-select:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .control-select {
+      width: 100%;
+      padding: 0 8px;
+      cursor: pointer;
+    }
+
+    .control-select option {
+      color: #101522;
+      background: #f4f7ff;
+    }
+
     .shape-picker {
       position: relative;
     }
@@ -278,6 +319,36 @@
       color: rgba(255, 255, 255, 0.94);
     }
 
+    .info-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .measure-banner {
+      position: fixed;
+      left: 50%;
+      top: 24px;
+      z-index: 3;
+      transform: translateX(-50%);
+      width: min(520px, calc(100vw - 48px));
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: rgba(245, 248, 255, 0.9);
+      background: rgba(4, 9, 24, 0.72);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(12px);
+      font-size: 13px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .measure-banner[hidden] {
+      display: none;
+    }
+
     @media (max-width: 640px) {
       .controls {
         top: 14px;
@@ -312,6 +383,82 @@
   <aside class="controls" id="controls" aria-label="流星控制选项">
     <h1>流星设置</h1>
     <div class="control">
+      <label for="timeSpeedControl">
+        时间速度
+        <output id="timeSpeedValue" for="timeSpeedControl">1.0x</output>
+      </label>
+      <input id="timeSpeedControl" type="range" min="0.1" max="8" step="0.1" value="1">
+      <div class="control-row">
+        <button class="control-button" id="pauseControl" type="button">暂停</button>
+        <button class="control-button" id="resetTimeControl" type="button">重置时间</button>
+      </div>
+    </div>
+    <div class="control">
+      <label for="scaleModeControl">比例模式</label>
+      <select class="control-select" id="scaleModeControl">
+        <option value="visual" selected>视觉模式</option>
+        <option value="relative">相对真实模式</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="targetSelect">搜索/定位</label>
+      <select class="control-select" id="targetSelect">
+        <option value="">选择天体</option>
+        <option value="太阳">太阳</option>
+        <option value="水星">水星</option>
+        <option value="金星">金星</option>
+        <option value="地球">地球</option>
+        <option value="月亮">月亮</option>
+        <option value="火星">火星</option>
+        <option value="木星">木星</option>
+        <option value="土星">土星</option>
+        <option value="天王星">天王星</option>
+        <option value="海王星">海王星</option>
+        <option value="哈雷彗星">哈雷彗星</option>
+      </select>
+      <div class="control-row">
+        <button class="control-button" id="locateControl" type="button">定位</button>
+        <button class="control-button" id="focusControl" type="button">聚焦</button>
+      </div>
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="measureControl">
+        <input id="measureControl" type="checkbox">
+        测距工具
+      </label>
+      <button class="control-button" id="clearMeasureControl" type="button">清除测距</button>
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="showTrailsControl">
+        <input id="showTrailsControl" type="checkbox" checked>
+        轨迹残影
+      </label>
+      <label class="toggle-option" for="showOrbitsControl">
+        <input id="showOrbitsControl" type="checkbox" checked>
+        轨道线
+      </label>
+      <label class="toggle-option" for="showLabelsControl">
+        <input id="showLabelsControl" type="checkbox" checked>
+        天体名称
+      </label>
+      <label class="toggle-option" for="showAsteroidsControl">
+        <input id="showAsteroidsControl" type="checkbox" checked>
+        小行星带
+      </label>
+      <label class="toggle-option" for="showCometsControl">
+        <input id="showCometsControl" type="checkbox" checked>
+        周期彗星
+      </label>
+      <label class="toggle-option" for="showMeteorsControl">
+        <input id="showMeteorsControl" type="checkbox" checked>
+        点击流星
+      </label>
+      <label class="toggle-option" for="showStarsControl">
+        <input id="showStarsControl" type="checkbox" checked>
+        星空背景
+      </label>
+    </div>
+    <div class="control">
       <label for="sizeControl">
         大小
         <output id="sizeValue" for="sizeControl">1.6x</output>
@@ -327,7 +474,7 @@
     </div>
     <div class="control">
       <label class="toggle-option" for="magnifierControl">
-        <input id="magnifierControl" type="checkbox" checked>
+        <input id="magnifierControl" type="checkbox">
         局部放大
       </label>
     </div>
@@ -414,7 +561,12 @@
       <button class="info-close" id="infoClose" type="button" aria-label="关闭信息">×</button>
     </div>
     <dl class="info-grid" id="infoGrid"></dl>
+    <div class="info-actions">
+      <button class="control-button" id="infoFocusControl" type="button">聚焦</button>
+      <button class="control-button" id="infoMeasureControl" type="button">加入测距</button>
+    </div>
   </section>
+  <div class="measure-banner" id="measureBanner" hidden>测距工具已开启：依次点击两个天体</div>
   <div class="hint">动态太阳系背景中，点击任意位置生成随机流星</div>
 
   <script>
@@ -423,6 +575,22 @@
     const sceneBuffer = document.createElement("canvas");
     const sceneCtx = sceneBuffer.getContext("2d");
     const controls = document.getElementById("controls");
+    const timeSpeedControl = document.getElementById("timeSpeedControl");
+    const pauseControl = document.getElementById("pauseControl");
+    const resetTimeControl = document.getElementById("resetTimeControl");
+    const scaleModeControl = document.getElementById("scaleModeControl");
+    const targetSelect = document.getElementById("targetSelect");
+    const locateControl = document.getElementById("locateControl");
+    const focusControl = document.getElementById("focusControl");
+    const measureControl = document.getElementById("measureControl");
+    const clearMeasureControl = document.getElementById("clearMeasureControl");
+    const showTrailsControl = document.getElementById("showTrailsControl");
+    const showOrbitsControl = document.getElementById("showOrbitsControl");
+    const showLabelsControl = document.getElementById("showLabelsControl");
+    const showAsteroidsControl = document.getElementById("showAsteroidsControl");
+    const showCometsControl = document.getElementById("showCometsControl");
+    const showMeteorsControl = document.getElementById("showMeteorsControl");
+    const showStarsControl = document.getElementById("showStarsControl");
     const sizeControl = document.getElementById("sizeControl");
     const speedControl = document.getElementById("speedControl");
     const magnifierControl = document.getElementById("magnifierControl");
@@ -432,6 +600,10 @@
     const infoTitle = document.getElementById("infoTitle");
     const infoGrid = document.getElementById("infoGrid");
     const infoClose = document.getElementById("infoClose");
+    const infoFocusControl = document.getElementById("infoFocusControl");
+    const infoMeasureControl = document.getElementById("infoMeasureControl");
+    const measureBanner = document.getElementById("measureBanner");
+    const timeSpeedValue = document.getElementById("timeSpeedValue");
     const sizeValue = document.getElementById("sizeValue");
     const speedValue = document.getElementById("speedValue");
     const magnifierZoomValue = document.getElementById("magnifierZoomValue");
@@ -445,10 +617,17 @@
     const stars = [];
     const meteors = [];
     const solarTargets = [];
+    const planetTrails = new Map();
+    const asteroids = [];
+    const measurement = {
+      points: []
+    };
 
     let width = 0;
     let height = 0;
     let pixelRatio = 1;
+    let simulationTime = 0;
+    let selectedInfoTarget = null;
     const pointer = {
       x: 0,
       y: 0,
@@ -457,6 +636,18 @@
     const settings = {
       size: Number(sizeControl.value),
       speed: Number(speedControl.value),
+      timeSpeed: Number(timeSpeedControl.value),
+      paused: false,
+      scaleMode: scaleModeControl.value,
+      focusTarget: "",
+      measureMode: false,
+      showTrails: showTrailsControl.checked,
+      showOrbits: showOrbitsControl.checked,
+      showLabels: showLabelsControl.checked,
+      showAsteroids: showAsteroidsControl.checked,
+      showComets: showCometsControl.checked,
+      showMeteors: showMeteorsControl.checked,
+      showStars: showStarsControl.checked,
       magnifierEnabled: magnifierControl.checked,
       magnifierZoom: Number(magnifierZoomControl.value),
       magnifierRadius: Number(magnifierRadiusControl.value),
@@ -511,10 +702,72 @@
       year: "绕地球约 27.3 天一圈",
       note: "月球引力是地球潮汐的重要来源。"
     };
+    const cometInfo = {
+      name: "哈雷彗星",
+      type: "周期彗星",
+      diameter: "彗核约 11 km",
+      mass: "约 2.2 × 10^14 kg",
+      gravity: "极弱",
+      orbitSpeed: "随近日点/远日点变化",
+      day: "自转约 2.2 天",
+      year: "约 75-76 个地球年",
+      note: "著名短周期彗星，靠近太阳时会形成明亮彗发和彗尾。"
+    };
+    const asteroidBeltInfo = {
+      name: "小行星带",
+      type: "小天体区域",
+      diameter: "位于火星与木星轨道之间",
+      mass: "总质量远小于月球",
+      gravity: "由众多小天体各自贡献",
+      orbitSpeed: "约 17-20 km/s 量级",
+      day: "各小行星自转周期不同",
+      year: "约 3-6 个地球年",
+      note: "包含谷神星、灶神星等小天体，是太阳系重要碎片带。"
+    };
+    const knowledge = {
+      太阳: { moons: "无卫星", atmosphere: "主要由氢、氦等离子体组成", missions: "SOHO、帕克太阳探测器、Solar Orbiter", fact: "太阳约占太阳系总质量的 99.8%。" },
+      水星: { moons: "无卫星", atmosphere: "极稀薄外逸层", missions: "水手10号、信使号、贝皮科伦坡", fact: "昼夜温差极大。" },
+      金星: { moons: "无卫星", atmosphere: "以二氧化碳为主，硫酸云层", missions: "金星号、麦哲伦号、Akatsuki", fact: "金星的一天比一年还长。" },
+      地球: { moons: "1 颗：月亮", atmosphere: "氮气、氧气为主", missions: "大量地球观测卫星", fact: "目前已知唯一有稳定液态水海洋和生命的行星。" },
+      月亮: { moons: "无卫星", atmosphere: "极稀薄外逸层", missions: "阿波罗、嫦娥、LRO", fact: "月亮始终以近似同一面朝向地球。" },
+      火星: { moons: "2 颗：火卫一、火卫二", atmosphere: "稀薄二氧化碳大气", missions: "海盗号、好奇号、毅力号、天问一号", fact: "拥有太阳系最高火山奥林匹斯山。" },
+      木星: { moons: "已知卫星超过 90 颗", atmosphere: "氢、氦为主", missions: "伽利略号、朱诺号、欧罗巴快船", fact: "大红斑是持续数百年的巨型风暴。" },
+      土星: { moons: "已知卫星超过 140 颗", atmosphere: "氢、氦为主", missions: "先锋11号、旅行者、卡西尼", fact: "土星环主要由冰粒和岩屑组成。" },
+      天王星: { moons: "已知卫星 27 颗", atmosphere: "氢、氦、甲烷", missions: "旅行者2号", fact: "自转轴倾角约 98 度。" },
+      海王星: { moons: "已知卫星 14 颗", atmosphere: "氢、氦、甲烷", missions: "旅行者2号", fact: "拥有太阳系行星中最强劲的风之一。" },
+      哈雷彗星: { moons: "无卫星", atmosphere: "靠近太阳时形成彗发", missions: "乔托号、织女星探测器", fact: "下一次回归近日点预计在 2061 年。" },
+      小行星带: { moons: "部分小行星有小卫星", atmosphere: "通常无大气", missions: "黎明号、隼鸟、OSIRIS-REx", fact: "小行星带并不像电影中那样拥挤。" }
+    };
+    const comet = {
+      name: "哈雷彗星",
+      color: "#b7fff2",
+      orbitYears: 75.3,
+      start: 0.45,
+      eccentricity: 0.72,
+      info: cometInfo
+    };
 
     function updateSetting(control, output, key) {
       settings[key] = Number(control.value);
       output.value = `${settings[key].toFixed(key === "speed" ? 2 : 1)}x`;
+    }
+
+    function updateTimeSetting() {
+      settings.timeSpeed = Number(timeSpeedControl.value);
+      timeSpeedValue.value = `${settings.timeSpeed.toFixed(1)}x`;
+    }
+
+    function updateDisplaySettings() {
+      settings.scaleMode = scaleModeControl.value;
+      settings.measureMode = measureControl.checked;
+      settings.showTrails = showTrailsControl.checked;
+      settings.showOrbits = showOrbitsControl.checked;
+      settings.showLabels = showLabelsControl.checked;
+      settings.showAsteroids = showAsteroidsControl.checked;
+      settings.showComets = showCometsControl.checked;
+      settings.showMeteors = showMeteorsControl.checked;
+      settings.showStars = showStarsControl.checked;
+      measureBanner.hidden = !settings.measureMode || measurement.points.length >= 2;
     }
 
     function updateMagnifierSetting() {
@@ -543,6 +796,7 @@
 
     function showInfo(target) {
       const data = target.data;
+      const extra = knowledge[data.name] || {};
       const rows = [
         ["类型", data.type || "行星"],
         ["大小（直径）", data.diameter],
@@ -551,15 +805,71 @@
         ["公转速度", data.orbitSpeed],
         ["自转周期", data.day],
         ["公转周期", data.year],
+        ["卫星", extra.moons],
+        ["大气/组成", extra.atmosphere],
+        ["探索任务", extra.missions],
+        ["有趣事实", extra.fact],
         ["补充", data.note]
       ];
 
+      selectedInfoTarget = data.name;
       infoTitle.textContent = data.name;
       infoGrid.innerHTML = rows
         .filter(([, value]) => Boolean(value))
         .map(([label, value]) => `<dt>${label}</dt><dd>${value}</dd>`)
         .join("");
       infoPanel.hidden = false;
+    }
+
+    function setFocusTarget(name) {
+      settings.focusTarget = name || "";
+      targetSelect.value = settings.focusTarget;
+      magnifierControl.checked = Boolean(settings.focusTarget);
+      updateMagnifierSetting();
+    }
+
+    function locateTarget(name, shouldFocus = false) {
+      const target = solarTargets.find((item) => item.data.name === name);
+
+      if (!target) {
+        return;
+      }
+
+      pointer.x = target.x;
+      pointer.y = target.y;
+      pointer.active = true;
+      showInfo(target);
+
+      if (shouldFocus) {
+        setFocusTarget(name);
+      }
+    }
+
+    function clearMeasurement() {
+      measurement.points = [];
+      measureBanner.textContent = "测距工具已开启：依次点击两个天体";
+      measureBanner.hidden = !settings.measureMode;
+    }
+
+    function addMeasurementTarget(target) {
+      if (measurement.points.length >= 2) {
+        measurement.points = [];
+      }
+
+      if (!measurement.points.some((item) => item.data.name === target.data.name)) {
+        measurement.points.push(target);
+      }
+
+      if (measurement.points.length === 2) {
+        const [a, b] = measurement.points;
+        const screenDistance = Math.hypot(a.x - b.x, a.y - b.y).toFixed(1);
+        const realHint = `${a.data.name} 与 ${b.data.name} 的真实距离会随轨道位置不断变化`;
+        measureBanner.textContent = `${a.data.name} ↔ ${b.data.name}：画面距离 ${screenDistance}px；${realHint}`;
+        measureBanner.hidden = false;
+      } else {
+        measureBanner.textContent = `已选择 ${target.data.name}，再点击第二个天体`;
+        measureBanner.hidden = false;
+      }
     }
 
     function findSolarTarget(x, y) {
@@ -587,6 +897,7 @@
       canvas.style.height = `${height}px`;
       ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       createStars();
+      createAsteroids();
     }
 
     function createStars() {
@@ -604,6 +915,69 @@
           tint: Math.random() > 0.78 ? "190, 215, 255" : "255, 255, 255"
         });
       }
+    }
+
+    function createAsteroids() {
+      asteroids.length = 0;
+      const count = Math.max(90, Math.floor((width * height) / 9000));
+
+      for (let i = 0; i < count; i += 1) {
+        asteroids.push({
+          phase: random(0, Math.PI * 2),
+          drift: random(-0.18, 0.18),
+          orbit: random(0.38, 0.5),
+          size: random(0.45, 1.25),
+          speed: random(0.45, 0.9),
+          alpha: random(0.22, 0.72)
+        });
+      }
+    }
+
+    function recordTrail(name, x, y, limit = 140) {
+      if (!planetTrails.has(name)) {
+        planetTrails.set(name, []);
+      }
+
+      const trail = planetTrails.get(name);
+      const last = trail[trail.length - 1];
+
+      if (!last || Math.hypot(last.x - x, last.y - y) > 0.8) {
+        trail.push({ x, y });
+      }
+
+      while (trail.length > limit) {
+        trail.shift();
+      }
+    }
+
+    function colorWithAlpha(hex, alpha) {
+      const clean = hex.replace("#", "");
+      const r = parseInt(clean.slice(0, 2), 16);
+      const g = parseInt(clean.slice(2, 4), 16);
+      const b = parseInt(clean.slice(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function drawTrail(name, color) {
+      const trail = planetTrails.get(name);
+
+      if (!settings.showTrails || !trail || trail.length < 2) {
+        return;
+      }
+
+      ctx.save();
+      ctx.lineWidth = 1.6;
+
+      for (let i = 1; i < trail.length; i += 1) {
+        const alpha = i / trail.length;
+        ctx.strokeStyle = colorWithAlpha(color, 0.28 * alpha);
+        ctx.beginPath();
+        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+        ctx.lineTo(trail[i].x, trail[i].y);
+        ctx.stroke();
+      }
+
+      ctx.restore();
     }
 
     function createMeteor(x, y) {
@@ -760,10 +1134,12 @@
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
-      ctx.font = `${Math.max(11, 12 * scale)}px "Microsoft YaHei", sans-serif`;
-      ctx.textAlign = "center";
-      ctx.fillText("太阳", centerX, centerY + sunRadius + 18 * scale);
+      if (settings.showLabels) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
+        ctx.font = `${Math.max(11, 12 * scale)}px "Microsoft YaHei", sans-serif`;
+        ctx.textAlign = "center";
+        ctx.fillText("太阳", centerX, centerY + sunRadius + 18 * scale);
+      }
       return sunRadius;
     }
 
@@ -858,8 +1234,10 @@
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      ctx.fillStyle = "rgba(226, 236, 255, 0.62)";
-      ctx.fillText("月亮", moonX, moonY - moonRadius - 8 * scale);
+      if (settings.showLabels) {
+        ctx.fillStyle = "rgba(226, 236, 255, 0.62)";
+        ctx.fillText("月亮", moonX, moonY - moonRadius - 8 * scale);
+      }
 
       return {
         x: moonX,
@@ -870,15 +1248,170 @@
       };
     }
 
+    function drawAsteroidBelt(centerX, centerY, minOrbit, maxOrbit, yScale, earthDays) {
+      if (!settings.showAsteroids) {
+        return;
+      }
+
+      const inner = minOrbit + ((maxOrbit - minOrbit) * 3) / (planets.length - 1);
+      const outer = minOrbit + ((maxOrbit - minOrbit) * 4) / (planets.length - 1);
+      const beltCenter = (inner + outer) / 2;
+      const beltWidth = Math.max(8, (outer - inner) * 0.44);
+
+      ctx.save();
+      asteroids.forEach((asteroid) => {
+        const angle = asteroid.phase + earthDays * 0.004 * asteroid.speed;
+        const radius = beltCenter + asteroid.drift * beltWidth;
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius * yScale;
+
+        ctx.fillStyle = `rgba(196, 184, 160, ${asteroid.alpha})`;
+        ctx.beginPath();
+        ctx.arc(x, y, asteroid.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.restore();
+      solarTargets.push({
+        x: centerX + Math.cos(earthDays * 0.004) * beltCenter,
+        y: centerY + Math.sin(earthDays * 0.004) * beltCenter * yScale,
+        radius: beltWidth,
+        hitRadius: Math.max(18, beltWidth * 0.8),
+        data: asteroidBeltInfo
+      });
+    }
+
+    function drawComet(centerX, centerY, maxOrbit, yScale, earthDays, scale) {
+      if (!settings.showComets) {
+        return;
+      }
+
+      const semiMajor = maxOrbit * 0.92;
+      const semiMinor = semiMajor * 0.36;
+      const angle = comet.start + (earthDays / (comet.orbitYears * 365.25)) * Math.PI * 2;
+      const focusOffset = semiMajor * comet.eccentricity * 0.52;
+      const x = centerX + Math.cos(angle) * semiMajor - focusOffset;
+      const y = centerY + Math.sin(angle) * semiMinor * yScale;
+      const tailAngle = Math.atan2(y - centerY, x - centerX);
+      const tailLength = 28 * scale;
+
+      drawTrail(comet.name, comet.color);
+      if (!settings.paused) {
+        recordTrail(comet.name, x, y, 170);
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(183, 255, 242, 0.14)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(centerX - focusOffset, centerY, semiMajor, semiMinor * yScale, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const gradient = ctx.createLinearGradient(x, y, x + Math.cos(tailAngle) * tailLength, y + Math.sin(tailAngle) * tailLength);
+      gradient.addColorStop(0, "rgba(220, 255, 250, 0.92)");
+      gradient.addColorStop(1, "rgba(117, 215, 255, 0)");
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 3 * scale;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + Math.cos(tailAngle) * tailLength, y + Math.sin(tailAngle) * tailLength);
+      ctx.stroke();
+
+      ctx.fillStyle = "#dffffa";
+      ctx.shadowColor = "rgba(183, 255, 242, 0.72)";
+      ctx.shadowBlur = 12 * scale;
+      ctx.beginPath();
+      ctx.arc(x, y, Math.max(2.2, 3.4 * scale), 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      if (settings.showLabels) {
+        ctx.fillStyle = "rgba(226, 255, 250, 0.72)";
+        ctx.fillText(comet.name, x, y - 13 * scale);
+      }
+
+      ctx.restore();
+      solarTargets.push({
+        x,
+        y,
+        radius: 4 * scale,
+        hitRadius: Math.max(14, 10 * scale),
+        data: comet.info
+      });
+    }
+
+    function drawFocusMarker(target) {
+      if (!target) {
+        return;
+      }
+
+      const pulse = 0.5 + Math.sin(simulationTime * 5) * 0.5;
+      const radius = target.hitRadius + 8 + pulse * 5;
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(119, 215, 255, 0.88)";
+      ctx.lineWidth = 2;
+      ctx.shadowColor = "rgba(119, 215, 255, 0.78)";
+      ctx.shadowBlur = 14;
+      ctx.beginPath();
+      ctx.arc(target.x, target.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      if (settings.magnifierEnabled) {
+        pointer.x = target.x;
+        pointer.y = target.y;
+        pointer.active = true;
+      }
+    }
+
+    function drawMeasurementLine() {
+      if (measurement.points.length === 0) {
+        return;
+      }
+
+      const current = measurement.points
+        .map((point) => solarTargets.find((target) => target.data.name === point.data.name))
+        .filter(Boolean);
+
+      if (current.length === 0) {
+        return;
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(255, 232, 126, 0.82)";
+      ctx.fillStyle = "rgba(255, 244, 184, 0.92)";
+      ctx.lineWidth = 1.6;
+      current.forEach((target) => {
+        ctx.beginPath();
+        ctx.arc(target.x, target.y, target.hitRadius + 4, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      if (current.length === 2) {
+        const [a, b] = current;
+        const distance = Math.hypot(a.x - b.x, a.y - b.y).toFixed(1);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+        ctx.fillText(`${distance}px`, (a.x + b.x) / 2, (a.y + b.y) / 2 - 10);
+      }
+
+      ctx.restore();
+    }
+
     function drawSolarSystem(time) {
       const minSize = Math.min(width, height);
       const scale = Math.max(0.64, Math.min(minSize / 820, 1.15));
       const centerX = width * 0.5;
       const centerY = height * 0.54;
       const yScale = 0.56;
-      const minOrbit = Math.max(40, minSize * 0.09);
+      const minOrbit = settings.scaleMode === "relative" ? Math.max(34, minSize * 0.06) : Math.max(40, minSize * 0.09);
       const maxOrbit = Math.max(minOrbit + 180 * scale, minSize * 0.43);
-      const earthDays = (time / 1000) * 8;
+      const earthDays = time * 8;
+      let focusTarget = null;
 
       ctx.save();
       solarTargets.length = 0;
@@ -894,15 +1427,31 @@
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
+      drawAsteroidBelt(centerX, centerY, minOrbit, maxOrbit, yScale, earthDays);
+      drawComet(centerX, centerY, maxOrbit, yScale, earthDays, scale);
+
       planets.forEach((planet, index) => {
-        const orbitRadius = minOrbit + ((maxOrbit - minOrbit) * index) / (planets.length - 1);
+        const orbitProgress = settings.scaleMode === "relative"
+          ? Math.pow(index / (planets.length - 1), 1.45)
+          : index / (planets.length - 1);
+        const orbitRadius = minOrbit + (maxOrbit - minOrbit) * orbitProgress;
         const orbitAngle = planet.start + (earthDays / (planet.orbitYears * 365.25)) * Math.PI * 2;
         const rotationAngle = (earthDays * 24 / planet.rotationHours) * Math.PI * 2;
         const x = centerX + Math.cos(orbitAngle) * orbitRadius;
         const y = centerY + Math.sin(orbitAngle) * orbitRadius * yScale;
-        const visualRadius = Math.max(2.6, planet.radius * scale);
+        const visualRadius = settings.scaleMode === "relative"
+          ? Math.max(2.1, Math.sqrt(planet.radius) * 2.1 * scale)
+          : Math.max(2.6, planet.radius * scale);
 
-        drawOrbit(centerX, centerY, orbitRadius, yScale);
+        if (settings.showOrbits) {
+          drawOrbit(centerX, centerY, orbitRadius, yScale);
+        }
+
+        drawTrail(planet.name, planet.color);
+        if (!settings.paused) {
+          recordTrail(planet.name, x, y);
+        }
+
         ctx.shadowColor = planet.color;
         ctx.shadowBlur = 10 * scale;
         drawPlanetBody(planet, x, y, visualRadius, orbitAngle, rotationAngle);
@@ -916,12 +1465,23 @@
         });
 
         if (planet.name === "地球") {
-          solarTargets.push(drawMoon(x, y, visualRadius, earthDays, scale));
+          const moonTarget = drawMoon(x, y, visualRadius, earthDays, scale);
+          solarTargets.push(moonTarget);
+          drawTrail("月亮", "#cfd5df");
+          if (!settings.paused) {
+            recordTrail("月亮", moonTarget.x, moonTarget.y, 120);
+          }
         }
 
-        ctx.fillStyle = "rgba(226, 236, 255, 0.72)";
-        ctx.fillText(planet.name, x, y - visualRadius - 10 * scale);
+        if (settings.showLabels) {
+          ctx.fillStyle = "rgba(226, 236, 255, 0.72)";
+          ctx.fillText(planet.name, x, y - visualRadius - 10 * scale);
+        }
       });
+
+      focusTarget = solarTargets.find((target) => target.data.name === settings.focusTarget);
+      drawFocusMarker(focusTarget);
+      drawMeasurementLine();
 
       ctx.restore();
     }
@@ -1168,16 +1728,24 @@
       const delta = Math.min((now - lastTime) / 1000, 0.033);
       lastTime = now;
 
+      if (!settings.paused) {
+        simulationTime += delta * settings.timeSpeed;
+      }
+
       drawBackground();
-      drawStars(now);
-      drawSolarSystem(now);
+      if (settings.showStars) {
+        drawStars(now);
+      }
+      drawSolarSystem(simulationTime);
       captureScene();
       drawMagnifier();
 
-      for (let i = meteors.length - 1; i >= 0; i -= 1) {
-        drawMeteor(meteors[i], delta);
-        if (meteors[i].age > meteors[i].life) {
-          meteors.splice(i, 1);
+      if (settings.showMeteors) {
+        for (let i = meteors.length - 1; i >= 0; i -= 1) {
+          drawMeteor(meteors[i], delta);
+          if (meteors[i].age > meteors[i].life) {
+            meteors.splice(i, 1);
+          }
         }
       }
 
@@ -1194,26 +1762,85 @@
 
       if (target) {
         showInfo(target);
+        if (settings.measureMode) {
+          addMeasurementTarget(target);
+        }
         return;
       }
 
-      createMeteor(event.clientX, event.clientY);
+      if (settings.showMeteors) {
+        createMeteor(event.clientX, event.clientY);
+      }
     });
     window.addEventListener("contextmenu", (event) => {
       event.preventDefault();
-
-      if (controls.contains(event.target) || infoPanel.contains(event.target)) {
-        return;
-      }
-
-      magnifierControl.checked = !magnifierControl.checked;
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-      pointer.active = magnifierControl.checked;
-      updateMagnifierSetting();
     });
     infoClose.addEventListener("click", () => {
       infoPanel.hidden = true;
+    });
+    infoFocusControl.addEventListener("click", () => {
+      if (selectedInfoTarget) {
+        setFocusTarget(selectedInfoTarget);
+      }
+    });
+    infoMeasureControl.addEventListener("click", () => {
+      if (!selectedInfoTarget) {
+        return;
+      }
+
+      const target = solarTargets.find((item) => item.data.name === selectedInfoTarget);
+      if (target) {
+        measureControl.checked = true;
+        updateDisplaySettings();
+        addMeasurementTarget(target);
+      }
+    });
+    timeSpeedControl.addEventListener("input", updateTimeSetting);
+    pauseControl.addEventListener("click", () => {
+      settings.paused = !settings.paused;
+      pauseControl.textContent = settings.paused ? "继续" : "暂停";
+    });
+    resetTimeControl.addEventListener("click", () => {
+      simulationTime = 0;
+      planetTrails.clear();
+      measurement.points = [];
+      clearMeasurement();
+    });
+    scaleModeControl.addEventListener("change", () => {
+      planetTrails.clear();
+      updateDisplaySettings();
+    });
+    locateControl.addEventListener("click", () => {
+      locateTarget(targetSelect.value, false);
+    });
+    focusControl.addEventListener("click", () => {
+      if (settings.focusTarget === targetSelect.value) {
+        setFocusTarget("");
+      } else {
+        locateTarget(targetSelect.value, true);
+      }
+    });
+    targetSelect.addEventListener("change", () => {
+      locateTarget(targetSelect.value, false);
+    });
+    measureControl.addEventListener("change", () => {
+      updateDisplaySettings();
+      if (!measureControl.checked) {
+        clearMeasurement();
+        measureBanner.hidden = true;
+      }
+    });
+    clearMeasureControl.addEventListener("click", clearMeasurement);
+    [
+      showTrailsControl,
+      showOrbitsControl,
+      showLabelsControl,
+      showAsteroidsControl,
+      showCometsControl,
+      showMeteorsControl,
+      showStarsControl
+    ].forEach((control) => {
+      control.addEventListener("change", updateDisplaySettings);
     });
     sizeControl.addEventListener("input", () => {
       updateSetting(sizeControl, sizeValue, "size");
@@ -1245,6 +1872,8 @@
 
     updateSetting(sizeControl, sizeValue, "size");
     updateSetting(speedControl, speedValue, "speed");
+    updateTimeSetting();
+    updateDisplaySettings();
     updateMagnifierSetting();
     updateShapeSetting(tailShapeInputs, tailShapeValue, tailShapeSummary, tailShapeNames, "tailShapes", "随机全部拖尾");
     updateShapeSetting(bodyShapeInputs, bodyShapeValue, bodyShapeSummary, bodyShapeNames, "bodyShapes", "随机全部本体");
