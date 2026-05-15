@@ -1,0 +1,1255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>点击流星星空</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(80, 126, 190, 0.22), transparent 26%),
+        radial-gradient(circle at 78% 12%, rgba(181, 85, 180, 0.14), transparent 22%),
+        radial-gradient(circle at 48% 82%, rgba(36, 149, 139, 0.12), transparent 28%),
+        linear-gradient(145deg, #05070f 0%, #0b1024 45%, #030511 100%);
+      cursor: crosshair;
+      user-select: none;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hint {
+      position: fixed;
+      left: 50%;
+      bottom: 34px;
+      transform: translateX(-50%);
+      width: min(88vw, 430px);
+      padding: 12px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(245, 248, 255, 0.82);
+      background: rgba(5, 9, 24, 0.46);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align: center;
+      pointer-events: none;
+      animation: hintFade 4.5s ease 1.4s forwards;
+    }
+
+    .controls {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 2;
+      width: min(280px, calc(100vw - 48px));
+      max-height: calc(100vh - 48px);
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: rgba(245, 248, 255, 0.92);
+      background: rgba(4, 9, 24, 0.66);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(12px);
+      cursor: default;
+      overflow-y: auto;
+    }
+
+    .controls h1 {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .control {
+      display: grid;
+      gap: 9px;
+    }
+
+    .control + .control {
+      margin-top: 18px;
+    }
+
+    .control label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 13px;
+      color: rgba(245, 248, 255, 0.78);
+    }
+
+    .control output {
+      min-width: 52px;
+      color: rgba(255, 255, 255, 0.95);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin: 0;
+      accent-color: #77d7ff;
+      cursor: pointer;
+    }
+
+    .shape-picker {
+      position: relative;
+    }
+
+    .shape-picker summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 36px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .shape-picker summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .shape-picker summary::after {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid rgba(255, 255, 255, 0.72);
+      content: "";
+      transition: transform 0.18s ease;
+    }
+
+    .shape-picker[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .shape-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      left: 0;
+      z-index: 4;
+      display: grid;
+      gap: 4px;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(6, 11, 29, 0.96);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.38);
+    }
+
+    .shape-option {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 9px;
+      padding: 8px;
+      border-radius: 6px;
+      color: rgba(245, 248, 255, 0.86);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .control .shape-option {
+      justify-content: flex-start;
+    }
+
+    .shape-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .shape-option input {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      accent-color: #77d7ff;
+    }
+
+    .toggle-option {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 9px;
+      color: rgba(245, 248, 255, 0.86);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .toggle-option input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #77d7ff;
+    }
+
+    .info-panel {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      z-index: 3;
+      width: min(340px, calc(100vw - 48px));
+      max-height: min(430px, calc(100vh - 48px));
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: rgba(245, 248, 255, 0.92);
+      background: rgba(4, 9, 24, 0.72);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.36);
+      backdrop-filter: blur(12px);
+      overflow-y: auto;
+    }
+
+    .info-panel[hidden] {
+      display: none;
+    }
+
+    .info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .info-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .info-close {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 9px 12px;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .info-grid dt {
+      color: rgba(190, 213, 246, 0.78);
+    }
+
+    .info-grid dd {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    @media (max-width: 640px) {
+      .controls {
+        top: 14px;
+        right: 14px;
+        width: min(240px, calc(100vw - 28px));
+        max-height: calc(100vh - 28px);
+        padding: 14px;
+      }
+
+      .hint {
+        bottom: 18px;
+      }
+
+      .info-panel {
+        left: 14px;
+        bottom: 14px;
+        width: min(300px, calc(100vw - 28px));
+        max-height: min(360px, calc(100vh - 28px));
+      }
+    }
+
+    @keyframes hintFade {
+      to {
+        opacity: 0;
+        transform: translate(-50%, 12px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <aside class="controls" id="controls" aria-label="流星控制选项">
+    <h1>流星设置</h1>
+    <div class="control">
+      <label for="sizeControl">
+        大小
+        <output id="sizeValue" for="sizeControl">1.6x</output>
+      </label>
+      <input id="sizeControl" type="range" min="0.6" max="3.2" step="0.1" value="1.6">
+    </div>
+    <div class="control">
+      <label for="speedControl">
+        速度
+        <output id="speedValue" for="speedControl">0.6x</output>
+      </label>
+      <input id="speedControl" type="range" min="0.25" max="1.8" step="0.05" value="0.6">
+    </div>
+    <div class="control">
+      <label class="toggle-option" for="magnifierControl">
+        <input id="magnifierControl" type="checkbox" checked>
+        局部放大
+      </label>
+    </div>
+    <div class="control">
+      <label for="magnifierZoomControl">
+        放大倍数
+        <output id="magnifierZoomValue" for="magnifierZoomControl">2.2x</output>
+      </label>
+      <input id="magnifierZoomControl" type="range" min="1.2" max="5" step="0.1" value="2.2">
+    </div>
+    <div class="control">
+      <label for="magnifierRadiusControl">
+        镜头大小
+        <output id="magnifierRadiusValue" for="magnifierRadiusControl">90px</output>
+      </label>
+      <input id="magnifierRadiusControl" type="range" min="54" max="160" step="2" value="90">
+    </div>
+    <div class="control">
+      <label for="tailShapePicker">
+        拖尾形状
+        <output id="tailShapeValue" for="tailShapePicker">5种</output>
+      </label>
+      <details class="shape-picker" id="tailShapePicker">
+        <summary id="tailShapeSummary">随机全部拖尾</summary>
+        <div class="shape-menu">
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="trail" checked>
+            经典拖尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="comet" checked>
+            粗亮彗尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="double" checked>
+            双尾流光
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="flare" checked>
+            爆闪短尾
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorTailShape" value="blade" checked>
+            光刃切线
+          </label>
+        </div>
+      </details>
+    </div>
+    <div class="control">
+      <label for="bodyShapePicker">
+        本体形状
+        <output id="bodyShapeValue" for="bodyShapePicker">5种</output>
+      </label>
+      <details class="shape-picker" id="bodyShapePicker">
+        <summary id="bodyShapeSummary">随机全部本体</summary>
+        <div class="shape-menu">
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="oval" checked>
+            椭圆光核
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="comet" checked>
+            彗星光团
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="double" checked>
+            双光点
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="star" checked>
+            星芒核心
+          </label>
+          <label class="shape-option">
+            <input type="checkbox" name="meteorBodyShape" value="blade" checked>
+            菱形光刃
+          </label>
+        </div>
+      </details>
+    </div>
+  </aside>
+  <section class="info-panel" id="infoPanel" hidden aria-live="polite">
+    <div class="info-header">
+      <h2 class="info-title" id="infoTitle">天体信息</h2>
+      <button class="info-close" id="infoClose" type="button" aria-label="关闭信息">×</button>
+    </div>
+    <dl class="info-grid" id="infoGrid"></dl>
+  </section>
+  <div class="hint">动态太阳系背景中，点击任意位置生成随机流星</div>
+
+  <script>
+    const canvas = document.getElementById("sky");
+    const ctx = canvas.getContext("2d");
+    const sceneBuffer = document.createElement("canvas");
+    const sceneCtx = sceneBuffer.getContext("2d");
+    const controls = document.getElementById("controls");
+    const sizeControl = document.getElementById("sizeControl");
+    const speedControl = document.getElementById("speedControl");
+    const magnifierControl = document.getElementById("magnifierControl");
+    const magnifierZoomControl = document.getElementById("magnifierZoomControl");
+    const magnifierRadiusControl = document.getElementById("magnifierRadiusControl");
+    const infoPanel = document.getElementById("infoPanel");
+    const infoTitle = document.getElementById("infoTitle");
+    const infoGrid = document.getElementById("infoGrid");
+    const infoClose = document.getElementById("infoClose");
+    const sizeValue = document.getElementById("sizeValue");
+    const speedValue = document.getElementById("speedValue");
+    const magnifierZoomValue = document.getElementById("magnifierZoomValue");
+    const magnifierRadiusValue = document.getElementById("magnifierRadiusValue");
+    const tailShapeValue = document.getElementById("tailShapeValue");
+    const tailShapeSummary = document.getElementById("tailShapeSummary");
+    const bodyShapeValue = document.getElementById("bodyShapeValue");
+    const bodyShapeSummary = document.getElementById("bodyShapeSummary");
+    const tailShapeInputs = [...document.querySelectorAll("input[name='meteorTailShape']")];
+    const bodyShapeInputs = [...document.querySelectorAll("input[name='meteorBodyShape']")];
+    const stars = [];
+    const meteors = [];
+    const solarTargets = [];
+
+    let width = 0;
+    let height = 0;
+    let pixelRatio = 1;
+    const pointer = {
+      x: 0,
+      y: 0,
+      active: false
+    };
+    const settings = {
+      size: Number(sizeControl.value),
+      speed: Number(speedControl.value),
+      magnifierEnabled: magnifierControl.checked,
+      magnifierZoom: Number(magnifierZoomControl.value),
+      magnifierRadius: Number(magnifierRadiusControl.value),
+      tailShapes: [],
+      bodyShapes: []
+    };
+    const tailShapeNames = {
+      trail: "经典拖尾",
+      comet: "粗亮彗尾",
+      double: "双尾流光",
+      flare: "爆闪短尾",
+      blade: "光刃切线"
+    };
+    const bodyShapeNames = {
+      oval: "椭圆光核",
+      comet: "彗星光团",
+      double: "双光点",
+      star: "星芒核心",
+      blade: "菱形光刃"
+    };
+
+    const random = (min, max) => Math.random() * (max - min) + min;
+    const planets = [
+      { name: "水星", color: "#b8aa98", orbitYears: 0.2408, rotationHours: 1407.6, radius: 3.1, start: 0.7, diameter: "4,879 km", mass: "3.30 × 10^23 kg", gravity: "3.70 m/s²", orbitSpeed: "47.4 km/s", day: "58.6 个地球日", year: "88 个地球日", note: "太阳系中最小且离太阳最近的行星。" },
+      { name: "金星", color: "#e1b66f", orbitYears: 0.6152, rotationHours: -5832.5, radius: 4.5, start: 2.2, diameter: "12,104 km", mass: "4.87 × 10^24 kg", gravity: "8.87 m/s²", orbitSpeed: "35.0 km/s", day: "243 个地球日，逆向自转", year: "225 个地球日", note: "厚重大气带来强烈温室效应。" },
+      { name: "地球", color: "#4f9cff", orbitYears: 1, rotationHours: 23.9, radius: 4.8, start: 3.7, diameter: "12,742 km", mass: "5.97 × 10^24 kg", gravity: "9.81 m/s²", orbitSpeed: "29.8 km/s", day: "23.9 小时", year: "365.25 天", note: "拥有液态水海洋和一颗天然卫星月亮。" },
+      { name: "火星", color: "#d06b45", orbitYears: 1.8808, rotationHours: 24.6, radius: 3.8, start: 5.1, diameter: "6,779 km", mass: "6.42 × 10^23 kg", gravity: "3.71 m/s²", orbitSpeed: "24.1 km/s", day: "24.6 小时", year: "687 个地球日", note: "表面富含氧化铁，呈红色外观。" },
+      { name: "木星", color: "#d2aa77", orbitYears: 11.862, rotationHours: 9.9, radius: 8.6, start: 1.4, diameter: "139,820 km", mass: "1.90 × 10^27 kg", gravity: "24.79 m/s²", orbitSpeed: "13.1 km/s", day: "9.9 小时", year: "11.86 个地球年", note: "太阳系最大行星，拥有明显云带和大红斑。" },
+      { name: "土星", color: "#dcc58f", orbitYears: 29.457, rotationHours: 10.7, radius: 7.6, start: 4.4, ring: true, diameter: "116,460 km", mass: "5.68 × 10^26 kg", gravity: "10.44 m/s²", orbitSpeed: "9.7 km/s", day: "10.7 小时", year: "29.46 个地球年", note: "以宽阔明亮的行星环著称。" },
+      { name: "天王星", color: "#8de2e6", orbitYears: 84.011, rotationHours: -17.2, radius: 6.2, start: 0.1, ring: true, diameter: "50,724 km", mass: "8.68 × 10^25 kg", gravity: "8.69 m/s²", orbitSpeed: "6.8 km/s", day: "17.2 小时，逆向自转", year: "84 个地球年", note: "自转轴高度倾斜，几乎像躺着公转。" },
+      { name: "海王星", color: "#4d73e7", orbitYears: 164.8, rotationHours: 16.1, radius: 6.1, start: 2.9, diameter: "49,244 km", mass: "1.02 × 10^26 kg", gravity: "11.15 m/s²", orbitSpeed: "5.4 km/s", day: "16.1 小时", year: "164.8 个地球年", note: "太阳系最外侧的已知大行星，风速极高。" }
+    ];
+    const sunInfo = {
+      name: "太阳",
+      type: "恒星",
+      diameter: "约 1,392,700 km",
+      mass: "1.989 × 10^30 kg",
+      gravity: "约 274 m/s²",
+      orbitSpeed: "太阳系中心天体",
+      day: "赤道约 25 天自转一周",
+      year: "太阳系行星围绕它公转",
+      note: "通过核聚变释放能量，是太阳系主要光和热来源。"
+    };
+    const moonInfo = {
+      name: "月亮",
+      type: "地球天然卫星",
+      diameter: "3,474.8 km",
+      mass: "7.35 × 10^22 kg",
+      gravity: "1.62 m/s²",
+      orbitSpeed: "约 1.02 km/s",
+      day: "自转与公转同步，约 27.3 天",
+      year: "绕地球约 27.3 天一圈",
+      note: "月球引力是地球潮汐的重要来源。"
+    };
+
+    function updateSetting(control, output, key) {
+      settings[key] = Number(control.value);
+      output.value = `${settings[key].toFixed(key === "speed" ? 2 : 1)}x`;
+    }
+
+    function updateMagnifierSetting() {
+      settings.magnifierEnabled = magnifierControl.checked;
+      settings.magnifierZoom = Number(magnifierZoomControl.value);
+      settings.magnifierRadius = Number(magnifierRadiusControl.value);
+      magnifierZoomValue.value = `${settings.magnifierZoom.toFixed(1)}x`;
+      magnifierRadiusValue.value = `${Math.round(settings.magnifierRadius)}px`;
+    }
+
+    function updateShapeSetting(inputs, output, summary, names, settingKey, allText, changedInput) {
+      let selected = inputs.filter((input) => input.checked).map((input) => input.value);
+
+      if (selected.length === 0) {
+        const fallback = changedInput || inputs[0];
+        fallback.checked = true;
+        selected = [fallback.value];
+      }
+
+      settings[settingKey] = selected;
+      output.value = `${selected.length}种`;
+      summary.textContent = selected.length === inputs.length
+        ? allText
+        : selected.map((shape) => names[shape]).join("、");
+    }
+
+    function showInfo(target) {
+      const data = target.data;
+      const rows = [
+        ["类型", data.type || "行星"],
+        ["大小（直径）", data.diameter],
+        ["重量/质量", data.mass],
+        ["表面重力", data.gravity],
+        ["公转速度", data.orbitSpeed],
+        ["自转周期", data.day],
+        ["公转周期", data.year],
+        ["补充", data.note]
+      ];
+
+      infoTitle.textContent = data.name;
+      infoGrid.innerHTML = rows
+        .filter(([, value]) => Boolean(value))
+        .map(([label, value]) => `<dt>${label}</dt><dd>${value}</dd>`)
+        .join("");
+      infoPanel.hidden = false;
+    }
+
+    function findSolarTarget(x, y) {
+      for (let i = solarTargets.length - 1; i >= 0; i -= 1) {
+        const target = solarTargets[i];
+        const distance = Math.hypot(x - target.x, y - target.y);
+
+        if (distance <= target.hitRadius) {
+          return target;
+        }
+      }
+
+      return null;
+    }
+
+    function resize() {
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * pixelRatio);
+      canvas.height = Math.floor(height * pixelRatio);
+      sceneBuffer.width = canvas.width;
+      sceneBuffer.height = canvas.height;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      createStars();
+    }
+
+    function createStars() {
+      stars.length = 0;
+      const count = Math.floor((width * height) / 4200);
+
+      for (let i = 0; i < count; i += 1) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: random(0.35, 1.65),
+          alpha: random(0.28, 0.95),
+          twinkle: random(0.006, 0.024),
+          phase: random(0, Math.PI * 2),
+          tint: Math.random() > 0.78 ? "190, 215, 255" : "255, 255, 255"
+        });
+      }
+    }
+
+    function createMeteor(x, y) {
+      const hue = Math.floor(random(0, 360));
+      const angle = random(0, Math.PI * 2);
+      const size = random(0.95, 2.45) * settings.size;
+      const speed = random(520, 900) * settings.speed;
+      const tail = random(170, 340) * Math.sqrt(size);
+      const tailShape = settings.tailShapes[Math.floor(Math.random() * settings.tailShapes.length)] || "trail";
+      const bodyShape = settings.bodyShapes[Math.floor(Math.random() * settings.bodyShapes.length)] || "oval";
+
+      meteors.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        age: 0,
+        life: random(0.65, 1.05),
+        size,
+        tail,
+        tailShape,
+        bodyShape,
+        hue,
+        color: `hsl(${hue} 95% 68%)`,
+        glow: `hsla(${hue}, 100%, 72%, 0.55)`
+      });
+    }
+
+    function drawBackground() {
+      ctx.clearRect(0, 0, width, height);
+
+      const glow = ctx.createRadialGradient(
+        width * 0.52,
+        height * 0.52,
+        0,
+        width * 0.52,
+        height * 0.52,
+        Math.max(width, height) * 0.72
+      );
+      glow.addColorStop(0, "rgba(40, 63, 105, 0.18)");
+      glow.addColorStop(0.48, "rgba(8, 13, 32, 0.08)");
+      glow.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, width, height);
+    }
+
+    function drawStars(time) {
+      for (const star of stars) {
+        const pulse = Math.sin(time * star.twinkle + star.phase) * 0.28;
+        const alpha = Math.max(0.08, Math.min(1, star.alpha + pulse));
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${star.tint}, ${alpha})`;
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function captureScene() {
+      sceneCtx.setTransform(1, 0, 0, 1, 0, 0);
+      sceneCtx.clearRect(0, 0, sceneBuffer.width, sceneBuffer.height);
+      sceneCtx.drawImage(canvas, 0, 0);
+    }
+
+    function drawMagnifier() {
+      if (!settings.magnifierEnabled || !pointer.active) {
+        return;
+      }
+
+      const radius = settings.magnifierRadius;
+      const zoom = settings.magnifierZoom;
+      const sourceSize = (radius * 2) / zoom;
+      const sourcePixels = sourceSize * pixelRatio;
+      const maxSourceX = Math.max(0, sceneBuffer.width - sourcePixels);
+      const maxSourceY = Math.max(0, sceneBuffer.height - sourcePixels);
+      const sourceX = Math.min(Math.max((pointer.x - sourceSize / 2) * pixelRatio, 0), maxSourceX);
+      const sourceY = Math.min(Math.max((pointer.y - sourceSize / 2) * pixelRatio, 0), maxSourceY);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(
+        sceneBuffer,
+        sourceX,
+        sourceY,
+        sourcePixels,
+        sourcePixels,
+        pointer.x - radius,
+        pointer.y - radius,
+        radius * 2,
+        radius * 2
+      );
+
+      const lensGlow = ctx.createRadialGradient(pointer.x, pointer.y, radius * 0.4, pointer.x, pointer.y, radius);
+      lensGlow.addColorStop(0, "rgba(255, 255, 255, 0)");
+      lensGlow.addColorStop(1, "rgba(119, 215, 255, 0.16)");
+      ctx.fillStyle = lensGlow;
+      ctx.fillRect(pointer.x - radius, pointer.y - radius, radius * 2, radius * 2);
+      ctx.restore();
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(171, 228, 255, 0.84)";
+      ctx.lineWidth = 2;
+      ctx.shadowColor = "rgba(119, 215, 255, 0.62)";
+      ctx.shadowBlur = 14;
+      ctx.beginPath();
+      ctx.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.28)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pointer.x - radius * 0.22, pointer.y);
+      ctx.lineTo(pointer.x + radius * 0.22, pointer.y);
+      ctx.moveTo(pointer.x, pointer.y - radius * 0.22);
+      ctx.lineTo(pointer.x, pointer.y + radius * 0.22);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawSun(centerX, centerY, scale) {
+      const sunRadius = Math.max(16, 24 * scale);
+      const aura = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, sunRadius * 4.4);
+
+      aura.addColorStop(0, "rgba(255, 232, 126, 0.82)");
+      aura.addColorStop(0.22, "rgba(255, 156, 54, 0.38)");
+      aura.addColorStop(0.58, "rgba(255, 98, 36, 0.12)");
+      aura.addColorStop(1, "rgba(255, 98, 36, 0)");
+      ctx.fillStyle = aura;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, sunRadius * 4.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      const sun = ctx.createRadialGradient(
+        centerX - sunRadius * 0.32,
+        centerY - sunRadius * 0.35,
+        sunRadius * 0.12,
+        centerX,
+        centerY,
+        sunRadius
+      );
+      sun.addColorStop(0, "#fff7bf");
+      sun.addColorStop(0.42, "#ffd158");
+      sun.addColorStop(1, "#ff7b22");
+      ctx.fillStyle = sun;
+      ctx.shadowColor = "rgba(255, 189, 84, 0.85)";
+      ctx.shadowBlur = 38 * scale;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, sunRadius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = "rgba(255, 255, 255, 0.78)";
+      ctx.font = `${Math.max(11, 12 * scale)}px "Microsoft YaHei", sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText("太阳", centerX, centerY + sunRadius + 18 * scale);
+      return sunRadius;
+    }
+
+    function drawOrbit(centerX, centerY, radius, yScale) {
+      ctx.strokeStyle = "rgba(178, 205, 255, 0.14)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(centerX, centerY, radius, radius * yScale, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    function drawPlanetBody(planet, x, y, radius, orbitAngle, rotationAngle) {
+      const gradient = ctx.createRadialGradient(
+        x - radius * 0.38,
+        y - radius * 0.45,
+        radius * 0.16,
+        x,
+        y,
+        radius
+      );
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+      gradient.addColorStop(0.38, planet.color);
+      gradient.addColorStop(1, "rgba(8, 12, 28, 0.88)");
+
+      if (planet.ring) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(orbitAngle * 0.35 + 0.55);
+        ctx.strokeStyle = planet.name === "土星" ? "rgba(236, 217, 165, 0.58)" : "rgba(175, 241, 246, 0.32)";
+        ctx.lineWidth = Math.max(1, radius * 0.22);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, radius * 1.85, radius * 0.52, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, radius * 0.98, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.translate(x, y);
+      ctx.rotate(rotationAngle);
+      ctx.strokeStyle = planet.name === "地球"
+        ? "rgba(191, 237, 186, 0.5)"
+        : "rgba(255, 255, 255, 0.24)";
+      ctx.lineWidth = Math.max(1, radius * 0.16);
+
+      for (let i = -2; i <= 2; i += 1) {
+        ctx.beginPath();
+        ctx.ellipse(0, i * radius * 0.36, radius * 1.15, radius * 0.12, 0, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawMoon(earthX, earthY, earthRadius, earthDays, scale) {
+      const moonOrbit = Math.max(13 * scale, earthRadius * 3.2);
+      const moonRadius = Math.max(1.3, earthRadius * 0.28);
+      const moonAngle = (earthDays / 27.3217) * Math.PI * 2;
+      const moonX = earthX + Math.cos(moonAngle) * moonOrbit;
+      const moonY = earthY + Math.sin(moonAngle) * moonOrbit * 0.62;
+
+      ctx.strokeStyle = "rgba(210, 220, 238, 0.18)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(earthX, earthY, moonOrbit, moonOrbit * 0.62, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const moon = ctx.createRadialGradient(
+        moonX - moonRadius * 0.35,
+        moonY - moonRadius * 0.35,
+        moonRadius * 0.15,
+        moonX,
+        moonY,
+        moonRadius
+      );
+      moon.addColorStop(0, "#ffffff");
+      moon.addColorStop(0.55, "#cfd5df");
+      moon.addColorStop(1, "#6f7888");
+
+      ctx.fillStyle = moon;
+      ctx.shadowColor = "rgba(230, 238, 255, 0.45)";
+      ctx.shadowBlur = 7 * scale;
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.fillStyle = "rgba(226, 236, 255, 0.62)";
+      ctx.fillText("月亮", moonX, moonY - moonRadius - 8 * scale);
+
+      return {
+        x: moonX,
+        y: moonY,
+        radius: moonRadius,
+        hitRadius: Math.max(12, moonRadius + 8),
+        data: moonInfo
+      };
+    }
+
+    function drawSolarSystem(time) {
+      const minSize = Math.min(width, height);
+      const scale = Math.max(0.64, Math.min(minSize / 820, 1.15));
+      const centerX = width * 0.5;
+      const centerY = height * 0.54;
+      const yScale = 0.56;
+      const minOrbit = Math.max(40, minSize * 0.09);
+      const maxOrbit = Math.max(minOrbit + 180 * scale, minSize * 0.43);
+      const earthDays = (time / 1000) * 8;
+
+      ctx.save();
+      solarTargets.length = 0;
+      const sunRadius = drawSun(centerX, centerY, scale);
+      solarTargets.push({
+        x: centerX,
+        y: centerY,
+        radius: sunRadius,
+        hitRadius: sunRadius + 10,
+        data: sunInfo
+      });
+      ctx.font = `${Math.max(10, 11 * scale)}px "Microsoft YaHei", sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      planets.forEach((planet, index) => {
+        const orbitRadius = minOrbit + ((maxOrbit - minOrbit) * index) / (planets.length - 1);
+        const orbitAngle = planet.start + (earthDays / (planet.orbitYears * 365.25)) * Math.PI * 2;
+        const rotationAngle = (earthDays * 24 / planet.rotationHours) * Math.PI * 2;
+        const x = centerX + Math.cos(orbitAngle) * orbitRadius;
+        const y = centerY + Math.sin(orbitAngle) * orbitRadius * yScale;
+        const visualRadius = Math.max(2.6, planet.radius * scale);
+
+        drawOrbit(centerX, centerY, orbitRadius, yScale);
+        ctx.shadowColor = planet.color;
+        ctx.shadowBlur = 10 * scale;
+        drawPlanetBody(planet, x, y, visualRadius, orbitAngle, rotationAngle);
+        ctx.shadowBlur = 0;
+        solarTargets.push({
+          x,
+          y,
+          radius: visualRadius,
+          hitRadius: Math.max(12, visualRadius + 7),
+          data: planet
+        });
+
+        if (planet.name === "地球") {
+          solarTargets.push(drawMoon(x, y, visualRadius, earthDays, scale));
+        }
+
+        ctx.fillStyle = "rgba(226, 236, 255, 0.72)";
+        ctx.fillText(planet.name, x, y - visualRadius - 10 * scale);
+      });
+
+      ctx.restore();
+    }
+
+    function drawMeteorTail(meteor, opacity, length, angle, widthScale = 1, offset = 0) {
+      const normalX = -Math.sin(angle) * offset;
+      const normalY = Math.cos(angle) * offset;
+      const headX = meteor.x + normalX;
+      const headY = meteor.y + normalY;
+      const tailX = headX - Math.cos(angle) * length;
+      const tailY = headY - Math.sin(angle) * length;
+      const gradient = ctx.createLinearGradient(tailX, tailY, headX, headY);
+
+      gradient.addColorStop(0, `hsla(${meteor.hue}, 100%, 68%, 0)`);
+      gradient.addColorStop(0.32, `hsla(${meteor.hue}, 100%, 68%, ${0.16 * opacity})`);
+      gradient.addColorStop(1, `hsla(${meteor.hue}, 100%, 76%, ${0.95 * opacity})`);
+
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 3.4 * meteor.size * widthScale;
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(headX, headY);
+      ctx.stroke();
+    }
+
+    function drawOvalBody(meteor, opacity, angle, radiusScale = 1, stretch = 1.35) {
+      const radius = 3.8 * meteor.size * radiusScale;
+
+      ctx.save();
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle);
+      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 90%, ${opacity})`;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * stretch, radius, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.84 * opacity})`;
+      ctx.beginPath();
+      ctx.ellipse(radius * 0.42, -radius * 0.18, radius * 0.42, radius * 0.28, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawCometBody(meteor, opacity, angle) {
+      const radius = 7.5 * meteor.size;
+
+      ctx.save();
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle);
+
+      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.4);
+      glow.addColorStop(0, `hsla(${meteor.hue}, 100%, 94%, ${0.95 * opacity})`);
+      glow.addColorStop(0.42, `hsla(${meteor.hue}, 100%, 72%, ${0.55 * opacity})`);
+      glow.addColorStop(1, `hsla(${meteor.hue}, 100%, 68%, 0)`);
+
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * 1.15, radius * 0.92, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * opacity})`;
+      ctx.beginPath();
+      ctx.ellipse(radius * 0.2, -radius * 0.12, radius * 0.38, radius * 0.24, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawDoubleBody(meteor, opacity, angle) {
+      const offset = 5.3 * meteor.size;
+      const radius = 3.1 * meteor.size;
+      const normalX = -Math.sin(angle) * offset;
+      const normalY = Math.cos(angle) * offset;
+
+      ctx.strokeStyle = `hsla(${meteor.hue}, 100%, 80%, ${0.5 * opacity})`;
+      ctx.lineWidth = Math.max(1.2, 1.1 * meteor.size);
+      ctx.beginPath();
+      ctx.moveTo(meteor.x - normalX, meteor.y - normalY);
+      ctx.lineTo(meteor.x + normalX, meteor.y + normalY);
+      ctx.stroke();
+
+      for (const side of [-1, 1]) {
+        ctx.fillStyle = `hsla(${meteor.hue}, 100%, ${side === 1 ? 92 : 82}%, ${opacity})`;
+        ctx.beginPath();
+        ctx.arc(meteor.x + normalX * side, meteor.y + normalY * side, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawStarBody(meteor, opacity, angle) {
+      const points = 8;
+      const outer = 8.2 * meteor.size;
+      const inner = 3.1 * meteor.size;
+
+      ctx.save();
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle + Math.PI / 8);
+      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 88%, ${0.9 * opacity})`;
+      ctx.beginPath();
+
+      for (let i = 0; i < points * 2; i += 1) {
+        const radius = i % 2 === 0 ? outer : inner;
+        const pointAngle = (Math.PI * i) / points;
+        const x = Math.cos(pointAngle) * radius;
+        const y = Math.sin(pointAngle) * radius;
+
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.88 * opacity})`;
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.2 * meteor.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBladeBody(meteor, opacity, angle) {
+      const length = 11 * meteor.size;
+      const width = 4.8 * meteor.size;
+
+      ctx.save();
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle);
+      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 88%, ${0.92 * opacity})`;
+      ctx.beginPath();
+      ctx.moveTo(length, 0);
+      ctx.lineTo(0, width);
+      ctx.lineTo(-length * 0.62, 0);
+      ctx.lineTo(0, -width);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.72 * opacity})`;
+      ctx.beginPath();
+      ctx.moveTo(length * 0.58, 0);
+      ctx.lineTo(0, width * 0.36);
+      ctx.lineTo(-length * 0.18, 0);
+      ctx.lineTo(0, -width * 0.36);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawFlareTail(meteor, opacity, angle) {
+      const rayLength = 14 * meteor.size;
+
+      ctx.strokeStyle = `hsla(${meteor.hue}, 100%, 82%, ${0.72 * opacity})`;
+      ctx.lineWidth = Math.max(1.2, 1.3 * meteor.size);
+
+      for (let i = 0; i < 4; i += 1) {
+        const rayAngle = angle + (Math.PI / 4) + i * (Math.PI / 2);
+        ctx.beginPath();
+        ctx.moveTo(meteor.x - Math.cos(rayAngle) * rayLength * 0.35, meteor.y - Math.sin(rayAngle) * rayLength * 0.35);
+        ctx.lineTo(meteor.x + Math.cos(rayAngle) * rayLength, meteor.y + Math.sin(rayAngle) * rayLength);
+        ctx.stroke();
+      }
+    }
+
+    function drawBlade(meteor, opacity, length, angle) {
+      const widthScale = 6 * meteor.size;
+      const normalX = -Math.sin(angle) * widthScale;
+      const normalY = Math.cos(angle) * widthScale;
+      const tailX = meteor.x - Math.cos(angle) * length * 0.76;
+      const tailY = meteor.y - Math.sin(angle) * length * 0.76;
+
+      const gradient = ctx.createLinearGradient(tailX, tailY, meteor.x, meteor.y);
+      gradient.addColorStop(0, `hsla(${meteor.hue}, 100%, 68%, 0)`);
+      gradient.addColorStop(0.7, `hsla(${meteor.hue}, 100%, 72%, ${0.2 * opacity})`);
+      gradient.addColorStop(1, `hsla(${meteor.hue}, 100%, 88%, ${0.9 * opacity})`);
+
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(meteor.x + normalX, meteor.y + normalY);
+      ctx.lineTo(tailX, tailY);
+      ctx.lineTo(meteor.x - normalX, meteor.y - normalY);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawMeteorBody(meteor, opacity, angle) {
+      ctx.shadowBlur = 34 * meteor.size;
+
+      if (meteor.bodyShape === "comet") {
+        ctx.shadowBlur = 42 * meteor.size;
+        drawCometBody(meteor, opacity, angle);
+      } else if (meteor.bodyShape === "double") {
+        drawDoubleBody(meteor, opacity, angle);
+      } else if (meteor.bodyShape === "star") {
+        ctx.shadowBlur = 38 * meteor.size;
+        drawStarBody(meteor, opacity, angle);
+      } else if (meteor.bodyShape === "blade") {
+        drawBladeBody(meteor, opacity, angle);
+      } else {
+        drawOvalBody(meteor, opacity, angle);
+      }
+    }
+
+    function drawMeteorTailByShape(meteor, opacity, length, angle) {
+      if (meteor.tailShape === "comet") {
+        drawMeteorTail(meteor, opacity, length * 0.88, angle, 1.8);
+      } else if (meteor.tailShape === "double") {
+        drawMeteorTail(meteor, opacity, length, angle, 0.72, 5.2 * meteor.size);
+        drawMeteorTail(meteor, opacity, length * 0.86, angle, 0.72, -5.2 * meteor.size);
+      } else if (meteor.tailShape === "flare") {
+        drawMeteorTail(meteor, opacity, length * 0.72, angle, 0.9);
+        drawFlareTail(meteor, opacity, angle);
+      } else if (meteor.tailShape === "blade") {
+        drawBlade(meteor, opacity, length, angle);
+      } else {
+        drawMeteorTail(meteor, opacity, length, angle);
+      }
+    }
+
+    function drawMeteor(meteor, delta) {
+      meteor.age += delta;
+      meteor.x += meteor.vx * delta;
+      meteor.y += meteor.vy * delta;
+
+      const progress = meteor.age / meteor.life;
+      const opacity = Math.sin(Math.min(progress, 1) * Math.PI);
+      const length = meteor.tail * (0.72 + opacity * 0.28);
+      const angle = Math.atan2(meteor.vy, meteor.vx);
+
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.shadowColor = meteor.glow;
+      ctx.shadowBlur = 22 * meteor.size;
+
+      drawMeteorTailByShape(meteor, opacity, length, angle);
+      drawMeteorBody(meteor, opacity, angle);
+
+      ctx.restore();
+    }
+
+    let lastTime = performance.now();
+
+    function animate(now) {
+      const delta = Math.min((now - lastTime) / 1000, 0.033);
+      lastTime = now;
+
+      drawBackground();
+      drawStars(now);
+      drawSolarSystem(now);
+      captureScene();
+      drawMagnifier();
+
+      for (let i = meteors.length - 1; i >= 0; i -= 1) {
+        drawMeteor(meteors[i], delta);
+        if (meteors[i].age > meteors[i].life) {
+          meteors.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("click", (event) => {
+      if (controls.contains(event.target) || infoPanel.contains(event.target)) {
+        return;
+      }
+
+      const target = findSolarTarget(event.clientX, event.clientY);
+
+      if (target) {
+        showInfo(target);
+        return;
+      }
+
+      createMeteor(event.clientX, event.clientY);
+    });
+    window.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+
+      if (controls.contains(event.target) || infoPanel.contains(event.target)) {
+        return;
+      }
+
+      magnifierControl.checked = !magnifierControl.checked;
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      pointer.active = magnifierControl.checked;
+      updateMagnifierSetting();
+    });
+    infoClose.addEventListener("click", () => {
+      infoPanel.hidden = true;
+    });
+    sizeControl.addEventListener("input", () => {
+      updateSetting(sizeControl, sizeValue, "size");
+    });
+    speedControl.addEventListener("input", () => {
+      updateSetting(speedControl, speedValue, "speed");
+    });
+    magnifierControl.addEventListener("change", updateMagnifierSetting);
+    magnifierZoomControl.addEventListener("input", updateMagnifierSetting);
+    magnifierRadiusControl.addEventListener("input", updateMagnifierSetting);
+    tailShapeInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        updateShapeSetting(tailShapeInputs, tailShapeValue, tailShapeSummary, tailShapeNames, "tailShapes", "随机全部拖尾", input);
+      });
+    });
+    bodyShapeInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        updateShapeSetting(bodyShapeInputs, bodyShapeValue, bodyShapeSummary, bodyShapeNames, "bodyShapes", "随机全部本体", input);
+      });
+    });
+    window.addEventListener("pointermove", (event) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      pointer.active = !controls.contains(event.target) && !infoPanel.contains(event.target);
+    });
+    window.addEventListener("pointerleave", () => {
+      pointer.active = false;
+    });
+
+    updateSetting(sizeControl, sizeValue, "size");
+    updateSetting(speedControl, speedValue, "speed");
+    updateMagnifierSetting();
+    updateShapeSetting(tailShapeInputs, tailShapeValue, tailShapeSummary, tailShapeNames, "tailShapes", "随机全部拖尾");
+    updateShapeSetting(bodyShapeInputs, bodyShapeValue, bodyShapeSummary, bodyShapeNames, "bodyShapes", "随机全部本体");
+    resize();
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
