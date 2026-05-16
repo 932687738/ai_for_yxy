@@ -4,12 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间">
-      <change beforePath="$PROJECT_DIR$/.idea/ai_for_learing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ai_for_learing.iml" afterDir="false" />
+    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="教学进度">
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/14种常见的Prompt策略.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/6个机器学习的核心算法.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/AI大模型提示词技巧.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/API调用大模型.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/Agent进入深水区后的十大趋势.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/Docker 命令汇总.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/RAG聊天机器人 VS AI Agent：哪个更高效？.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/【图文】大模型算法岗常见面试题及答案解析.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/【大模型项目实战】使用RAG技术构建企业级文档问答系统之QA抽取，非常详细！（含开源代码）.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/一篇搞懂大模型LLM.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/人工智能Agent的基本原理与架构.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大数据预处理方法总结.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大时间序列模型最强总结手册 (无图版).md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大时间序列模型最强总结手册.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/各个行业的AI大模型：医疗、心理、法律、金融、教育.....md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/基准测试（Benchmark）.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大型语言模型的11种高效微调方法.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大模型提示词工程分类.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大模型部署：Rerank 模型的部署及使用.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/掌握AI项目成功的10个关键步骤.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/高级RAG技术.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_PROGRESS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/COURSE_TASKS.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/COURSE_TASKS.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" beforeDir="false" afterPath="$PROJECT_DIR$/study/chapters/07-cnn-rnn-transformer-intro.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +44,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/932687738/ai_for_learing.git&quot;,
-    &quot;accountId&quot;: &quot;bfd8cec1-f587-4317-8f13-c69f1a6e56b6&quot;
+    &quot;url&quot;: &quot;https://github.com/932687738/ai_for_yxy.git&quot;,
+    &quot;accountId&quot;: &quot;84950aed-b69e-44d0-a06e-aaa04fb1f43d&quot;
   }
 }</component>
   <component name="MarkdownSettingsMigration">
@@ -40,24 +57,39 @@
   <component name="ProjectId" id="3DeFIBVCXDrn1GH0RQcQJebrRRE" />
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.vanilla_rnn_numpy_demo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.vanilla_rnn_numpy_demo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/cache/workspace/ai_for_learing/study/pdf_md",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\cache\workspace\ai_for_learing\study\pdf_md" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\cache\workspace\ai_for_learing\study\pdf_md\complete" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="cnn_valid_conv_numpy_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ai_for_learing" />
@@ -205,6 +237,8 @@
       <workItem from="1778637168484" duration="4874000" />
       <workItem from="1778721891218" duration="45000" />
       <workItem from="1778758222598" duration="3416000" />
+      <workItem from="1778835885130" duration="1599000" />
+      <workItem from="1778897455691" duration="609000" />
     </task>
     <task id="LOCAL-00001" summary="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径">
       <option name="closed" value="true" />
@@ -254,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1778760704479</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="教学进度">
+      <option name="closed" value="true" />
+      <created>1778835959366</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1778835959366</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +309,10 @@
     <MESSAGE value="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据" />
     <MESSAGE value="feat(study): 完善CNN课程内容并新增向量数据库管理工具&#10;&#10;- 补充CNN核心概念讲解包括卷积运算、核权重、特征图和池化详解&#10;- 新增三个NumPy演示脚本用于可视化卷积和池化过程&#10;- 添加课程进度跟踪和外部依赖说明&#10;- 开发ChromaDB命令行工具支持CRUD操作和多种连接模式&#10;- 更新项目规则文档集成向量数据库操作入口" />
     <MESSAGE value="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(knowledge-base): 添加 GitHub star 排行榜功能&#10;&#10;- 在知识库摘要流程中集成 GitHub 按 star 排序的前十名仓库统计&#10;- 新增 dailyReport/github-topz.md 文件用于存储排行榜数据&#10;- 添加 update_github_topz.py 工具脚本实现排行榜自动更新&#10;- 修改 dual-digest-on-pull 规则文档说明双 digest 流程变更&#10;- 在知识库摘要技能文档中添加 GitHub star 十强相关说明&#10;- 实现排行榜数据与历史数据的合并排序逻辑&#10;- 添加上海时区的时间戳记录每次更新时间" />
+    <MESSAGE value="教学进度" />
+    <option name="LAST_COMMIT_MESSAGE" value="教学进度" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ai_for_learing$vanilla_rnn_numpy_demo.coverage" NAME="vanilla_rnn_numpy_demo Coverage Results" MODIFIED="1778826911757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ai-learning/07-cnn-rnn-transformer-intro/scripts" />
   </component>
 </project>
