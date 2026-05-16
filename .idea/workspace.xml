@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="教学进度">
+    <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/meteor-stars.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/meteor-stars.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/14种常见的Prompt策略.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/6个机器学习的核心算法.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/AI大模型提示词技巧.md" afterDir="false" />
@@ -26,7 +28,6 @@
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大模型部署：Rerank 模型的部署及使用.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/掌握AI项目成功的10个关键步骤.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/高级RAG技术.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

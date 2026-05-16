@@ -36,6 +36,10 @@
     const infoMeasureControl = document.getElementById("infoMeasureControl");
     const measureBanner = document.getElementById("measureBanner");
     const timeSpeedValue = document.getElementById("timeSpeedValue");
+    const pageOpenedValue = document.getElementById("pageOpenedValue");
+    const simulationDateValue = document.getElementById("simulationDateValue");
+    const simulationElapsedValue = document.getElementById("simulationElapsedValue");
+    const timeScaleValue = document.getElementById("timeScaleValue");
     const solarActivityIntensityValue = document.getElementById("solarActivityIntensityValue");
     const sizeValue = document.getElementById("sizeValue");
     const speedValue = document.getElementById("speedValue");
@@ -63,6 +67,7 @@
     let height = 0;
     let pixelRatio = 1;
     let simulationTime = 0;
+    let lastClockUpdate = 0;
     let selectedInfoTarget = null;
     let teachingTargetName = "";
     const pointer = {
@@ -111,8 +116,15 @@
     };
 
     const random = (min, max) => Math.random() * (max - min) + min;
+    const pageOpenedAt = new Date();
+    const SIMULATED_DAYS_PER_SECOND = 8;
     const AU_IN_KM = 149597870.7;
     const MOON_ORBIT_AU = 384400 / AU_IN_KM;
+    const meteorLimits = {
+      low: 14,
+      medium: 24,
+      high: 34
+    };
     const performanceProfiles = {
       low: { stars: 7600, asteroids: 15000, solarParticles: 0.55 },
       medium: { stars: 4200, asteroids: 9000, solarParticles: 1 },
@@ -228,6 +240,57 @@
     function updateTimeSetting() {
       settings.timeSpeed = Number(timeSpeedControl.value);
       timeSpeedValue.value = `${settings.timeSpeed.toFixed(1)}x`;
+      timeScaleValue.textContent = `1秒 = ${(SIMULATED_DAYS_PER_SECOND * settings.timeSpeed).toFixed(1)}天`;
+    }
+
+    function formatDateTime(date) {
+      return new Intl.DateTimeFormat("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(date);
+    }
+
+    function formatDurationDays(totalDays) {
+      if (totalDays < 1) {
+        const hours = Math.floor(totalDays * 24);
+        const minutes = Math.floor(totalDays * 1440) % 60;
+        return hours > 0 ? `${hours}小时${minutes}分钟` : `${Math.max(0, minutes)}分钟`;
+      }
+
+      const years = Math.floor(totalDays / 365.25);
+      const afterYears = totalDays - years * 365.25;
+      const months = Math.floor(afterYears / 30.4375);
+      const days = Math.floor(afterYears - months * 30.4375);
+      const parts = [];
+
+      if (years) parts.push(`${years}年`);
+      if (months) parts.push(`${months}个月`);
+      if (days || parts.length === 0) parts.push(`${days}天`);
+      return parts.join("");
+    }
+
+    function getSimulatedEarthDays() {
+      return simulationTime * SIMULATED_DAYS_PER_SECOND;
+    }
+
+    function updateSimulationClock(force = false) {
+      const now = performance.now();
+      if (!force && now - lastClockUpdate < 250) {
+        return;
+      }
+
+      lastClockUpdate = now;
+      const elapsedDays = getSimulatedEarthDays();
+      const simulationDate = new Date(pageOpenedAt.getTime() + elapsedDays * 86400000);
+
+      simulationDateValue.textContent = formatDateTime(simulationDate);
+      simulationElapsedValue.textContent = formatDurationDays(elapsedDays);
+      timeScaleValue.textContent = `1秒 = ${(SIMULATED_DAYS_PER_SECOND * settings.timeSpeed).toFixed(1)}天`;
     }
 
     function updateDisplaySettings() {
@@ -707,29 +770,187 @@
     }
 
     function createMeteor(x, y) {
-      const hue = Math.floor(random(0, 360));
+      const palette = [
+        { hue: random(26, 46), edge: random(188, 215), name: "warm" },
+        { hue: random(190, 220), edge: random(34, 50), name: "blue" },
+        { hue: random(275, 320), edge: random(185, 205), name: "violet" },
+        { hue: random(88, 132), edge: random(28, 42), name: "green" }
+      ];
+      const colorSet = palette[Math.floor(random(0, palette.length))];
+      const hue = Math.floor(colorSet.hue);
       const angle = random(0, Math.PI * 2);
-      const size = random(0.95, 2.45) * settings.size;
-      const speed = random(520, 900) * settings.speed;
-      const tail = random(170, 340) * Math.sqrt(size);
+      const size = random(0.82, 1.95) * settings.size;
+      const speed = random(420, 760) * settings.speed;
+      const tail = Math.min(760, random(190, 380) * Math.sqrt(size));
       const tailShape = settings.tailShapes[Math.floor(Math.random() * settings.tailShapes.length)] || "trail";
       const bodyShape = settings.bodyShapes[Math.floor(Math.random() * settings.bodyShapes.length)] || "oval";
+      const fragmentScale = settings.performanceMode === "high" ? 1 : settings.performanceMode === "medium" ? 0.68 : 0.38;
+      const fragmentCount = Math.floor(random(4, 10) * Math.min(1.35, size) * fragmentScale);
+      const fragments = Array.from({ length: fragmentCount }, () => ({
+        along: random(0.08, 0.88),
+        side: random(-1, 1),
+        drift: random(-22, 22),
+        size: random(0.45, 1.9) * Math.sqrt(size),
+        hueShift: random(-14, 18),
+        phase: random(0, Math.PI * 2),
+        lifeBias: random(0.25, 1)
+      }));
 
-      meteors.push({
+      const meteor = {
         x,
         y,
         vx: Math.cos(angle) * speed,
         vy: Math.sin(angle) * speed,
         age: 0,
-        life: random(0.65, 1.05),
+        life: random(0.95, 1.65),
         size,
         tail,
         tailShape,
         bodyShape,
         hue,
+        edgeHue: Math.floor(colorSet.edge),
+        colorTone: colorSet.name,
+        flicker: random(8, 16),
+        phase: random(0, Math.PI * 2),
+        bend: random(-0.18, 0.18),
+        fragments,
         color: `hsl(${hue} 95% 68%)`,
         glow: `hsla(${hue}, 100%, 72%, 0.55)`
-      });
+      };
+
+      meteor.sprite = createMeteorSprite(meteor);
+      meteors.push(meteor);
+
+      const limit = meteorLimits[settings.performanceMode] || meteorLimits.medium;
+      while (meteors.length > limit) {
+        meteors.shift();
+      }
+    }
+
+    function createMeteorSprite(meteor) {
+      const spriteScale = settings.performanceMode === "high" ? 1.25 : settings.performanceMode === "medium" ? 1 : 0.78;
+      const length = Math.max(120, meteor.tail) * spriteScale;
+      const headRadius = meteor.size * (meteor.bodyShape === "comet" ? 10 : meteor.bodyShape === "blade" ? 7.2 : 8.2) * spriteScale;
+      const widthBoost = meteor.tailShape === "comet" ? 3.8 : meteor.tailShape === "double" ? 2.5 : meteor.tailShape === "flare" ? 3.2 : 2.1;
+      const padding = Math.ceil(Math.max(34, headRadius * 2.8));
+      const canvasWidth = Math.ceil(length + padding * 2 + headRadius * 4);
+      const canvasHeight = Math.ceil(Math.max(54, headRadius * widthBoost + padding));
+      const offscreen = document.createElement("canvas");
+      offscreen.width = canvasWidth;
+      offscreen.height = canvasHeight;
+
+      const mctx = offscreen.getContext("2d");
+      const headX = canvasWidth - padding - headRadius * 1.35;
+      const headY = canvasHeight / 2;
+      const tailStartX = headX - length;
+      const drawCurve = (offset, curve, lineWidth, hue, alpha, lightness = 72, blur = 0) => {
+        const gradient = mctx.createLinearGradient(tailStartX, headY + offset, headX, headY);
+        gradient.addColorStop(0, `hsla(${hue}, 100%, ${lightness - 12}%, 0)`);
+        gradient.addColorStop(0.35, `hsla(${hue}, 100%, ${lightness - 4}%, ${0.08 * alpha})`);
+        gradient.addColorStop(0.78, `hsla(${hue}, 100%, ${lightness}%, ${0.42 * alpha})`);
+        gradient.addColorStop(0.94, `rgba(255, 245, 220, ${0.74 * alpha})`);
+        gradient.addColorStop(1, `rgba(255, 255, 255, ${0.96 * alpha})`);
+
+        mctx.save();
+        mctx.strokeStyle = gradient;
+        mctx.lineWidth = Math.max(0.7, lineWidth);
+        mctx.lineCap = "round";
+        mctx.lineJoin = "round";
+        mctx.shadowColor = `hsla(${hue}, 100%, 70%, ${0.38 * alpha})`;
+        mctx.shadowBlur = blur;
+        mctx.beginPath();
+        mctx.moveTo(tailStartX, headY + offset);
+        mctx.quadraticCurveTo(headX - length * 0.48, headY + offset * 0.45 + curve, headX, headY);
+        mctx.stroke();
+        mctx.restore();
+      };
+
+      mctx.globalCompositeOperation = "lighter";
+
+      const dustWidth = meteor.size * spriteScale * (meteor.tailShape === "comet" ? 26 : meteor.tailShape === "blade" ? 9 : 16);
+      const dustGradient = mctx.createLinearGradient(tailStartX, headY, headX, headY);
+      dustGradient.addColorStop(0, `hsla(${meteor.hue}, 92%, 54%, 0)`);
+      dustGradient.addColorStop(0.52, `hsla(${meteor.hue}, 96%, 62%, 0.08)`);
+      dustGradient.addColorStop(1, `hsla(${meteor.hue}, 100%, 76%, 0.28)`);
+      mctx.fillStyle = dustGradient;
+      mctx.beginPath();
+      mctx.moveTo(headX, headY - dustWidth);
+      mctx.quadraticCurveTo(headX - length * 0.48, headY - dustWidth * 0.36 + meteor.bend * length * 0.1, tailStartX, headY);
+      mctx.quadraticCurveTo(headX - length * 0.48, headY + dustWidth * 0.34 + meteor.bend * length * 0.1, headX, headY + dustWidth);
+      mctx.closePath();
+      mctx.fill();
+
+      const baseWidth = meteor.size * spriteScale * (meteor.tailShape === "blade" ? 2.2 : meteor.tailShape === "comet" ? 6.2 : 4.2);
+      drawCurve(0, meteor.bend * length * 0.06, baseWidth * 2.2, meteor.hue, 0.42, 64, 14 * spriteScale);
+      drawCurve(0, meteor.bend * length * 0.04, baseWidth, meteor.edgeHue, 0.72, 72, 7 * spriteScale);
+      drawCurve(0, 0, Math.max(0.8, baseWidth * 0.38), 42, 0.92, 94, 2 * spriteScale);
+
+      if (meteor.tailShape === "double") {
+        drawCurve(meteor.size * 5.2 * spriteScale, meteor.bend * length * 0.08, baseWidth * 0.52, meteor.edgeHue, 0.58, 72, 5 * spriteScale);
+        drawCurve(-meteor.size * 5.2 * spriteScale, -meteor.bend * length * 0.05, baseWidth * 0.46, meteor.hue, 0.48, 68, 5 * spriteScale);
+      }
+
+      for (const fragment of meteor.fragments) {
+        const x = headX - length * fragment.along;
+        const y = headY + fragment.side * meteor.size * spriteScale * 8.2 * (0.35 + fragment.along);
+        const radius = fragment.size * spriteScale * (meteor.tailShape === "flare" ? 1.35 : 0.9);
+        mctx.fillStyle = `hsla(${meteor.hue + fragment.hueShift}, 100%, 78%, ${0.2 + fragment.lifeBias * 0.22})`;
+        mctx.shadowColor = `hsla(${meteor.edgeHue}, 100%, 74%, 0.32)`;
+        mctx.shadowBlur = radius * 5;
+        mctx.beginPath();
+        mctx.arc(x, y, radius, 0, Math.PI * 2);
+        mctx.fill();
+      }
+
+      const stretch = meteor.bodyShape === "blade" ? 2.1 : meteor.bodyShape === "oval" ? 1.55 : 1.32;
+      const halo = mctx.createRadialGradient(headX, headY, 0, headX, headY, headRadius * 2.25);
+      halo.addColorStop(0, "rgba(255,255,255,0.86)");
+      halo.addColorStop(0.24, `hsla(${meteor.hue}, 100%, 78%, 0.52)`);
+      halo.addColorStop(0.58, `hsla(${meteor.edgeHue}, 100%, 68%, 0.16)`);
+      halo.addColorStop(1, `hsla(${meteor.edgeHue}, 100%, 60%, 0)`);
+      mctx.save();
+      mctx.translate(headX, headY);
+      mctx.fillStyle = halo;
+      mctx.beginPath();
+      mctx.ellipse(0, 0, headRadius * stretch, headRadius, 0, 0, Math.PI * 2);
+      mctx.fill();
+
+      const core = mctx.createRadialGradient(headRadius * 0.22, -headRadius * 0.06, 0, 0, 0, headRadius * 0.9);
+      core.addColorStop(0, "rgba(255,255,255,0.98)");
+      core.addColorStop(0.36, "rgba(255,249,219,0.92)");
+      core.addColorStop(0.72, `hsla(${meteor.hue}, 100%, 77%, 0.48)`);
+      core.addColorStop(1, `hsla(${meteor.hue}, 100%, 65%, 0)`);
+      mctx.fillStyle = core;
+      mctx.beginPath();
+      mctx.ellipse(0, 0, headRadius * 0.62 * stretch, headRadius * 0.52, 0, 0, Math.PI * 2);
+      mctx.fill();
+
+      if (meteor.bodyShape === "double") {
+        mctx.fillStyle = "rgba(255,255,255,0.56)";
+        for (const side of [-1, 1]) {
+          mctx.beginPath();
+          mctx.arc(-headRadius * 0.08, side * headRadius * 0.38, headRadius * 0.2, 0, Math.PI * 2);
+          mctx.fill();
+        }
+      } else if (meteor.bodyShape === "star") {
+        mctx.strokeStyle = "rgba(255,255,255,0.42)";
+        mctx.lineWidth = Math.max(0.8, meteor.size * spriteScale * 0.8);
+        mctx.beginPath();
+        mctx.moveTo(-headRadius * 1.45, 0);
+        mctx.lineTo(headRadius * 1.8, 0);
+        mctx.moveTo(0, -headRadius * 0.85);
+        mctx.lineTo(0, headRadius * 0.85);
+        mctx.stroke();
+      }
+      mctx.restore();
+
+      return {
+        canvas: offscreen,
+        headX,
+        headY,
+        width: canvasWidth,
+        height: canvasHeight
+      };
     }
 
     function drawBackground() {
@@ -1347,7 +1568,7 @@
       const yScale = 0.56;
       const minOrbit = settings.scaleMode === "relative" ? Math.max(34, minSize * 0.06) : Math.max(40, minSize * 0.09);
       const maxOrbit = Math.max(minOrbit + 180 * scale, minSize * 0.43);
-      const earthDays = time * 8;
+      const earthDays = time * SIMULATED_DAYS_PER_SECOND;
       let focusTarget = null;
 
       ctx.save();
@@ -1438,218 +1659,164 @@
       ctx.restore();
     }
 
-    function drawMeteorTail(meteor, opacity, length, angle, widthScale = 1, offset = 0) {
-      const normalX = -Math.sin(angle) * offset;
-      const normalY = Math.cos(angle) * offset;
-      const headX = meteor.x + normalX;
-      const headY = meteor.y + normalY;
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function easeOutCubic(value) {
+      return 1 - Math.pow(1 - clamp(value, 0, 1), 3);
+    }
+
+    function drawMeteorCurve(meteor, angle, length, offset, width, opacity, hue, saturation, lightness, blur = 0) {
+      const normalX = -Math.sin(angle);
+      const normalY = Math.cos(angle);
+      const headX = meteor.x + normalX * offset;
+      const headY = meteor.y + normalY * offset;
       const tailX = headX - Math.cos(angle) * length;
       const tailY = headY - Math.sin(angle) * length;
+      const controlX = headX - Math.cos(angle) * length * 0.46 + normalX * meteor.bend * length * 0.12;
+      const controlY = headY - Math.sin(angle) * length * 0.46 + normalY * meteor.bend * length * 0.12;
       const gradient = ctx.createLinearGradient(tailX, tailY, headX, headY);
 
-      gradient.addColorStop(0, `hsla(${meteor.hue}, 100%, 68%, 0)`);
-      gradient.addColorStop(0.32, `hsla(${meteor.hue}, 100%, 68%, ${0.16 * opacity})`);
-      gradient.addColorStop(1, `hsla(${meteor.hue}, 100%, 76%, ${0.95 * opacity})`);
+      gradient.addColorStop(0, `hsla(${hue}, ${saturation}%, ${lightness}%, 0)`);
+      gradient.addColorStop(0.22, `hsla(${hue}, ${saturation}%, ${lightness}%, ${0.05 * opacity})`);
+      gradient.addColorStop(0.62, `hsla(${hue}, ${saturation}%, ${lightness}%, ${0.34 * opacity})`);
+      gradient.addColorStop(0.9, `rgba(255, 247, 224, ${0.72 * opacity})`);
+      gradient.addColorStop(1, `rgba(255, 255, 255, ${0.98 * opacity})`);
 
+      ctx.save();
+      ctx.shadowColor = `hsla(${hue}, 100%, 72%, ${0.48 * opacity})`;
+      ctx.shadowBlur = blur;
       ctx.strokeStyle = gradient;
-      ctx.lineWidth = 3.4 * meteor.size * widthScale;
+      ctx.lineWidth = Math.max(0.7, width);
       ctx.beginPath();
       ctx.moveTo(tailX, tailY);
-      ctx.lineTo(headX, headY);
+      ctx.quadraticCurveTo(controlX, controlY, headX, headY);
       ctx.stroke();
-    }
-
-    function drawOvalBody(meteor, opacity, angle, radiusScale = 1, stretch = 1.35) {
-      const radius = 3.8 * meteor.size * radiusScale;
-
-      ctx.save();
-      ctx.translate(meteor.x, meteor.y);
-      ctx.rotate(angle);
-      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 90%, ${opacity})`;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, radius * stretch, radius, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.84 * opacity})`;
-      ctx.beginPath();
-      ctx.ellipse(radius * 0.42, -radius * 0.18, radius * 0.42, radius * 0.28, 0, 0, Math.PI * 2);
-      ctx.fill();
       ctx.restore();
     }
 
-    function drawCometBody(meteor, opacity, angle) {
-      const radius = 7.5 * meteor.size;
-
-      ctx.save();
-      ctx.translate(meteor.x, meteor.y);
-      ctx.rotate(angle);
-
-      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.4);
-      glow.addColorStop(0, `hsla(${meteor.hue}, 100%, 94%, ${0.95 * opacity})`);
-      glow.addColorStop(0.42, `hsla(${meteor.hue}, 100%, 72%, ${0.55 * opacity})`);
-      glow.addColorStop(1, `hsla(${meteor.hue}, 100%, 68%, 0)`);
-
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, radius * 1.15, radius * 0.92, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * opacity})`;
-      ctx.beginPath();
-      ctx.ellipse(radius * 0.2, -radius * 0.12, radius * 0.38, radius * 0.24, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawDoubleBody(meteor, opacity, angle) {
-      const offset = 5.3 * meteor.size;
-      const radius = 3.1 * meteor.size;
-      const normalX = -Math.sin(angle) * offset;
-      const normalY = Math.cos(angle) * offset;
-
-      ctx.strokeStyle = `hsla(${meteor.hue}, 100%, 80%, ${0.5 * opacity})`;
-      ctx.lineWidth = Math.max(1.2, 1.1 * meteor.size);
-      ctx.beginPath();
-      ctx.moveTo(meteor.x - normalX, meteor.y - normalY);
-      ctx.lineTo(meteor.x + normalX, meteor.y + normalY);
-      ctx.stroke();
-
-      for (const side of [-1, 1]) {
-        ctx.fillStyle = `hsla(${meteor.hue}, 100%, ${side === 1 ? 92 : 82}%, ${opacity})`;
-        ctx.beginPath();
-        ctx.arc(meteor.x + normalX * side, meteor.y + normalY * side, radius, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    function drawStarBody(meteor, opacity, angle) {
-      const points = 8;
-      const outer = 8.2 * meteor.size;
-      const inner = 3.1 * meteor.size;
-
-      ctx.save();
-      ctx.translate(meteor.x, meteor.y);
-      ctx.rotate(angle + Math.PI / 8);
-      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 88%, ${0.9 * opacity})`;
-      ctx.beginPath();
-
-      for (let i = 0; i < points * 2; i += 1) {
-        const radius = i % 2 === 0 ? outer : inner;
-        const pointAngle = (Math.PI * i) / points;
-        const x = Math.cos(pointAngle) * radius;
-        const y = Math.sin(pointAngle) * radius;
-
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.88 * opacity})`;
-      ctx.beginPath();
-      ctx.arc(0, 0, 2.2 * meteor.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawBladeBody(meteor, opacity, angle) {
-      const length = 11 * meteor.size;
-      const width = 4.8 * meteor.size;
-
-      ctx.save();
-      ctx.translate(meteor.x, meteor.y);
-      ctx.rotate(angle);
-      ctx.fillStyle = `hsla(${meteor.hue}, 100%, 88%, ${0.92 * opacity})`;
-      ctx.beginPath();
-      ctx.moveTo(length, 0);
-      ctx.lineTo(0, width);
-      ctx.lineTo(-length * 0.62, 0);
-      ctx.lineTo(0, -width);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.72 * opacity})`;
-      ctx.beginPath();
-      ctx.moveTo(length * 0.58, 0);
-      ctx.lineTo(0, width * 0.36);
-      ctx.lineTo(-length * 0.18, 0);
-      ctx.lineTo(0, -width * 0.36);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function drawFlareTail(meteor, opacity, angle) {
-      const rayLength = 14 * meteor.size;
-
-      ctx.strokeStyle = `hsla(${meteor.hue}, 100%, 82%, ${0.72 * opacity})`;
-      ctx.lineWidth = Math.max(1.2, 1.3 * meteor.size);
-
-      for (let i = 0; i < 4; i += 1) {
-        const rayAngle = angle + (Math.PI / 4) + i * (Math.PI / 2);
-        ctx.beginPath();
-        ctx.moveTo(meteor.x - Math.cos(rayAngle) * rayLength * 0.35, meteor.y - Math.sin(rayAngle) * rayLength * 0.35);
-        ctx.lineTo(meteor.x + Math.cos(rayAngle) * rayLength, meteor.y + Math.sin(rayAngle) * rayLength);
-        ctx.stroke();
-      }
-    }
-
-    function drawBlade(meteor, opacity, length, angle) {
-      const widthScale = 6 * meteor.size;
-      const normalX = -Math.sin(angle) * widthScale;
-      const normalY = Math.cos(angle) * widthScale;
-      const tailX = meteor.x - Math.cos(angle) * length * 0.76;
-      const tailY = meteor.y - Math.sin(angle) * length * 0.76;
-
+    function drawMeteorDustWake(meteor, opacity, length, angle, widthFactor) {
+      const tailWidth = meteor.size * widthFactor;
+      const normalX = -Math.sin(angle);
+      const normalY = Math.cos(angle);
+      const tailX = meteor.x - Math.cos(angle) * length;
+      const tailY = meteor.y - Math.sin(angle) * length;
+      const midX = meteor.x - Math.cos(angle) * length * 0.44 + normalX * meteor.bend * length * 0.16;
+      const midY = meteor.y - Math.sin(angle) * length * 0.44 + normalY * meteor.bend * length * 0.16;
       const gradient = ctx.createLinearGradient(tailX, tailY, meteor.x, meteor.y);
-      gradient.addColorStop(0, `hsla(${meteor.hue}, 100%, 68%, 0)`);
-      gradient.addColorStop(0.7, `hsla(${meteor.hue}, 100%, 72%, ${0.2 * opacity})`);
-      gradient.addColorStop(1, `hsla(${meteor.hue}, 100%, 88%, ${0.9 * opacity})`);
 
+      gradient.addColorStop(0, `hsla(${meteor.hue}, 84%, 50%, 0)`);
+      gradient.addColorStop(0.48, `hsla(${meteor.hue}, 82%, 58%, ${0.08 * opacity})`);
+      gradient.addColorStop(1, `hsla(${meteor.hue}, 96%, 74%, ${0.28 * opacity})`);
+
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
       ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.moveTo(meteor.x + normalX, meteor.y + normalY);
-      ctx.lineTo(tailX, tailY);
-      ctx.lineTo(meteor.x - normalX, meteor.y - normalY);
+      ctx.moveTo(meteor.x + normalX * tailWidth, meteor.y + normalY * tailWidth);
+      ctx.quadraticCurveTo(midX + normalX * tailWidth * 0.48, midY + normalY * tailWidth * 0.48, tailX, tailY);
+      ctx.quadraticCurveTo(midX - normalX * tailWidth * 0.42, midY - normalY * tailWidth * 0.42, meteor.x - normalX * tailWidth, meteor.y - normalY * tailWidth);
       ctx.closePath();
       ctx.fill();
+      ctx.restore();
     }
 
-    function drawMeteorBody(meteor, opacity, angle) {
-      ctx.shadowBlur = 34 * meteor.size;
+    function drawMeteorFragments(meteor, opacity, length, angle, progress) {
+      const normalX = -Math.sin(angle);
+      const normalY = Math.cos(angle);
+      const forwardX = Math.cos(angle);
+      const forwardY = Math.sin(angle);
+      const flareBoost = meteor.tailShape === "flare" ? 1.45 : 1;
 
-      if (meteor.bodyShape === "comet") {
-        ctx.shadowBlur = 42 * meteor.size;
-        drawCometBody(meteor, opacity, angle);
-      } else if (meteor.bodyShape === "double") {
-        drawDoubleBody(meteor, opacity, angle);
-      } else if (meteor.bodyShape === "star") {
-        ctx.shadowBlur = 38 * meteor.size;
-        drawStarBody(meteor, opacity, angle);
-      } else if (meteor.bodyShape === "blade") {
-        drawBladeBody(meteor, opacity, angle);
-      } else {
-        drawOvalBody(meteor, opacity, angle);
+      ctx.save();
+      ctx.globalCompositeOperation = "lighter";
+      for (const fragment of meteor.fragments) {
+        const localFade = opacity * clamp((1 - progress * 0.42) * fragment.lifeBias, 0, 1);
+        const drift = fragment.drift * meteor.age;
+        const along = length * fragment.along + drift;
+        const side = fragment.side * meteor.size * 7.8 * (0.35 + fragment.along);
+        const x = meteor.x - forwardX * along + normalX * side;
+        const y = meteor.y - forwardY * along + normalY * side;
+        const twinkle = 0.65 + Math.sin(simulationTime * 8 + fragment.phase) * 0.35;
+        const radius = fragment.size * flareBoost * twinkle;
+
+        ctx.fillStyle = `hsla(${meteor.hue + fragment.hueShift}, 100%, 78%, ${0.34 * localFade})`;
+        ctx.shadowColor = `hsla(${meteor.edgeHue}, 100%, 74%, ${0.36 * localFade})`;
+        ctx.shadowBlur = radius * 5;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
       }
+      ctx.restore();
     }
 
-    function drawMeteorTailByShape(meteor, opacity, length, angle) {
-      if (meteor.tailShape === "comet") {
-        drawMeteorTail(meteor, opacity, length * 0.88, angle, 1.8);
-      } else if (meteor.tailShape === "double") {
-        drawMeteorTail(meteor, opacity, length, angle, 0.72, 5.2 * meteor.size);
-        drawMeteorTail(meteor, opacity, length * 0.86, angle, 0.72, -5.2 * meteor.size);
-      } else if (meteor.tailShape === "flare") {
-        drawMeteorTail(meteor, opacity, length * 0.72, angle, 0.9);
-        drawFlareTail(meteor, opacity, angle);
-      } else if (meteor.tailShape === "blade") {
-        drawBlade(meteor, opacity, length, angle);
-      } else {
-        drawMeteorTail(meteor, opacity, length, angle);
+    function drawMeteorHead(meteor, opacity, angle, flash) {
+      const radius = meteor.size * (meteor.bodyShape === "comet" ? 9.5 : meteor.bodyShape === "blade" ? 6.8 : 7.8);
+      const stretch = meteor.bodyShape === "blade" ? 2.15 : meteor.bodyShape === "oval" ? 1.55 : 1.35;
+
+      ctx.save();
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle);
+      ctx.globalCompositeOperation = "lighter";
+
+      const halo = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * 2.15);
+      halo.addColorStop(0, `rgba(255, 255, 255, ${0.76 * opacity * flash})`);
+      halo.addColorStop(0.22, `hsla(${meteor.hue}, 100%, 78%, ${0.44 * opacity})`);
+      halo.addColorStop(0.55, `hsla(${meteor.edgeHue}, 100%, 68%, ${0.14 * opacity})`);
+      halo.addColorStop(1, `hsla(${meteor.edgeHue}, 100%, 60%, 0)`);
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * stretch, radius * 1.02, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      const core = ctx.createRadialGradient(radius * 0.22, -radius * 0.06, 0, 0, 0, radius * 0.88);
+      core.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+      core.addColorStop(0.36, `rgba(255, 249, 219, ${0.92 * opacity})`);
+      core.addColorStop(0.72, `hsla(${meteor.hue}, 100%, 77%, ${0.48 * opacity})`);
+      core.addColorStop(1, `hsla(${meteor.hue}, 100%, 65%, 0)`);
+      ctx.fillStyle = core;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius * 0.62 * stretch, radius * 0.52, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (meteor.bodyShape === "double") {
+        ctx.fillStyle = `rgba(255, 255, 255, ${0.62 * opacity})`;
+        for (const side of [-1, 1]) {
+          ctx.beginPath();
+          ctx.arc(-radius * 0.08, side * radius * 0.38, radius * 0.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      } else if (meteor.bodyShape === "star") {
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.46 * opacity})`;
+        ctx.lineWidth = Math.max(0.8, meteor.size * 0.8);
+        ctx.beginPath();
+        ctx.moveTo(-radius * 1.45, 0);
+        ctx.lineTo(radius * 1.8, 0);
+        ctx.moveTo(0, -radius * 0.85);
+        ctx.lineTo(0, radius * 0.85);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    function drawMeteorTailByShape(meteor, opacity, length, angle, flash) {
+      const width = meteor.size * (meteor.tailShape === "blade" ? 1.7 : meteor.tailShape === "comet" ? 4.2 : 2.7);
+      const dustWidth = meteor.tailShape === "comet" ? 18 : meteor.tailShape === "blade" ? 7 : 12;
+
+      drawMeteorDustWake(meteor, opacity, length * (meteor.tailShape === "blade" ? 0.72 : 0.88), angle, dustWidth);
+      drawMeteorCurve(meteor, angle, length, 0, width * 2.1, opacity * 0.34, meteor.hue, 96, 64, 22 * meteor.size);
+      drawMeteorCurve(meteor, angle, length * 0.92, 0, width, opacity * 0.72, meteor.edgeHue, 100, 72, 11 * meteor.size);
+      drawMeteorCurve(meteor, angle, length * 0.68, 0, Math.max(0.85, width * 0.46), opacity * flash, 42, 30, 94, 4 * meteor.size);
+
+      if (meteor.tailShape === "double") {
+        drawMeteorCurve(meteor, angle, length * 0.84, meteor.size * 5.2, width * 0.55, opacity * 0.58, meteor.edgeHue, 100, 72, 7 * meteor.size);
+        drawMeteorCurve(meteor, angle, length * 0.78, -meteor.size * 5.2, width * 0.48, opacity * 0.48, meteor.hue, 100, 68, 7 * meteor.size);
+      }
+
+      if (meteor.tailShape === "flare") {
+        drawMeteorFragments(meteor, opacity * 1.2, length * 0.86, angle, meteor.age / meteor.life);
       }
     }
 
@@ -1659,18 +1826,25 @@
       meteor.y += meteor.vy * delta;
 
       const progress = meteor.age / meteor.life;
-      const opacity = Math.sin(Math.min(progress, 1) * Math.PI);
-      const length = meteor.tail * (0.72 + opacity * 0.28);
+      const ignition = easeOutCubic(progress / 0.16);
+      const decay = Math.pow(clamp(1 - progress, 0, 1), 0.58);
+      const flicker = 0.86 + Math.sin(simulationTime * meteor.flicker + meteor.phase) * 0.14;
+      const opacity = clamp(ignition * decay * flicker, 0, 1);
+      const flash = 1 + Math.max(0, 1 - progress / 0.18) * 0.55;
       const angle = Math.atan2(meteor.vy, meteor.vx);
 
       ctx.save();
-      ctx.lineCap = "round";
-      ctx.shadowColor = meteor.glow;
-      ctx.shadowBlur = 22 * meteor.size;
-
-      drawMeteorTailByShape(meteor, opacity, length, angle);
-      drawMeteorBody(meteor, opacity, angle);
-
+      ctx.translate(meteor.x, meteor.y);
+      ctx.rotate(angle);
+      ctx.globalCompositeOperation = "lighter";
+      ctx.globalAlpha = Math.min(1, opacity * flash);
+      ctx.drawImage(
+        meteor.sprite.canvas,
+        -meteor.sprite.headX,
+        -meteor.sprite.headY,
+        meteor.sprite.width,
+        meteor.sprite.height
+      );
       ctx.restore();
     }
 
@@ -1683,6 +1857,7 @@
       if (!settings.paused) {
         simulationTime += delta * settings.timeSpeed;
       }
+      updateSimulationClock();
 
       drawBackground();
       if (settings.showStars) {
@@ -1834,6 +2009,8 @@
       pointer.active = false;
     });
 
+    pageOpenedValue.textContent = formatDateTime(pageOpenedAt);
+    updateSimulationClock(true);
     updateSetting(sizeControl, sizeValue, "size");
     updateSetting(speedControl, speedValue, "speed");
     updateTimeSetting();
