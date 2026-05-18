@@ -5,29 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6ee28f4-cf78-4bef-898b-70d7918c577e" name="Changes" comment="docs(ai-daily-news): 更新AI日报摘要与状态文件&#10;&#10;- 添加2026-05-13日AI新闻摘要内容&#10;- 更新ai-daily-state.json同步最新处理日期&#10;- 添加2026-05-13日知识库新闻摘要&#10;- 更新knowledge-base-state.json同步最新处理日期&#10;- 修正项目配置文件中的任务历史记录&#10;- 更新workspace.xml中的运行配置和任务元数据">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/meteor-stars.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/meteor-stars.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/14种常见的Prompt策略.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/6个机器学习的核心算法.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/AI大模型提示词技巧.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/API调用大模型.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/Agent进入深水区后的十大趋势.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/Docker 命令汇总.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/RAG聊天机器人 VS AI Agent：哪个更高效？.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/【图文】大模型算法岗常见面试题及答案解析.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/【大模型项目实战】使用RAG技术构建企业级文档问答系统之QA抽取，非常详细！（含开源代码）.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/一篇搞懂大模型LLM.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/人工智能Agent的基本原理与架构.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大数据预处理方法总结.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大时间序列模型最强总结手册 (无图版).md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/十大时间序列模型最强总结手册.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/各个行业的AI大模型：医疗、心理、法律、金融、教育.....md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/基准测试（Benchmark）.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大型语言模型的11种高效微调方法.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大模型提示词工程分类.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/大模型部署：Rerank 模型的部署及使用.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/掌握AI项目成功的10个关键步骤.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study/pdf_md/complete/高级RAG技术.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cursor/rules/dual-digest-on-pull.mdc" beforeDir="false" afterPath="$PROJECT_DIR$/.cursor/rules/dual-digest-on-pull.mdc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cursor/skills/knowledge-base-digest/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/.cursor/skills/knowledge-base-digest/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyReport/ai-daily-news/ai-daily-digest.md" beforeDir="false" afterPath="$PROJECT_DIR$/dailyReport/ai-daily-news/ai-daily-digest.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyReport/ai-daily-news/ai-daily-state.json" beforeDir="false" afterPath="$PROJECT_DIR$/dailyReport/ai-daily-news/ai-daily-state.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyReport/github-topz.md" beforeDir="false" afterPath="$PROJECT_DIR$/dailyReport/github-topz.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyReport/knowledge-base-news/knowledge-base-digest.md" beforeDir="false" afterPath="$PROJECT_DIR$/dailyReport/knowledge-base-news/knowledge-base-digest.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dailyReport/knowledge-base-news/knowledge-base-state.json" beforeDir="false" afterPath="$PROJECT_DIR$/dailyReport/knowledge-base-news/knowledge-base-state.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/github_topz/stars_merge.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/github_topz/stars_merge.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/github_topz/trending_fetch.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/github_topz/trending_fetch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/update_github_topz.py" beforeDir="false" afterPath="$PROJECT_DIR$/tools/update_github_topz.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,25 +51,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.vanilla_rnn_numpy_demo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/cache/workspace/ai_for_learing/study/pdf_md",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.vanilla_rnn_numpy_demo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/cache/workspace/ai_for_learing/study/pdf_md&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\cache\workspace\ai_for_learing\study\pdf_md" />
@@ -240,6 +227,7 @@
       <workItem from="1778758222598" duration="3416000" />
       <workItem from="1778835885130" duration="1599000" />
       <workItem from="1778897455691" duration="609000" />
+      <workItem from="1779060508159" duration="606000" />
     </task>
     <task id="LOCAL-00001" summary="docs(project): 更新项目配置和文档以支持 Python 开发环境&#10;&#10;- 移除 .idea 目录的 git 忽略规则，将其加入版本控制&#10;- 修正项目模块名称中的拼写错误（ai_for_learning -&gt; ai_for_learing）&#10;- 添加详细的 Python 环境配置说明和依赖安装指南&#10;- 在课程模式文档中增加 Python 依赖管理规范&#10;- 更新项目状态文件中的任务时间戳和处理目标列表&#10;- 配置 PyCharm 工作空间设置和虚拟环境排除路径">
       <option name="closed" value="true" />

@@ -7,7 +7,7 @@ import re
 import ssl
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -19,6 +19,9 @@ Entry = Tuple[int, str, str, str]
 
 ROW_WITH_DESC_RE = re.compile(
     r"^\|\s*\d+\s*\|\s*`([^`]+)`\s*\|\s*(\d+)\s*\|\s*(.*?)\s*\|\s*(https?://\S+)\s*\|\s*$"
+)
+ROW_WITH_DESC_MARK_RE = re.compile(
+    r"^\|\s*\d+\s*\|\s*`([^`]+)`\s*\|\s*(\d+)\s*\|\s*(.*?)\s*\|\s*(https?://\S+)\s*\|\s*([^|]*?)\s*\|\s*$"
 )
 ROW_LEGACY_RE = re.compile(
     r"^\|\s*\d+\s*\|\s*`([^`]+)`\s*\|\s*(\d+)\s*\|\s*(https?://\S+)\s*\|\s*$"
@@ -67,23 +70,33 @@ def parse_existing_table(md_blob: str) -> Dict[str, Entry]:
     out_dict: Dict[str, Entry] = {}
     for line in md_blob.splitlines():
         s = line.strip()
-        matched = ROW_WITH_DESC_RE.match(s)
-        if matched:
-            full_raw = matched.group(1)
-            stars_val = matched.group(2)
-            desc_segment = matched.group(3).strip()
-            url_val = matched.group(4)
+        matched_mark = ROW_WITH_DESC_MARK_RE.match(s)
+        if matched_mark:
+            full_raw = matched_mark.group(1)
+            stars_val = matched_mark.group(2)
+            desc_segment = matched_mark.group(3).strip()
+            url_val = matched_mark.group(4)
             desc_keep = ""
             if desc_segment and desc_segment not in ("—", "-"):
                 desc_keep = normalize_description(desc_segment)
         else:
-            m2 = ROW_LEGACY_RE.match(s)
-            if not m2:
-                continue
-            full_raw = m2.group(1)
-            stars_val = m2.group(2)
-            url_val = m2.group(3)
-            desc_keep = ""
+            matched = ROW_WITH_DESC_RE.match(s)
+            if matched:
+                full_raw = matched.group(1)
+                stars_val = matched.group(2)
+                desc_segment = matched.group(3).strip()
+                url_val = matched.group(4)
+                desc_keep = ""
+                if desc_segment and desc_segment not in ("—", "-"):
+                    desc_keep = normalize_description(desc_segment)
+            else:
+                m2 = ROW_LEGACY_RE.match(s)
+                if not m2:
+                    continue
+                full_raw = m2.group(1)
+                stars_val = m2.group(2)
+                url_val = m2.group(3)
+                desc_keep = ""
         key_use = repo_key_from_full(full_raw)
         if not key_use:
             continue
@@ -164,7 +177,11 @@ def build_merged(existing_map_inner: Dict[str, Entry], fetch_items_top: List[dic
     return merged_outer
 
 
-def render_stars_section(ssl_ctx: ssl.SSLContext, merged_outer: Dict[str, Entry]) -> str:
+def render_stars_section(
+    ssl_ctx: ssl.SSLContext,
+    merged_outer: Dict[str, Entry],
+    prev_repo_keys_before: Set[str],
+) -> str:
     zone_now = datetime.now(tz=_shanghai_tz()).strftime("%Y-%m-%d %H:%M:%S")
     ranked_rows_ordered = sorted(
         merged_outer.items(),
@@ -176,11 +193,12 @@ def render_stars_section(ssl_ctx: ssl.SSLContext, merged_outer: Dict[str, Entry]
         "- 数据源：[`dual-digest-on-pull`](../.cursor/rules/dual-digest-on-pull.mdc) 工作流程下配套的 GitHub Search API：`sort=stars` **全局前十名**（`/search/repositories`）。与本节历史行合并时：**已出现的仓库更新 Stars**，新仓库按 Star **降序** 参与整表排序。",
         "- **仓库简介**列：数据源为 GitHub `description`，**写入时为中文简述**——常见仓库内置固定中文提要；其余在渲染时尽力通过公开翻译接口转写，失败则回退英文摘录。表格中若为中文且无新的英文数据源，会直接沿用原有中文单元格。",
         "- **与 Trending 区别**：本节为全局累计 Star 排序快照；文末 Trending 为 GitHub「今日 / 本周 / 本月热度」榜单，数据源与口径均不同。",
+        "- **标记**列：相对**本次拉取前**磁盘上 `github-topz.md` 中本节表格已存在的 `owner/repo`，不存在的行标为 **新增**；下次拉取会重新计算并清空上一次的「新增」（仅保留新一轮相对上一轮新增）。",
         "",
         "**最近一次更新时间**（Asia/Shanghai）： {}".format(zone_now),
         "",
-        "| 序号 | 仓库 | Stars | 仓库简介（中文） | 链接 |",
-        "| --- | --- | ---:| --- | --- |",
+        "| 序号 | 仓库 | Stars | 仓库简介（中文） | 链接 | 标记 |",
+        "| --- | --- | ---:| --- | --- | --- |",
     ]
     for idx_row, (_k_ent, tup_inner) in enumerate(ranked_rows_ordered, start=1):
         stars_ct, html_url_pick, label_pick, brief_raw = tup_inner
@@ -191,9 +209,10 @@ def render_stars_section(ssl_ctx: ssl.SSLContext, merged_outer: Dict[str, Entry]
         )
         safe_url_piece = html_url_pick if html_url_pick else fallback_url_piece
         safe_intro_cell_piece = intro_display_zh_cn(ssl_ctx, _k_ent, brief_raw)
+        mark_cell_piece = "新增" if _k_ent not in prev_repo_keys_before else ""
         lines_buf.append(
-            "| {} | `{}` | {} | {} | {} |".format(
-                idx_row, label_pick, stars_ct, safe_intro_cell_piece, safe_url_piece
+            "| {} | `{}` | {} | {} | {} | {} |".format(
+                idx_row, label_pick, stars_ct, safe_intro_cell_piece, safe_url_piece, mark_cell_piece
             )
         )
     lines_buf.append("")
@@ -204,14 +223,15 @@ def run_stars_pipeline(
     ssl_ctx: ssl.SSLContext, token_optional: Optional[str], full_existing_md_content: str
 ) -> Tuple[Dict[str, Entry], str]:
     hist_map_piece = parse_stars_merge_state(full_existing_md_content)
+    prev_repo_keys_before_piece = set(hist_map_piece.keys())
     fetched_top_list = github_search_top10(ssl_ctx, token_optional)
     if len(fetched_top_list) < 1:
         merged_only_hist = dict(hist_map_piece)
         enrich_missing_descriptions(ssl_ctx, token_optional, merged_only_hist)
-        body_section_only = render_stars_section(ssl_ctx, merged_only_hist)
+        body_section_only = render_stars_section(ssl_ctx, merged_only_hist, prev_repo_keys_before_piece)
         return merged_only_hist, body_section_only
     merged_full_map = build_merged(hist_map_piece, fetched_top_list)
     enrich_missing_descriptions(ssl_ctx, token_optional, merged_full_map)
-    body_section_piece = render_stars_section(ssl_ctx, merged_full_map)
+    body_section_piece = render_stars_section(ssl_ctx, merged_full_map, prev_repo_keys_before_piece)
     return merged_full_map, body_section_piece
 

@@ -4,17 +4,55 @@ from __future__ import annotations
 import re
 import ssl
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Set
 from urllib.request import Request, urlopen
 
-from .display_zh import intro_display_zh_cn, strip_simple_html
+from .display_zh import intro_display_zh_cn, repo_key_from_full, strip_simple_html
 
 
+TRENDING_DOC_MARKER = "## Trending 页面快照（HTML 抓取）"
+TRENDING_SINCE_HEADINGS = {
+    "daily": "### 今日 trending（since=daily）",
+    "weekly": "### 本周 trending（since=weekly）",
+    "monthly": "### 本月 trending（since=monthly）",
+}
 TRENDING_BASE = "https://github.com/trending"
 USER_AGENT_FALLBACK = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ai_for_learing-tools-github_topz "
     "(+https://github.com/) Python-urllib-compatible"
 )
+
+
+def trending_doc_portion(md_text: str) -> str:
+    if TRENDING_DOC_MARKER not in md_text:
+        return ""
+    return md_text[md_text.find(TRENDING_DOC_MARKER):]
+
+
+def extract_trending_subsection_for_since(portion_md: str, since_value: str) -> str:
+    heading = TRENDING_SINCE_HEADINGS.get(since_value)
+    if not heading or heading not in portion_md:
+        return ""
+    idx = portion_md.find(heading)
+    tail = portion_md[idx:]
+    inner_rest = tail[len(heading):]
+    next_h3 = re.search(r"^### ", inner_rest, flags=re.MULTILINE)
+    if next_h3:
+        return tail[: len(heading) + next_h3.start()]
+    return tail
+
+
+def parse_trending_existing_repo_keys(section_md: str) -> Set[str]:
+    keys_out: Set[str] = set()
+    for line in section_md.splitlines():
+        line_s = line.strip()
+        matched_row = re.match(r"^\|\s*\d+\s*\|\s*`([^`]+)`\s*\|", line_s)
+        if not matched_row:
+            continue
+        k_loc = repo_key_from_full(matched_row.group(1))
+        if k_loc:
+            keys_out.add(k_loc)
+    return keys_out
 
 
 @dataclass
@@ -156,6 +194,7 @@ def render_trending_section(
     ssl_ctx_loc: ssl.SSLContext,
     heading_title_cn: str,
     since_value: str,
+    prev_repo_keys_before: Set[str],
 ) -> str:
     """返回「### …」一段 Markdown（含表格）。"""
     try:
@@ -181,13 +220,14 @@ def render_trending_section(
         "",
         "**页面**： `{}?since={}`".format(TRENDING_BASE, since_value),
         "",
-        "| # | 仓库 | Stars | Forks | 语言 | 周期动向 | 仓库简介（中文） | 链接 |",
-        "| ---: | --- | ---:| ---:| --- | --- | --- | --- |",
+        "| # | 仓库 | Stars | Forks | 语言 | 周期动向 | 仓库简介（中文） | 链接 | 标记 |",
+        "| ---: | --- | ---:| ---:| --- | --- | --- | --- | --- |",
     ]
     for ix_row_rep, rp_it in enumerate(repo_collected[:25], start=1):
         intro_zh_cell = intro_display_zh_cn(ssl_ctx_loc, rp_it.repo_key_lc, rp_it.description_txt)
+        mark_cell_loc = "新增" if rp_it.repo_key_lc not in prev_repo_keys_before else ""
         rows_lines.append(
-            "| {} | `{}` | {} | {} | {} | {} | {} | {} |".format(
+            "| {} | `{}` | {} | {} | {} | {} | {} | {} | {} |".format(
                 ix_row_rep,
                 "{}/{}".format(rp_it.owner_nm, rp_it.repo_nm),
                 rp_it.stars_tot,
@@ -196,23 +236,36 @@ def render_trending_section(
                 rp_it.trending_txt,
                 intro_zh_cell,
                 rp_it.canonical_url,
+                mark_cell_loc,
             )
         )
     rows_lines.append("")
     return "### {}\n".format(heading_title_cn) + "\n".join(rows_lines)
 
 
-def render_trending_bundle(ssl_ctx_piece: ssl.SSLContext) -> str:
+def render_trending_bundle(ssl_ctx_piece: ssl.SSLContext, existing_full_md: str = "") -> str:
+    trend_blob = trending_doc_portion(existing_full_md)
+    keys_daily = parse_trending_existing_repo_keys(extract_trending_subsection_for_since(trend_blob, "daily"))
+    keys_weekly = parse_trending_existing_repo_keys(extract_trending_subsection_for_since(trend_blob, "weekly"))
+    keys_monthly = parse_trending_existing_repo_keys(extract_trending_subsection_for_since(trend_blob, "monthly"))
     section_parts = [
-        "## Trending 页面快照（HTML 抓取）",
+        TRENDING_DOC_MARKER,
         "",
         "**说明**：与上方「全局 Star Search」数据源不同；本段按 GitHub trending 页的 **daily / weekly / monthly** 各拉一页并解析。**若前端改版导致选择器失效，需更新解析逻辑。**",
         "",
-        render_trending_section(ssl_ctx_piece, "今日 trending（since=daily）", "daily"),
+        "- **标记**列：三个 `since` 子表**各自独立**对照本次拉取前文件中该小节表格已出现的 `owner/repo`；新出现的行标 **新增**。下次拉取会先清空上一轮「新增」再重算（只保留相对**上一版文件**的新仓库）。",
         "",
-        render_trending_section(ssl_ctx_piece, "本周 trending（since=weekly）", "weekly"),
+        render_trending_section(
+            ssl_ctx_piece, "今日 trending（since=daily）", "daily", keys_daily
+        ),
         "",
-        render_trending_section(ssl_ctx_piece, "本月 trending（since=monthly）", "monthly"),
+        render_trending_section(
+            ssl_ctx_piece, "本周 trending（since=weekly）", "weekly", keys_weekly
+        ),
+        "",
+        render_trending_section(
+            ssl_ctx_piece, "本月 trending（since=monthly）", "monthly", keys_monthly
+        ),
         "",
     ]
     return "\n".join(section_parts)

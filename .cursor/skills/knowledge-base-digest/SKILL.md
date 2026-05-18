@@ -121,7 +121,7 @@ description: Generates a Chinese knowledge-base digest from a fixed set of Chine
 | 网易 | 网易传媒技术团队 | https://www.zhihu.com/org/wang-yi-yun-54-1/posts | 主要技术输出渠道为知乎专栏。 |
 | 360 | 360 核心安全技术博客 | http://blogs.360.cn/ | 聚焦网络安全、攻防技术、漏洞分析。 |
 | 有赞 | 有赞技术团队 | https://tech.youzan.com/ | 电商 SaaS 技术博客，覆盖支付、安全、大数据。 |
-| （工具） | GitHub Top（starz 快照） | `https://api.github.com/search/repositories`（`sort=stars&order=desc&per_page=10`） | 每次拉取对本 skill 成功跑通时，必须用仓库脚本更新 `dailyReport/github-topz.md`，与历史行合并：已有仓库更新 Stars，新仓库插入后全表按 Stars 降序。 |
+| （工具） | GitHub Top（starz 快照） | `https://api.github.com/search/repositories`（`sort=stars&order=desc&per_page=10`） | 每次拉取对本 skill 成功跑通时，必须用仓库脚本更新 `dailyReport/github-topz.md`，与历史行合并：已有仓库更新 Stars，新仓库插入后全表按 Stars 降序；表格 **标记**列规则见 `.cursor/rules/dual-digest-on-pull.mdc`。 |
 
 ## GitHub star 前十（github-topz）
 
@@ -134,7 +134,7 @@ python tools/update_github_topz.py
 行为说明：
 
 - 调用 GitHub REST Search API 拉取全局按 Star 降序的前 **10** 条仓库。
-- 读取已有 `dailyReport/github-topz.md` 表格；对每个拉取到的仓库：若 `owner/name` 已在文件中则**更新 Star 与链接**，否则**追加**；最终全表按 Star **从大到小**排序。
+- 读取已有 `dailyReport/github-topz.md` 表格；对每个拉取到的仓库：若 `owner/name` 已在文件中则**更新 Star 与链接**，否则**追加**；最终全表按 Star **从大到小**排序。**「标记」列**：相对**本次运行前**文件中该表已出现过的 `owner/repo`，本轮首次出现的行标 **新增**；再次运行脚本会先清空上一轮「新增」后仅标出新一轮新增（详见 `.cursor/rules/dual-digest-on-pull.mdc`）。
 - 可选：设置环境变量 `GITHUB_TOKEN` 或 `GH_TOKEN` 以降低匿名限流风险。
 - Markdown 头部需保留对双 Digest 规则的引用（由脚本写入 `dailyReport/github-topz.md` 内 `../.cursor/rules/dual-digest-on-pull.mdc` 相对链接）。
 

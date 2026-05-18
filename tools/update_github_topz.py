@@ -23,7 +23,7 @@ from github_topz import stars_merge, trending_fetch
 
 def compose_full_markdown(ssl_ctx_inner: ssl.SSLContext, token_inner: str | None, existing_md_bulk: str) -> str:
     _hist_drop, stars_body_md = stars_merge.run_stars_pipeline(ssl_ctx_inner, token_inner, existing_md_bulk)
-    trending_body_md = trending_fetch.render_trending_bundle(ssl_ctx_inner)
+    trending_body_md = trending_fetch.render_trending_bundle(ssl_ctx_inner, existing_md_bulk)
     preamble_lines = [
         "# GitHub 快照（Stars Search API + Trending）",
         "",
@@ -31,6 +31,7 @@ def compose_full_markdown(ssl_ctx_inner: ssl.SSLContext, token_inner: str | None
         "",
         "- **模块一**：`tools/github_topz/stars_merge.py` → GitHub REST `/search/repositories` 全局 Star 前十名，并按既有规则与本节历史 Markdown 表格合并（列结构与原 `github-topz.md` 一致）。",
         "- **模块二**：`tools/github_topz/trending_fetch.py` → 抓取 Trending 「今日 / 本周 / 本月」页面 HTML，`article.Box-row` 解析后与中文简介渲染。",
+        "- **标记列**：各表相对**本次运行前**已保存的 `github-topz.md` 中对应表格出现过的 `owner/repo` 做差集；首次出现标 **新增**；再次运行会先清空上一轮「新增」后仅标记新一轮新增（详见 `.cursor/rules/dual-digest-on-pull.mdc`）。",
         "",
         "---",
         "",

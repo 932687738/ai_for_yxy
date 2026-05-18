@@ -2,6 +2,76 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-17
+
+### 今日总览
+
+**一句话结论**：`2026-05-17`（Asia/Shanghai，00:00–23:59）在「工程事实」层面最明显的是 **MCP Streamable HTTP 在 `initialize` 阶段对 `MCP-Protocol-Version` 头与 JSON-RPC body 的一致性处理被公开质疑并进入社区修复讨论**；在「舆论议程」层面，美媒同日密集讨论 **苹果下一代 Siri（Gemini + 自动删除聊天记录）**、**Musk v. OpenAI 收尾阶段对“信任”的放大器效应**、以及 **高校毕业典礼上对 AI 叙事的公开反弹**，但这些稿件的站点时间戳在换算到 **Asia/Shanghai** 后往往落在 **2026-05-18 凌晨**，需要按 **相邻日期/跨时区传播**阅读。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | MCP / Agent 网关工程（GitHub Issue PR 线程）；消费级 AI 产品链（Bloomberg 线索 × TechCrunch）；通用办公协同里的 CV/分割遗留能力退役（Microsoft 官方社区 × The Verge）；长周期 Agent 评测论文管线（Hugging Face Daily Papers `2026-05-17` × arXiv）；汽车业“AI skills swap”与岗位结构（TechCrunch Mobility）；诉讼与公共叙事（TechCrunch）；开源 CLI Agent 发布脉冲（GitHub `Published` UTC→上海_calibration）；Claude Code / Codex / OpenClaw / Hermes / Spring AI / LangChain / skills 专项检索 |
+| 核心趋势 | **协议层一致性会先变成“可观测 bug”**：MCP 这类强工具协议在跨网关部署时，**header vs body** 的权威来源必须工程化；**信任变成显式产品叙事**：苹果试图用 **数据留存策略**对冲第三方模型能力叙事；**社会对 AI 的反感**正在从线上投票转向 **线下公共仪式（毕业典礼）** |
+| 可直接关注 | 做 MCP 网关：把 **initialize 的 version negotiation**做成可回归测试；做国家/企业落地：把 **“模型由谁运行、日志与留存周期、第三方处理者条款”**写成可审计清单；做 Agent 平台：用 **WildClawBench** 这类“真实 runtime + 长 horizon”基准校准你对 scaffold 的信心 |
+| 专项检索结论 | **Codex**：未发现 GitHub `openai/codex` 的 **`Published` 落入上海 `2026-05-17`** 新稳定版 tag（近期可见 alpha 线仍集中在 **2026-05-12** 前后，需以 releases 页为准）；**Claude Code**：未发现 **`2026-05-17（上海）`** 强对齐的新 GitHub Release tag；**OpenClaw**：`v2026.5.16-beta.5` 的 GitHub **`Published: 2026-05-17T17:59:02Z` → `2026-05-18 01:59:32（Asia/Shanghai）`**，**不计入**本节严格日窗，但建议 **`2026-05-18`** digest 作为高频跟进；**Hermes**：`v2026.5.16` 落在 **`2026-05-16`** 窗口，本节不再重复展开；**Spring AI**：未发现 `spring.io/blog` 与 **`2026-05-17`** 日期字段硬对齐的新条目；**LangChain**：未发现 `changelog.langchain.com` / `blog.langchain.com` 与 **`2026-05-17`** 同日落款；**skills**：OpenClaw beta.5 含多项 **skills / tool plugin**增量，但 **`Published` 换算后为上海次日** |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| MCP / HTTP 互操作 | [Issue #2108：`MCP-Protocol-Version` header 与 body `protocolVersion` 在 `initialize` 不一致时仍被接受](https://github.com/modelcontextprotocol/typescript-sdk/issues/2108) | **Updated `2026-05-17T14:18:44Z` → `2026-05-17 22:18:44（Asia/Shanghai）`** | 开源缺陷报告 + 修复讨论（链接到 PR `#2111` 线索） | 这类问题会被 **API 网关、观测平台、审计日志**放大；应当把 **协商权威来源**写入实现与测试 |
+| 消费级 AI 隐私叙事 | [Apple’s Siri revamp could include auto-deleting chats \| TechCrunch](https://techcrunch.com/2026/05/17/apples-siri-revamp-could-include-auto-deleting-chats/)（引用 Bloomberg） | **TechCrunch：`May 17, 2026 1:15 PM PDT` → `2026-05-18 04:15（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | 独立 App × **Gemini** × **可配置留存周期**，本质是 **“第三方模型 + 第一方隐私承诺”**的产品结构设计题 |
+| 诉讼 / 产业信任 | [Why trust is a big question at the Elon Musk-OpenAI trial \| TechCrunch](https://techcrunch.com/2026/05/17/why-trust-is-a-big-question-at-the-elon-musk-openai-trial/) | **`May 17, 2026 12:46 PM PDT` → `2026-05-18 03:46（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | 对 **公司治理、对外陈述一致性、监管沟通**是提醒：信任不是公关辞令，是 **可验证事实集合** |
+| 公共舆论 / AI 接受度 | [University of Arizona students boo Eric Schmidt’s AI cheerleading during commencement \| The Verge](https://www.theverge.com/ai-artificial-intelligence/932203/university-of-arizona-students-boo-eric-schmidt-ai-commencement) | **`May 17, 2026, 5:22 PM UTC` → `2026-05-18 01:22（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | **人才市场体感**会反过来影响政策与企业内训；对 HR/TL 是“别说教，先展示可验证收益”的信号 |
+| Teams / CV 功能退役 | [Microsoft is retiring Teams’ Together Mode \| The Verge](https://www.theverge.com/tech/932215/microsoft-teams-together-mode) | **The Verge：`May 17, 2026, 9:15 PM UTC` → `2026-05-18 05:15（Asia/Shanghai）`（相邻日期/跨时区传播）**；微软官方公告见下 | 技术媒体（引用官方社区） | Together Mode **用分割/抠像把头像摆进虚拟会议室**；退役说明 **“AI/CV 加持的协同特性”也要服从总体 UX / 性能预算** |
+| Teams / 官方说明 | [Goodbye Together mode, hello simplified meeting layouts in Microsoft Teams](https://techcommunity.microsoft.com/blog/microsoft365insiderblog/goodbye-together-mode-hello-simplified-meeting-layouts-in-microsoft-teams/4519312) | **Microsoft Community Hub 帖子落款：`May 14, 2026`（相邻日期）** | 厂商官方社区 | 以 **现代画廊视图**承接多路视频；对做实时音视频与 CV 插件的人是“功能生命周期管理”的样本 |
+| 产业组织 / skills | [TechCrunch Mobility: The AI skills arms race is coming for automotive](https://techcrunch.com/2026/05/17/techcrunch-mobility-the-ai-skills-arms-race-is-coming-for-automotive/) | **`May 17, 2026 9:05 AM PDT` → `2026-05-18 00:05（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | **裁撤传统 IT 岗 × 招聘 AI-native 工程**的结构性叙事；对你意味着团队技能模型与预算要先改 |
+| Agent 评测 / 论文 | [WildClawBench: A Benchmark for Real-World, Long-Horizon Agent Evaluation](https://arxiv.org/abs/2605.10912) | **见于** HF Daily Papers [`2026-05-17`](https://huggingface.co/papers/date/2026-05-17) 列表；**arXiv 版本日以 abs 页 Submission history 为准** | 论文原文 | 直接把 **OpenClaw / Claude Code / Codex / Hermes** 接进容器化 harness，强调 **轨迹、工具副作用与判分** |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| MCP 协议对齐 | `typescript-sdk`：**Issue #2108** 及关联 **PR #2111**（见 Issue 时间线） | Streamable HTTP、`initialize`、header/body 一致性 | MCP Server/Client 维护者、网关作者 |
+| Agent 评测 | **WildClawBench**（GitHub：`internlm/WildClawBench`） | native runtime、dockerized harness、hybrid grading | Agent 平台 / 评测负责人 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：这一天更像「**协议与评测基础设施**在收紧」：**MCP**把版本协商细节暴露成缺陷；**WildClawBench**把“scaffold 不是附带物”写进分数差异里。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| MCP 网关 | `initialize` mismatch 可被接受 | 把 **“header 与 body 是否必须一致”**定义成明确策略，并 **用集成测试锁住** |
+| 长周期 Agent | WildClawBench：换 harness 可巨幅改分 | 你的 Agent 系统评估必须 **固定 harness 版本与工具白名单** |
+| OpenClaw 工具面 | `v2026.5.16-beta.5`（`Published`→上海次日）包含 **typed tool plugins / skills**增量 | **关注次日章节**以免漏掉高频平台变更 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | **MCP `typescript-sdk`：Issue #2108** | 这是典型的 **“协议实现细节 → 线上诡异故障”**入口 |
+| 必读 | **WildClawBench（2605.10912）** | 把评测从“答对了吗”推进到“**怎么在真实 runtime 里做错/做对**” |
+| 推荐 | **TechCrunch：Siri / Gemini / auto-delete** | 观察 **平台公司如何把隐私叙事产品化** |
+
+### 来源清单
+
+- 检索范围：2026-05-17 00:00:00 到 2026-05-17 23:59:59（Asia/Shanghai），并对 **GitHub / 媒体 UTC & 美西时间**做换算标注
+- 引用域名：`github.com`, `techcrunch.com`, `theverge.com`, `techcommunity.microsoft.com`, `huggingface.co`, `arxiv.org`
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 开源缺陷 | MCP TS SDK Issue #2108 | **Updated UTC→上海 `2026-05-17`** | https://github.com/modelcontextprotocol/typescript-sdk/issues/2108 |
+| 技术媒体 | Apple Siri auto-deleting chats | **相邻日期/跨时区传播（上海 `2026-05-18` 早盘）** | https://techcrunch.com/2026/05/17/apples-siri-revamp-could-include-auto-deleting-chats/ |
+| 技术媒体 | Musk-OpenAI trial trust | **相邻日期/跨时区传播（上海 `2026-05-18`）** | https://techcrunch.com/2026/05/17/why-trust-is-a-big-question-at-the-elon-musk-openai-trial/ |
+| 技术媒体 | Schmidt commencement booed | **相邻日期/跨时区传播（上海 `2026-05-18`）** | https://www.theverge.com/ai-artificial-intelligence/932203/university-of-arizona-students-boo-eric-schmidt-ai-commencement |
+| 技术媒体 | Teams Together Mode retired | **相邻日期/跨时区传播**；**官方社区 `May 14, 2026`** | https://www.theverge.com/tech/932215/microsoft-teams-together-mode |
+| 厂商社区 | Goodbye Together mode（Teams） | **`May 14, 2026`** | https://techcommunity.microsoft.com/blog/microsoft365insiderblog/goodbye-together-mode-hello-simplified-meeting-layouts-in-microsoft-teams/4519312 |
+| 技术媒体 | AI skills arms race（automotive） | **相邻日期/跨时区传播** | https://techcrunch.com/2026/05/17/techcrunch-mobility-the-ai-skills-arms-race-is-coming-for-automotive/ |
+| 论文聚合 | Hugging Face Daily Papers | **列表页：`2026-05-17`** | https://huggingface.co/papers/date/2026-05-17 |
+| 论文原文 | WildClawBench | **以 arXiv 版本历史为准** | https://arxiv.org/abs/2605.10912 |
+| 开源发布（次日窗） | OpenClaw `v2026.5.16-beta.5` | **`Published` UTC→上海 `2026-05-18 01:59`** | https://github.com/openclaw/openclaw/releases/tag/v2026.5.16-beta.5 |
+
 ## 2026-05-16
 
 ### 今日总览

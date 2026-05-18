@@ -12,5 +12,5 @@ alwaysApply: true
    - `.cursor/skills/knowledge-base-digest/SKILL.md`
 2. **同一轮对话内顺序完成两件事**：完成 **AI Daily News Digest**（`ai-daily-digest`）规定流程 → 再完成 **Knowledge Base Digest**（`knowledge-base-digest`）规定流程（若检索量大，可先并行收集再分两节写入）。
 3. **日期与 force**：用户未写明 `force=true`、也未带 `1`/`2`/具体日时，两个 skill 都要求先选方式——**只向用户提问一次**：「请选择拉取方式：1 增量 … 2 指定 YYYY-MM-DD …（可选 force=true）」；用户回复后 **两个 skill 共用同一选择**（同一 `force`、同一增量区间或同一指定日）。
-4. **收尾说明**须分别交代：① AI 日报处理日期与写入的 Markdown/状态路径；② 知识库摘要处理日期与写入路径，并**包含** `dailyReport/github-topz.md`（由 `python tools/update_github_topz.py` 在本次知识库拉取内更新，与 `knowledge-base-digest.md` 同批）。（路径以各 SKILL「固定路径」为准，当前在项目 `dailyReport/` 下。）
+4. **收尾说明**须分别交代：① AI 日报处理日期与写入的 Markdown/状态路径；② 知识库摘要处理日期与写入路径，并**包含** `dailyReport/github-topz.md`（由 `python tools/update_github_topz.py` 在本次知识库拉取内更新，与 `knowledge-base-digest.md` 同批）。`github-topz.md` 中 **全局 Star 表**与 **各 Trending 子表**均含 **「标记」列**：相对**本次拉取前**文件中该表已出现过的 `owner/repo`，本轮首次出现的行标 **新增**；**下一次拉取**会清空上一轮「新增」后按同一规则重算（仅标记相对**上一版磁盘文件**的新增行）。（路径以各 SKILL「固定路径」为准，当前在项目 `dailyReport/` 下。）
 5. 若用户**仅**在搞 Git（例如明确 `git pull`、同步分支），**忽略**本条，不按 digest 流程执行。
