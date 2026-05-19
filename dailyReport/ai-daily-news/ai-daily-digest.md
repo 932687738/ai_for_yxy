@@ -2,6 +2,78 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-18
+
+### 今日总览
+
+**一句话结论**：`2026-05-18`（Asia/Shanghai，00:00–23:59）主线是「**开源 Agent 网关密集迭代（OpenClaw `v2026.5.16-beta.5` 的 GitHub `Published` 换算落入上海当日凌晨）** × **企业协作厂商把会议与会话上下文通过 MCP 推进到 Codex / Claude 工具链（Zoom 官方稿 `Published May 18, 2026`）** × **涉 OpenAI 组织形态与 Altman 的诉讼以“程序法窗口”收束（陪审团裁决 + 大量美媒 UTC/美西时间戳换算后落入上海次日）**」并行；同日 **患者侧 AI 就诊笔记（Kin Health 种子轮）**与 **HF Daily `2026-05-18` 上的 Agent/RAG/浏览器 Agent 指纹论文**补充研发视角。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | OpenClaw GitHub Release（UTC→上海）；Zoom MCP 新闻稿与 Codex 插件仓库线索；Musk v. Altman 陪审团进展（The Verge / TechCrunch）；Schiff 数据中心能源法案快讯（The Verge）；患者侧 AI notetaker 融资（TechCrunch）；Hugging Face Daily Papers `2026-05-18`；Codex / Claude Code / Hermes / Spring AI / LangChain / skills 专项；arXiv 核对 |
+| 核心趋势 | **Agent 基础设施继续“平台化”**：网关侧一周多更 + 会议厂商把 **组织上下文**接进 MCP；**法律战**短期落到 **诉讼时效与程序**，但 **治理与信任**议题不会消失；**医疗 + LLM**仍在 **准确率/同意/HIPAA**张力下扩张 |
+| 可直接关注 | 维护 OpenClaw/Codex 集成：跟踪 **typed tool plugins、代理 TLS、QA-Lab parity**；企业 AI：评估 **Zoom MCP**时的 **数据驻留、审计、最小权限**；安全：**浏览器 Agent 可被动指纹识别**意味着你要重新设计 **流量与脚本策略** |
+| 专项检索结论 | **Codex**：未发现 **`Published` 落入上海 `2026-05-18`** 的新稳定版 tag（以 `openai/codex` releases 为准）；**Claude Code**：未发现 **`2026-05-18（上海）`** 强对齐的新 GitHub Release tag；**OpenClaw**：**`v2026.5.16-beta.5`** GitHub **`Published: 2026-05-17T17:59:02Z` → `2026-05-18 01:59:02（Asia/Shanghai）`**，**落入**当日窗口；**Hermes**：未发现 **`2026-05-18（上海）`** 新 tag（`v2026.5.16` 仍属此前窗口）；**Spring AI / LangChain**：未发现与 **`2026-05-18`** 日期字段硬对齐的新博文/变更日志条目；**skills**：以 **OpenClaw beta.5**（meme-maker、`autoreview`、node inspector、Python debug、`defineToolPlugin` 等）与 **Zoom×Codex** 物料为主 |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| 多通道 Agent 网关 | [openclaw/openclaw `v2026.5.16-beta.5`](https://github.com/openclaw/openclaw/releases/tag/v2026.5.16-beta.5) | GitHub **`Published: 2026-05-17T17:59:02Z` → `2026-05-18 01:59:02（Asia/Shanghai）`** | 开源预发布 | Mac 端 Settings 卡片化、**`defineToolPlugin` + plugins build/validate/init**、HTTPS 托管 forward-proxy、**meme-maker / autoreview / node inspector / Python debug** 等 skills、QA-Lab 与 runtime parity 闸门强化——典型“**生产型 Agent 平台周更**” |
+| 企业 MCP / 会议智能 | [Zoom connects conversations and organizational context across AI tools through expanded MCP capabilities](https://news.zoom.com/zoom-mcp-expanded-capabilities/) | **官方稿：`Published May 18, 2026`** | 官方新闻稿 | 将 **会议摘要/转写/录制/Notes**与 **Salesforce、Workday、ServiceNow** 等接进 **MCP Server**，并宣布 **OpenAI Codex 插件**与 **Claude 插件**路径——企业要把 **上下文治理**前置到集成设计 |
+| Codex 插件物料 | [openai/plugins：`plugins/zoom`](https://github.com/openai/plugins/tree/main/plugins/zoom)（Zoom 稿内链接） | **与 Zoom 官方稿同日宣发（以稿件为准）** | 开源插件目录 | 把 **会议可验证事实**导入 **编码侧文档化/自动化**的参考接线 |
+| 诉讼 / 治理 | [Elon Musk loses his case against Sam Altman \| The Verge](https://www.theverge.com/ai-artificial-intelligence/932383/jury-verdict-musk-v-altman-openai-trial) | **`May 18, 2026, 5:39 PM UTC` → `2026-05-19 01:39（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | 咨询陪审团：两条主张 **诉讼时效**挡下，另一条连带失败；**法官接受意见**；对 **非营利/关联交易叙事**的工程组织仍具 **合规对照**价值 |
+| 诉讼 / 产业 | [Elon Musk has lost his lawsuit against Sam Altman and OpenAI \| TechCrunch](https://techcrunch.com/2026/05/18/elon-musk-has-lost-his-lawsuit-against-sam-altman-and-openai/) | **`May 18, 2026 10:34 AM PDT` → `2026-05-19 01:34（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | 更偏 **程序法**：陪审团认为 **提起过晚**；强调 **IPO 前“结构性威胁”之一被移开** |
+| 政策 / 数据中心 | [A new bill aims to shield energy consumers from AI data center-related costs \| The Verge](https://www.theverge.com/policy/932472/a-new-bill-aims-to-shield-energy-consumers-from-ai-data-center-related-costs) | **`Posted May 18, 2026 at 5:56 PM UTC` → `2026-05-19 01:56（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体（ linked 参议员公告） | **Energy Cost Fairness and Reliability Act**：对“**energy-intensive facilities**”提要求以缓解电网压力——算力扩张进入 **立法与电价分配**讨论 |
+| 医疗 × LLM 产品 | [Kin Health raises $9M to build an AI notetaker for patients \| TechCrunch](https://techcrunch.com/2026/05/18/kin-health-raises-9m-to-build-an-ai-notetaker-for-patients/) | **`May 18, 2026 8:26 AM PDT` → `2026-05-18 23:26（Asia/Shanghai）`** | 技术媒体 | 患者侧 **录音→临床叙事→摘要**流水线；**未宣称 HIPAA 认证**但强调加密与默认私有——对 **同意/准确性/责任边界**要按监管口径自己再核验 |
+| 论文（Agent/编程） | [Solvita: Enhancing Large Language Models for Competitive Programming via Agentic Evolution](https://arxiv.org/abs/2605.15301) | **见于** HF Daily [`2026-05-18`](https://huggingface.co/papers/date/2026-05-18)；**arXiv 版本历史以 abs 页为准** | 论文原文 | **Planner/Solver/Oracle/Hacker** 闭环 + **图结构知识网络**沉淀经验，强调 **竞赛编程 Agent** 的可演进性 |
+| 论文（安全 × Browser Agent） | [Known By Their Actions: Fingerprinting LLM Browser Agents via UI Traces](https://arxiv.org/abs/2605.14786) | **见于** HF Daily [`2026-05-18`](https://huggingface.co/papers/date/2026-05-18) | 论文原文 | **被动 UI traces** 可对 **14 个前沿模型**做高 F1 **指纹识别**——对 **客户端自动化、Bot 治理、红队**有直接含义 |
+| 论文（RAG 评测） | [MLAIRE: Multilingual Language-Aware Information Retrieval Evaluation Protocal](https://arxiv.org/abs/2605.07249) | **见于** HF Daily [`2026-05-18`](https://huggingface.co/papers/date/2026-05-18) | 论文原文 | 把 **跨语语义相关**与 **query-language preference**拆开评测——多语 **RAG/搜索引擎**上线前的指标设计参考 |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| OpenClaw 变更阅读 | OpenClaw Release **`v2026.5.16-beta.5`** | tool plugins、代理 TLS、skills、QA gates | Agent 平台 / SRE |
+| MCP 集成 | Zoom 官方稿 + `openai/plugins` Zoom 目录 | MCP server、Codex 插件、企业系统连接器 | 企业架构 / 集成工程师 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：工程热点在 **“把组织上下文接到工具协议上”**（Zoom MCP）与 **“把 Agent 网关打磨到可发布节奏”**（OpenClaw）；论文侧则提醒 **浏览器 Agent 的匿名性假设可能不成立**。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| MCP 作为上下文总线 | Zoom：会议智能 + CRM/ITSM | 企业侧需要 **数据分级、检索边界、审计追踪**与 **MCP Server 版本治理** |
+| 网关交付 | OpenClaw beta.5 | **插件工具链 + QA-Lab**是长期维护成本中心，要提前预算 |
+| 评测 | MLAIRE / Solvita / “Known By Their Actions” | **多语 RAG**要同时看 **语义与可读语言**；**浏览器自动化**要假设 **可被站点侧观测** |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | OpenClaw：**`v2026.5.16-beta.5` notes** | 直接反映 **Agent 网关**一周内的真实修复面 |
+| 必读 | arXiv：**2605.14786（Browser Agent fingerprint）** | 安全与产品设计交叉点 |
+| 推荐 | Zoom：**expanded MCP** 官方稿 | 看清 **“会议上下文商品化”**的接口与叙事 |
+
+### 来源清单
+
+- 检索范围：2026-05-18 00:00:00 到 2026-05-18 23:59:59（Asia/Shanghai），并对 **GitHub `Published`（UTC）**、媒体 **UTC/PDT** 做换算标注
+- 引用域名：`github.com`, `news.zoom.com`, `theverge.com`, `techcrunch.com`, `schiff.senate.gov`（linked）, `huggingface.co`, `arxiv.org`
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 开源发布 | OpenClaw `v2026.5.16-beta.5` | **UTC→上海 `2026-05-18`** | https://github.com/openclaw/openclaw/releases/tag/v2026.5.16-beta.5 |
+| 官方新闻稿 | Zoom expanded MCP | **`Published May 18, 2026`** | https://news.zoom.com/zoom-mcp-expanded-capabilities/ |
+| 技术媒体 | Musk loses（The Verge） | **相邻日期/跨时区传播** | https://www.theverge.com/ai-artificial-intelligence/932383/jury-verdict-musk-v-altman-openai-trial |
+| 技术媒体 | Musk loses（TechCrunch） | **相邻日期/跨时区传播** | https://techcrunch.com/2026/05/18/elon-musk-has-lost-his-lawsuit-against-sam-altman-and-openai/ |
+| 技术媒体 | Schiff energy bill | **相邻日期/跨时区传播** | https://www.theverge.com/policy/932472/a-new-bill-aims-to-shield-energy-consumers-from-ai-data-center-related-costs |
+| 技术媒体 | Kin Health $9M | **上海 `2026-05-18`**（PDT→上海） | https://techcrunch.com/2026/05/18/kin-health-raises-9m-to-build-an-ai-notetaker-for-patients/ |
+| 论文聚合 | Hugging Face Daily Papers | **列表页：`2026-05-18`** | https://huggingface.co/papers/date/2026-05-18 |
+| 论文原文 | Solvita | **以 arXiv 为准** | https://arxiv.org/abs/2605.15301 |
+| 论文原文 | Known By Their Actions | **以 arXiv 为准** | https://arxiv.org/abs/2605.14786 |
+| 论文原文 | MLAIRE | **以 arXiv 为准** | https://arxiv.org/abs/2605.07249 |
+
 ## 2026-05-17
 
 ### 今日总览
