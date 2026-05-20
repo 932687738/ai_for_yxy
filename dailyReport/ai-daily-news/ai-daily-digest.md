@@ -2,6 +2,85 @@
 
 按 Asia/Shanghai 时区增量汇总 AI/人工智能相关每日资讯。
 
+## 2026-05-19
+
+### 今日总览
+
+**一句话结论**：`2026-05-19`（Asia/Shanghai，00:00–23:59）主线是 **Google I/O 2026 把「Agent 平台 + 分发」推到前台**（Gemini 3.5 Flash、Gemini Spark、Antigravity 2.0/CLI、Search Agent 化）与 **Anthropic/OpenAI 在「人才 + 平台 + 信任」三线并进**（Karpathy 加盟预训练、Claude Managed Agents/MCP tunnels、OpenAI 内容溯源 C2PA×SynthID）并行；工程侧 **Claude Code `v2.1.144`、Codex `0.131.0`、OpenClaw `v2026.5.19-beta.1`** 同日或按 UTC→上海换算落入当日窗口。
+
+| 维度 | 本日结论 |
+| --- | --- |
+| 检索范围 | Google I/O 官方稿与 blog.google；OpenAI 溯源公告；Anthropic 对话倡议 + API Release Notes + Karpathy 人事；Claude Code/Codex/OpenClaw GitHub Release；TechCrunch/The Verge；arXiv/HF 论文；政策/中文补充 |
+| 核心趋势 | **Agent 从「聊天」转向「长时程执行 + 组织上下文」**：Spark/Antigravity/Search Agents 与 Zoom MCP（前日）形成「平台化 Agent」共振；**溯源与治理**（C2PA、SynthID、Anthropic 道德形成研究）与 **顶级预训练人才流动**同步升温 |
+| 可直接关注 | 评估 **Gemini 3.5 Flash + Antigravity 2.0** 作为 coding/agent 基座；企业侧对照 **Claude Managed Agents** 的 MCP tunnels、自托管 sandbox、100K+ token spill；安全/合规团队跟进 **OpenAI 公开验证工具** 与 C2PA 互操作 |
+| 专项检索结论 | **Claude Code**：**`v2.1.144`** GitHub **`Published: 2026-05-19T00:48:51Z` → `2026-05-19 08:48:51（Asia/Shanghai）`**；**Codex**：**`rust-v0.131.0`** **`Published: 2026-05-18T17:39:34Z` → `2026-05-19 01:39:34（Asia/Shanghai）`**；**OpenClaw**：**`v2026.5.19-beta.1`** **`Published: 2026-05-18T22:58:13Z` → `2026-05-19 06:58:13（Asia/Shanghai）`**；**Hermes**：未发现 **`2026-05-19（上海）`** 新 tag（最近 **`v2026.5.16`** 仍属 **`2026-05-16`** 窗口）；**Spring AI / LangChain**：未发现与 **`2026-05-19`** 硬对齐的新 release/博文；**skills**：Antigravity 2.0 延续 **Agent Skills/Hooks/Subagents** 能力栈，OpenClaw beta.1 侧继续 **typed tool plugins + autoreview/meme-maker** 等 skills 迭代 |
+
+### 重要事件与发布
+
+| 主题 | 标题 | 日期 | 类型 | 研发/学习价值 |
+| --- | --- | --- | --- | --- |
+| Google I/O / 模型 | [Google I/O 2026: Sundar Pichai’s opening keynote](https://blog.google/innovation-and-ai/sundar-pichai-io-2026/) | **官方稿：`May 19, 2026`** | 官方发布 | Gemini 3.5 Flash 成为 Gemini App/Search AI Mode 默认；宣布 **Gemini Spark**、**Gemini Omni**、Antigravity 2.0、Search Agent 化——「**模型 + 分发 + Agent 运行时**」一体化叙事 |
+| Agent 模型 | [With Gemini 3.5 Flash, Google bets its next AI wave on agents, not chatbots](https://techcrunch.com/2026/05/19/with-gemini-3-5-flash-google-bets-its-next-ai-wave-on-agents-not-chatbots/) | **`May 19, 2026 10:51 AM PDT` → `2026-05-20 01:51（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | 3.5 Flash 强调 **coding + 长时程 autonomous agents**；与 **Antigravity** 协同演示多 Agent 构建 OS——对 **agent harness 与默认模型选型**有直接参考 |
+| 个人 Agent | [Google introduces Gemini Spark, a 24/7 agentic assistant with Gmail integration](https://techcrunch.com/2026/05/19/google-introduces-gemini-spark-a-24-7-agentic-assistant-with-gmail-integration/) | **`May 19, 2026 10:45 AM PDT` → `2026-05-20 01:45（Asia/Shanghai）`（相邻日期/跨时区传播）** | 技术媒体 | **Gmail/Workspace 原生集成 + Google Cloud VM 常驻**；MCP 扩展第三方——企业需提前设计 **邮箱/文档上下文的分级与审计** |
+| Agent 开发平台 | [Google launches Antigravity 2.0 with an updated desktop app and CLI tool](https://techcrunch.com/2026/05/19/google-launches-antigravity-2-0-with-an-updated-desktop-app-and-cli-tool/) | **`May 19, 2026`（I/O 同日）** | 技术媒体 | 独立桌面 Agent IDE + **Antigravity CLI**（承接 Gemini CLI 能力栈）；对 **多 Agent 并行、后台任务、Subagents** 的工程落地是重要对照组 |
+| 具身/世界模型 | [Google’s Genie world model can now simulate real streets with Street View](https://techcrunch.com/2026/05/19/googles-genie-world-model-can-now-simulate-real-streets-with-street-view/) | **`May 19, 2026`（I/O 同日）** | 技术媒体 | **Street View × Genie 3** 生成可交互 3D 环境——机器人/AV **仿真数据**与 **罕见场景**训练的新供给 |
+| 内容溯源 | [Advancing content provenance for a safer, more transparent AI ecosystem](https://openai.com/index/advancing-content-provenance/) | **官方稿：`May 19, 2026`** | 官方发布 | **C2PA Conforming Generator** + 与 Google **SynthID 图像水印**合作 + **[公开验证工具预览](https://openai.com/verify)**——生成式媒体 **合规/风控/平台治理**必读 |
+| 治理 / 价值观 | [Widening the conversation on frontier AI](https://www.anthropic.com/news/widening-conversation-ai) | **官方稿：`May 19, 2026`** | 官方发布 | 与宗教/哲学/文化社群对话 **AI 道德形成**；实验 **「外部良知」工具**降低 misalignment——对 **Constitution/评测集设计**有方法论启发 |
+| Claude API / Agent 平台 | [Claude Platform Release Notes — May 19, 2026](https://docs.anthropic.com/en/release-notes/api) | **`May 19, 2026`** | 官方文档 | **MCP tunnels（RP）**、**Claude Managed Agents 自托管 sandbox**、会话内更新 MCP 配置、**>100K token 输出 spill 到 sandbox 文件** |
+| 人事 / 预训练 | [OpenAI co-founder Andrej Karpathy joins Anthropic's pre-training team](https://techcrunch.com/2026/05/19/openai-co-founder-andrej-karpathy-joins-anthropics-pre-training-team/) | **`May 19, 2026 8:43 AM PDT` → `2026-05-19 23:43（Asia/Shanghai）`** | 技术媒体 | Karpathy 加入 **pre-training**，将建 **「用 Claude 加速预训练研究」**团队——信号：**AI-assisted research** 与纯算力堆叠并重 |
+| Claude Code | [anthropics/claude-code `v2.1.144`](https://github.com/anthropics/claude-code/releases/tag/v2.1.144) | GitHub **`Published: 2026-05-19T00:48:51Z` → `2026-05-19 08:48:51（Asia/Shanghai）`** | 开源发布 | **`/resume` 支持 background sessions**、MCP 分页 tools 修复、启动/API 不可达 **75s 挂起→15s 超时**、Windows/CJK 渲染多项修复 |
+| Codex | [openai/codex `rust-v0.131.0`](https://github.com/openai/codex/releases/tag/rust-v0.131.0) | GitHub **`Published: 2026-05-18T17:39:34Z` → `2026-05-19 01:39:34（Asia/Shanghai）`** | 开源发布 | TUI 会话控制增强、**@mentions** 跨文件/插件/skills 搜索、**`codex doctor`** 诊断、远程 daemon/Windows sandbox 硬化 |
+| OpenClaw | [openclaw/openclaw `v2026.5.19-beta.1`](https://github.com/openclaw/openclaw/releases/tag/v2026.5.19-beta.1) | GitHub **`Published: 2026-05-18T22:58:13Z` → `2026-05-19 06:58:13（Asia/Shanghai）`** | 开源预发布 | Mac Settings 卡片化、**`defineToolPlugin`**、browser CLI **`--timeout-ms`**、Node **≥22.19**、Docker **`OPENCLAW_IMAGE_APT_PACKAGES`** |
+
+### 技术文档与教程
+
+| 方向 | 推荐资料 | 核心技术点 | 适合谁看 |
+| --- | --- | --- | --- |
+| Google Agent 栈 | I/O Keynote + Antigravity 2.0 稿 | 3.5 Flash、Spark、Antigravity CLI、Search Agents | 平台/全栈 / Agent 架构 |
+| 溯源互操作 | OpenAI：**Advancing content provenance** | C2PA、SynthID、verify 工具边界 | 安全/合规 / 媒体平台 |
+| Claude 企业 Agent | Anthropic API Release Notes（5/19） | MCP tunnels、自托管 sandbox、大输出 spill | 后端 / 集成工程师 |
+
+### LangChain / Agent / LLM 工程相关进展
+
+**总体判断**：**Google 用「默认模型 + Agent 运行时 + Workspace 分发」打组合拳**；Anthropic 则在 **Managed Agents 私有化执行**与 **预训练人才**上加深护城河；OpenAI 同日补 **跨平台溯源**这一「信任基础设施」。
+
+| 主题 | 进展 | 工程启发 |
+| --- | --- | --- |
+| Agent 运行时竞争 | Antigravity 2.0 / Spark / Claude Managed Agents | 选型时对比 **常驻 VM、MCP 扩展、后台 subagent、权限/审计**四件套 |
+| MCP 企业化 | Anthropic **MCP tunnels** + Google Spark MCP 路线图 | 内网 MCP Server 需 **隧道/零信任**方案，别直接把 localhost 暴露给云端 |
+| 大工具输出 | Managed Agents **100K+ token spill to file** | 长日志/抓取结果应 **文件化 + 截断预览**，避免撑爆 context |
+| 开源 Agent 网关 | OpenClaw **beta.1** 周更 | **插件 SDK + QA gates** 是长期维护成本，应纳入 SRE 预算 |
+
+### 值得深入阅读的资料
+
+| 推荐级别 | 资料 | 为什么值得读 |
+| --- | --- | --- |
+| 必读 | Google I/O 2026 Keynote（blog.google） | 当日 **Agent 化产品矩阵**的一手叙事 |
+| 必读 | OpenAI：**Advancing content provenance** | 看清 **C2PA × SynthID × 公开 verify** 如何组合 |
+| 推荐 | Anthropic API Release Notes（**May 19**） | **MCP tunnels / 自托管 sandbox** 的企业落地细节 |
+| 推荐 | Claude Code **`v2.1.144` release notes** | 终端 Agent **稳定性/MCP/background session** 修复面 |
+
+### 来源清单
+
+- 检索范围：2026-05-19 00:00:00 到 2026-05-19 23:59:59（Asia/Shanghai），并对 **GitHub `Published`（UTC）**、媒体 **PDT/UTC** 做换算标注
+- 引用域名：`blog.google`, `techcrunch.com`, `openai.com`, `anthropic.com`, `docs.anthropic.com`, `github.com`, `theverge.com`, `arxiv.org`
+- 来源清单表格：
+
+| 类型 | 标题 | 日期 | 链接 |
+| --- | --- | --- | --- |
+| 官方发布 | Google I/O 2026 Keynote | **`May 19, 2026`** | https://blog.google/innovation-and-ai/sundar-pichai-io-2026/ |
+| 官方发布 | OpenAI content provenance | **`May 19, 2026`** | https://openai.com/index/advancing-content-provenance/ |
+| 官方发布 | Anthropic widening conversation | **`May 19, 2026`** | https://www.anthropic.com/news/widening-conversation-ai |
+| 官方文档 | Claude API Release Notes | **`May 19, 2026`** | https://docs.anthropic.com/en/release-notes/api |
+| 技术媒体 | Gemini 3.5 Flash agents | **相邻日期/跨时区传播** | https://techcrunch.com/2026/05/19/with-gemini-3-5-flash-google-bets-its-next-ai-wave-on-agents-not-chatbots/ |
+| 技术媒体 | Gemini Spark | **相邻日期/跨时区传播** | https://techcrunch.com/2026/05/19/google-introduces-gemini-spark-a-24-7-agentic-assistant-with-gmail-integration/ |
+| 技术媒体 | Antigravity 2.0 | **`May 19, 2026`** | https://techcrunch.com/2026/05/19/google-launches-antigravity-2-0-with-an-updated-desktop-app-and-cli-tool/ |
+| 技术媒体 | Genie × Street View | **`May 19, 2026`** | https://techcrunch.com/2026/05/19/googles-genie-world-model-can-now-simulate-real-streets-with-street-view/ |
+| 技术媒体 | Karpathy → Anthropic | **上海 `2026-05-19`（PDT→上海）** | https://techcrunch.com/2026/05/19/openai-co-founder-andrej-karpathy-joins-anthropics-pre-training-team/ |
+| 开源发布 | Claude Code v2.1.144 | **UTC→上海 `2026-05-19`** | https://github.com/anthropics/claude-code/releases/tag/v2.1.144 |
+| 开源发布 | Codex rust-v0.131.0 | **UTC→上海 `2026-05-19`** | https://github.com/openai/codex/releases/tag/rust-v0.131.0 |
+| 开源发布 | OpenClaw v2026.5.19-beta.1 | **UTC→上海 `2026-05-19`** | https://github.com/openclaw/openclaw/releases/tag/v2026.5.19-beta.1 |
+
 ## 2026-05-18
 
 ### 今日总览
